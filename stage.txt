@@ -1,0 +1,20 @@
+Lundi 23 novembre
+
+- Mise en place des comptes : création de mon adresse mail VEV et de mon compte GitHub.
+- Installation du poste de travail : installation de Linux Fedora 44 sur l'ordinateur qu'on m'a prêté. J'ai démarré depuis une clé USB en passant par le BIOS.
+- Découverte de l'entreprise : VEV développe des logiciels de gestion pour la recharge de véhicules électriques. Ils permettent notamment de :
+  - localiser les bornes de recharge ;
+  - savoir qui les utilise et qui a le droit de les utiliser ;
+  - suivre la position des véhicules ;
+  - suivre l'énergie consommée par les batteries.
+- Les types de bornes : j'ai découvert deux types de prises :
+  - la Type 2, en courant alternatif (AC) ;
+  - le Combo CCS2, en courant continu (DC), plus puissant.
+- Atelier maquette : j'ai découpé des feuilles qui ont servi de base à une maquette, puis on les a scotchées sur une planche. J'ai ensuite coupé des bandes LED à la bonne longueur, et on m'a expliqué le rôle des différents composants.
+- Personnalisation de l'environnement : installation de l'extension GNOME Dash to Panel. Elle ajoute en bas de l'écran une barre des tâches comme sur Windows, avec les applications épinglées, les fenêtres ouvertes, l'horloge et les icônes système.
+
+Mardi 24 novembre
+
+- Comptes : fin de la configuration de GitHub et création d'un compte sur la plateforme VEV, qui me permet de voir l'état de tous les véhicules.
+- Outils de développement : installation de VS Code depuis le terminal, puis de Claude.
+- Projet personnel : avec Claude, j'ai créé un site web qui contient mon CV. J'y mettrai tout ce que je réalise pendant le stage.
