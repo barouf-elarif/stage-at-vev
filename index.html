@@ -10,39 +10,60 @@
 <body>
 
   <header class="hero">
+    <div class="container lang-switch">
+      <button type="button" class="lang-btn" data-set-lang="fr" title="Français" aria-label="Français"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ED2939"/></svg></button>
+      <button type="button" class="lang-btn" data-set-lang="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
+    </div>
     <div class="container">
-      <p class="tag">Stage de première · 1CIEL</p>
+      <p class="tag">
+        <span data-lang="fr">Stage de première · 1CIEL</span>
+        <span data-lang="en">First-year internship · 1CIEL</span>
+      </p>
       <h1>Elarif Barouf</h1>
-      <p class="subtitle">Stagiaire en informatique / électronique</p>
-      <p class="dates">Stage du <strong>23 novembre</strong> au <strong>25 décembre</strong></p>
-      <a class="btn" href="#contact">Me contacter</a>
+      <p class="subtitle">
+        <span data-lang="fr">Stagiaire en informatique / électronique</span>
+        <span data-lang="en">Computer science / electronics intern</span>
+      </p>
+      <p class="dates">
+        <span data-lang="fr">Stage du <strong>23 novembre</strong> au <strong>25 décembre</strong></span>
+        <span data-lang="en">Internship from <strong>November 23</strong> to <strong>December 25</strong></span>
+      </p>
+      <a class="btn" href="#contact">
+        <span data-lang="fr">Me contacter</span>
+        <span data-lang="en">Contact me</span>
+      </a>
     </div>
   </header>
 
   <nav class="nav">
     <div class="container">
-      <a href="#profil">Profil</a>
-      <a href="#competences">Compétences</a>
-      <a href="#formation">Formation</a>
-      <a href="#langues">Langues</a>
-      <a href="#interets">Centres d’intérêt</a>
-      <a href="#contact">Contact</a>
+      <a href="#profil"><span data-lang="fr">Profil</span><span data-lang="en">Profile</span></a>
+      <a href="#competences"><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></a>
+      <a href="#formation"><span data-lang="fr">Formation</span><span data-lang="en">Education</span></a>
+      <a href="#langues"><span data-lang="fr">Langues</span><span data-lang="en">Languages</span></a>
+      <a href="#interets"><span data-lang="fr">Centres d’intérêt</span><span data-lang="en">Interests</span></a>
+      <a href="#journal"><span data-lang="fr">Journal de stage</span><span data-lang="en">Internship log</span></a>
+      <a href="#contact"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></a>
     </div>
   </nav>
 
   <main class="container">
 
     <section id="profil" class="card">
-      <h2>Profil</h2>
-      <p>
+      <h2><span data-lang="fr">Profil</span><span data-lang="en">Profile</span></h2>
+      <p data-lang="fr">
         Élève en 1CIEL au lycée Eucalyptus à Nice, motivé et sérieux,
         souhaitant développer ses compétences en informatique, réseaux et électronique.
+      </p>
+      <p data-lang="en">
+        1CIEL student at Lycée Eucalyptus in Nice, motivated and serious,
+        eager to develop my skills in computing, networking and electronics.
       </p>
     </section>
 
     <section id="competences" class="card">
-      <h2>Compétences</h2>
-      <ul class="skills">
+      <h2><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></h2>
+      <ul class="skills" data-lang="fr">
         <li>Bases en informatique et électronique</li>
         <li>Utilisation de Windows, Internet et outils numériques</li>
         <li>Intérêt pour les réseaux et la cybersécurité</li>
@@ -51,40 +72,134 @@
         <li>Esprit d’équipe et sens de l’organisation</li>
         <li>Motivation, sérieux et ponctualité</li>
       </ul>
+      <ul class="skills" data-lang="en">
+        <li>Basics of computing and electronics</li>
+        <li>Using Windows, the Internet and digital tools</li>
+        <li>Interest in networking and cybersecurity</li>
+        <li>Basic computer maintenance</li>
+        <li>Installing and configuring software</li>
+        <li>Team spirit and good organization</li>
+        <li>Motivated, serious and punctual</li>
+      </ul>
     </section>
 
     <div class="grid">
       <section id="formation" class="card">
-        <h2>Formation</h2>
+        <h2><span data-lang="fr">Formation</span><span data-lang="en">Education</span></h2>
         <p class="item-title">Lycée Eucalyptus — Nice</p>
         <p>1CIEL · 2026–2027</p>
       </section>
 
       <section id="langues" class="card">
-        <h2>Langues</h2>
-        <p class="item-title">Français</p>
-        <p>Langue maternelle</p>
-        <p class="item-title">Anglais</p>
-        <p>Niveau scolaire</p>
+        <h2><span data-lang="fr">Langues</span><span data-lang="en">Languages</span></h2>
+        <p class="item-title"><span data-lang="fr">Français</span><span data-lang="en">French</span></p>
+        <p><span data-lang="fr">Langue maternelle</span><span data-lang="en">Native language</span></p>
+        <p class="item-title"><span data-lang="fr">Anglais</span><span data-lang="en">English</span></p>
+        <p><span data-lang="fr">Niveau scolaire</span><span data-lang="en">School level</span></p>
       </section>
 
       <section id="interets" class="card">
-        <h2>Centres d’intérêt</h2>
-        <ul class="chips">
+        <h2><span data-lang="fr">Centres d’intérêt</span><span data-lang="en">Interests</span></h2>
+        <ul class="chips" data-lang="fr">
           <li>Informatique</li>
           <li>Électronique</li>
           <li>Technologies numériques</li>
         </ul>
+        <ul class="chips" data-lang="en">
+          <li>Computing</li>
+          <li>Electronics</li>
+          <li>Digital technologies</li>
+        </ul>
       </section>
     </div>
+
+    <section id="journal" class="card">
+      <h2><span data-lang="fr">Journal de stage</span><span data-lang="en">Internship log</span></h2>
+
+      <!-- ===== Version française ===== -->
+      <div data-lang="fr">
+        <article class="day">
+          <h3>Lundi 23 novembre</h3>
+          <ul>
+            <li><strong>Mise en place des comptes :</strong> création de mon adresse mail VEV et de mon compte GitHub.</li>
+            <li><strong>Installation du poste de travail :</strong> installation de Linux Fedora 44 sur l’ordinateur qu’on m’a prêté. J’ai démarré depuis une clé USB en passant par le BIOS.</li>
+            <li><strong>Découverte de l’entreprise :</strong> VEV développe des logiciels de gestion pour la recharge de véhicules électriques. Ils permettent notamment de :
+              <ul>
+                <li>localiser les bornes de recharge ;</li>
+                <li>savoir qui les utilise et qui a le droit de les utiliser ;</li>
+                <li>suivre la position des véhicules ;</li>
+                <li>suivre l’énergie consommée par les batteries.</li>
+              </ul>
+            </li>
+            <li><strong>Les types de bornes :</strong> j’ai découvert deux types de prises :
+              <ul>
+                <li>la Type 2, en courant alternatif (AC) ;</li>
+                <li>le Combo CCS2, en courant continu (DC), plus puissant.</li>
+              </ul>
+            </li>
+            <li><strong>Atelier maquette :</strong> j’ai découpé des feuilles qui ont servi de base à une maquette, puis on les a scotchées sur une planche. J’ai ensuite coupé des bandes LED à la bonne longueur, et on m’a expliqué le rôle des différents composants.</li>
+            <li><strong>Personnalisation de l’environnement :</strong> installation de l’extension GNOME Dash to Panel. Elle ajoute en bas de l’écran une barre des tâches comme sur Windows, avec les applications épinglées, les fenêtres ouvertes, l’horloge et les icônes système.</li>
+          </ul>
+        </article>
+
+        <article class="day">
+          <h3>Mardi 24 novembre</h3>
+          <ul>
+            <li><strong>Comptes :</strong> fin de la configuration de GitHub et création d’un compte sur la plateforme VEV, qui me permet de voir l’état de tous les véhicules.</li>
+            <li><strong>Outils de développement :</strong> installation de VS Code depuis le terminal, puis de Claude.</li>
+            <li><strong>Projet personnel :</strong> avec Claude, j’ai créé un site web qui contient mon CV. J’y mettrai tout ce que je réalise pendant le stage.</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- ===== English version ===== -->
+      <div data-lang="en">
+        <article class="day">
+          <h3>Monday, November 23</h3>
+          <ul>
+            <li><strong>Account setup:</strong> created my VEV email address and my GitHub account.</li>
+            <li><strong>Workstation setup:</strong> installed Linux Fedora 44 on the computer I was lent. I booted from a USB stick through the BIOS.</li>
+            <li><strong>Discovering the company:</strong> VEV develops management software for electric vehicle charging. It makes it possible to:
+              <ul>
+                <li>locate charging stations;</li>
+                <li>know who uses them and who is allowed to use them;</li>
+                <li>track vehicle locations;</li>
+                <li>monitor the energy consumed by the batteries.</li>
+              </ul>
+            </li>
+            <li><strong>Charger types:</strong> I learned about two types of connectors:
+              <ul>
+                <li>Type 2, alternating current (AC);</li>
+                <li>Combo CCS2, direct current (DC), more powerful.</li>
+              </ul>
+            </li>
+            <li><strong>Model workshop:</strong> I cut out sheets that served as the base for a model, then we taped them onto a board. I then cut LED strips to the right length, and the role of the different components was explained to me.</li>
+            <li><strong>Customizing the desktop:</strong> installed the GNOME extension Dash to Panel. It adds a Windows-style taskbar at the bottom of the screen, with pinned apps, open windows, the clock and system icons.</li>
+          </ul>
+        </article>
+
+        <article class="day">
+          <h3>Tuesday, November 24</h3>
+          <ul>
+            <li><strong>Accounts:</strong> finished setting up GitHub and created an account on the VEV platform, which lets me see the status of all vehicles.</li>
+            <li><strong>Development tools:</strong> installed VS Code from the terminal, then Claude.</li>
+            <li><strong>Personal project:</strong> with Claude, I built a website containing my CV. I will add everything I do during the internship to it.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section id="contact" class="card contact">
       <h2>Contact</h2>
       <ul>
-        <li><span>Téléphone</span><a href="tel:+33660057369">06 60 05 73 69</a></li>
+        <li><span><span data-lang="fr">Téléphone</span><span data-lang="en">Phone</span></span><a href="tel:+33660057369">06 60 05 73 69</a></li>
         <li><span>E-mail</span><a href="mailto:baroufelarif@gmail.com">baroufelarif@gmail.com</a></li>
-        <li><span>Ville</span>Nice</li>
-        <li><span>Disponibilité</span>Du 23 novembre au 25 décembre</li>
+        <li><span><span data-lang="fr">Ville</span><span data-lang="en">City</span></span>Nice</li>
+        <li>
+          <span><span data-lang="fr">Disponibilité</span><span data-lang="en">Availability</span></span>
+          <span data-lang="fr">Du 23 novembre au 25 décembre</span>
+          <span data-lang="en">From November 23 to December 25</span>
+        </li>
       </ul>
     </section>
 
@@ -93,6 +208,29 @@
   <footer>
     <div class="container">© Elarif Barouf · Lycée Eucalyptus, Nice</div>
   </footer>
+
+  <script>
+    (function () {
+      var titles = {
+        fr: "Elarif Barouf — Stagiaire en informatique / électronique",
+        en: "Elarif Barouf — Computer science / electronics intern"
+      };
+      function setLang(lang) {
+        document.documentElement.lang = lang;
+        document.title = titles[lang];
+        document.querySelectorAll(".lang-btn").forEach(function (b) {
+          b.classList.toggle("active", b.dataset.setLang === lang);
+        });
+        try { localStorage.setItem("lang", lang); } catch (e) {}
+      }
+      document.querySelectorAll(".lang-btn").forEach(function (b) {
+        b.addEventListener("click", function () { setLang(b.dataset.setLang); });
+      });
+      var saved = null;
+      try { saved = localStorage.getItem("lang"); } catch (e) {}
+      setLang(saved === "en" ? "en" : "fr");
+    })();
+  </script>
 
 </body>
 </html>
