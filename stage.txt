@@ -18,3 +18,7 @@ Mardi 24 novembre
 - Comptes : fin de la configuration de GitHub et création d'un compte sur la plateforme VEV, qui me permet de voir l'état de tous les véhicules.
 - Outils de développement : installation de VS Code depuis le terminal, puis de Claude.
 - Projet personnel : avec Claude, j'ai créé un site web qui contient mon CV. J'y mettrai tout ce que je réalise pendant le stage.
+- Projet GitHub : création du dépôt « stage-at-vev » sur GitHub, où je mets tout mon travail du stage (CV, site web, journal).
+  - Avec Claude dans VS Code, on a initialisé Git dans le dossier du projet (git init), ajouté les fichiers (git add), fait les premiers commits (git commit), puis relié le dossier au dépôt GitHub (git remote add origin) et envoyé le code (git push).
+  - Ensuite, à chaque modification (journal, version anglaise du site), j'ai fait un nouveau commit et un push pour mettre à jour GitHub.
+- Invitation d'un invité : j'ai ajouté une personne sur mon projet pour qu'elle puisse le voir et y participer. Sur la page du dépôt : Settings > Collaborators > Add people, puis j'ai saisi son nom d'utilisateur GitHub. La personne reçoit une invitation qu'elle doit accepter.
