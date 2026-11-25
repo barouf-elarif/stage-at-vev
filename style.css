@@ -104,6 +104,10 @@ main { padding-top: 36px; padding-bottom: 36px; }
   border-radius: 4px;
 }
 
+/* Projets */
+.project-link { display: inline-block; margin-top: 12px; color: var(--accent); font-weight: 600; text-decoration: none; }
+.project-link:hover { text-decoration: underline; }
+
 /* Journal de stage */
 .day { border-left: 4px solid var(--accent); padding: 4px 0 4px 18px; margin-top: 18px; }
 .day:first-of-type { margin-top: 0; }
@@ -122,6 +126,29 @@ main { padding-top: 36px; padding-bottom: 36px; }
   border-radius: 20px;
   font-size: .92rem;
 }
+
+/* Échecs : Elo au clic */
+.chip-info { position: relative; padding: 0 !important; }
+.chip-btn {
+  background: none; border: none; font: inherit; color: inherit;
+  padding: 5px 12px; border-radius: 20px; cursor: pointer;
+  text-decoration: underline dotted; text-underline-offset: 3px;
+}
+.chip-btn:hover, .chip-info.open .chip-btn { background: #cfeae6; }
+.chip-pop {
+  display: none;
+  position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
+  width: max-content; max-width: 260px; text-align: center;
+  background: var(--navy); color: #fff;
+  font-size: .85rem; padding: 6px 12px; border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  z-index: 5;
+}
+.chip-pop::after {
+  content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--navy);
+}
+.chip-info.open .chip-pop { display: block; }
 
 /* Contact */
 .contact ul { list-style: none; }
@@ -142,6 +169,46 @@ footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 24
   .hero { padding: 30px 0; }
   body { background: #fff; }
 }
+
+/* Page centres d'intérêt */
+.hero-small { padding: 50px 0 40px; }
+.back-link { display: inline-block; color: #fff; opacity: .8; text-decoration: none; margin-bottom: 14px; font-size: .95rem; }
+.back-link:hover { opacity: 1; text-decoration: underline; }
+
+.stat { display: flex; flex-direction: column; }
+.stat-value { font-size: 2.2rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+.stat-label { color: var(--muted); }
+
+.top3 { list-style: none; display: grid; gap: 10px; margin-top: 10px; }
+.top3 li {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg); border-radius: 8px; padding: 12px 16px;
+}
+.rank {
+  flex: none; width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff; font-weight: 700;
+}
+.top3 li:first-child .rank { background: #d4a017; }
+.game { font-weight: 700; color: var(--navy); }
+.meta { color: var(--muted); font-size: .88rem; }
+
+/* Voir plus */
+.more { margin-top: 12px; }
+.more summary {
+  display: inline-block; cursor: pointer; list-style: none;
+  color: var(--accent); font-weight: 600;
+  padding: 6px 14px; border: 2px solid var(--accent); border-radius: 6px;
+}
+.more summary::-webkit-details-marker { display: none; }
+.more summary:hover { background: #e6f4f2; }
+.more summary::after { content: " ▾"; }
+.more[open] summary::after { content: " ▴"; }
+.more .when-open { display: none; }
+.more[open] .when-open { display: inline; }
+.more[open] .when-closed { display: none; }
+.top-rest li { padding: 8px 16px; }
+.top3.top-rest li .rank { width: 30px; height: 30px; background: var(--muted); font-size: .9rem; }
 
 /* Choix de la langue */
 html[lang="fr"] [data-lang="en"],
