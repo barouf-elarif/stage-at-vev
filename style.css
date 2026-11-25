@@ -213,8 +213,9 @@ footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 24
 .top3.top-rest li .rank { width: 30px; height: 30px; background: var(--muted); font-size: .9rem; }
 
 /* Choix de la langue */
-html[lang="fr"] [data-lang="en"],
-html[lang="en"] [data-lang="fr"] { display: none !important; }
+html:not([lang="fr"]) [data-lang="fr"],
+html:not([lang="en"]) [data-lang="en"],
+html:not([lang="es"]) [data-lang="es"] { display: none !important; }
 
 .lang-switch { display: flex; justify-content: flex-end; gap: 10px; margin-top: -40px; margin-bottom: 20px; }
 .lang-btn {
@@ -232,3 +233,31 @@ html[lang="en"] [data-lang="fr"] { display: none !important; }
 .lang-btn.active { opacity: 1; border-color: #fff; }
 
 @media print { .lang-switch { display: none; } }
+
+/* Lien vers le profil Duolingo */
+.duo-link { color: #58cc02; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.duo-link:hover { color: #7be32a; }
+.stat-label .duo-link { color: #46a302; }
+.stat-label .duo-link:hover { color: #58cc02; }
+
+/* Types de bornes : photo au clic */
+.plug-info { display: inline-block; vertical-align: baseline; }
+.plug-btn { font-weight: 700; color: var(--accent); padding: 0 6px; border-radius: 6px; }
+.plug-btn:hover, .plug-info.open .plug-btn { background: #e6f4f2; }
+.plug-pop { max-width: none; padding: 8px; }
+.plug-pop img { display: block; width: 240px; height: 170px; object-fit: contain; border-radius: 4px; background: #fff; }
+.plug-cap { display: block; margin-top: 6px; }
+
+/* Photo dans le journal */
+.photo { margin: 10px 0 4px; }
+.photo img { display: block; width: 100%; max-width: 420px; height: auto; border-radius: 6px; border: 1px solid var(--border); transition: transform .15s; }
+.photo a:hover img { transform: scale(1.01); }
+.photo .photo-cap { display: block; font-size: .85rem; color: var(--muted); margin-top: 4px; }
+.photo summary {
+  display: inline-block; cursor: pointer; list-style: none;
+  color: var(--accent); font-weight: 600; font-size: .92rem;
+  padding: 3px 10px; border-radius: 6px; background: #e6f4f2;
+}
+.photo summary::-webkit-details-marker { display: none; }
+.photo summary:hover { background: #cfeae6; }
+.photo[open] summary { margin-bottom: 8px; }
