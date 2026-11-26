@@ -106,20 +106,20 @@
   // Chaque thème se débloque en trouvant deux objets cachés dans le haut de la page,
   // chacun visible seulement avec un certain thème.
   //   Halloween : une citrouille (thème Orange) + un balai (thème Violet)
-  //   Noël      : une étoile (thème Vert, comme le sapin) + un flocon (thème Sombre, la nuit d'hiver)
+  //   Noël      : un sapin (thème Vert) + un flocon (thème Sombre, la nuit d'hiver)
   var EGGS = {
     pumpkin: { unlocks: "halloween", msg: { fr: "🎃 Citrouille trouvée !", en: "🎃 Pumpkin found!", es: "🎃 ¡Calabaza encontrada!" } },
     broom:   { unlocks: "halloween", msg: { fr: "🧹 Balai trouvé !", en: "🧹 Broom found!", es: "🧹 ¡Escoba encontrada!" } },
-    star:    { unlocks: "noel", msg: { fr: "⭐ Étoile trouvée !", en: "⭐ Star found!", es: "⭐ ¡Estrella encontrada!" } },
+    tree:    { unlocks: "noel", msg: { fr: "🎄 Sapin trouvé !", en: "🎄 Tree found!", es: "🎄 ¡Árbol encontrado!" } },
     flake:   { unlocks: "noel", msg: { fr: "❄️ Flocon trouvé !", en: "❄️ Snowflake found!", es: "❄️ ¡Copo encontrado!" } }
   };
   var LOCK_HINT = {
     halloween: { fr: "🔒 Halloween est verrouillé. Une citrouille se cache dans le thème Orange, et un balai dans le thème Violet…",
                  en: "🔒 Halloween is locked. A pumpkin hides in the Orange theme, and a broom in the Purple theme…",
                  es: "🔒 Halloween está bloqueado. Una calabaza se esconde en el tema Naranja y una escoba en el tema Morado…" },
-    noel:      { fr: "🔒 Noël est verrouillé. L’étoile du sapin se cache dans le thème Vert, et un flocon tombe dans la nuit du thème Sombre…",
-                 en: "🔒 Christmas is locked. The tree’s star hides in the Green theme, and a snowflake falls in the night of the Dark theme…",
-                 es: "🔒 Navidad está bloqueada. La estrella del árbol se esconde en el tema Verde y un copo cae en la noche del tema Oscuro…" }
+    noel:      { fr: "🔒 Noël est verrouillé. Un petit sapin se cache dans le thème Vert, et un flocon tombe dans la nuit du thème Sombre…",
+                 en: "🔒 Christmas is locked. A little Christmas tree hides in the Green theme, and a snowflake falls in the night of the Dark theme…",
+                 es: "🔒 Navidad está bloqueada. Un pequeño árbol de Navidad se esconde en el tema Verde y un copo cae en la noche del tema Oscuro…" }
   };
   function getEggs() { try { return JSON.parse(localStorage.getItem("eggs") || "[]"); } catch (e) { return []; } }
 
