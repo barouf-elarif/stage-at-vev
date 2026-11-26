@@ -1,7 +1,7 @@
 // Thèmes du site : menu déroulant + thèmes secrets (page Centres d'intérêt)
 (function () {
   var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel",
-                "bloodborne", "astro", "ragnarok", "echecs"];
+                "bloodborne", "astro", "ragnarok", "echecs", "halloween"];
   var menu = document.querySelector(".theme-menu");
   var buttons = document.querySelectorAll("[data-theme-choice]");
 
@@ -42,9 +42,10 @@
   //  - Échecs     : les deux rois face à face : le roi noir (n°1 des animés) puis le roi blanc (n°1 des jeux)
   //  - Bloodborne : le ciel noir et rouge (thème Éclipse), puis 3 clics sur la place n°1 des jeux
   //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
+  //  - Halloween  : la citrouille allumée (thème Orange), puis 13 clics sur le score Elo (le nombre maudit)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
-  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" } };
+  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween" };
   var MSG = {
     unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
     relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
@@ -126,6 +127,7 @@
       bloodborne: { fr: "☀️ Le soleil brille encore… la chasse n’a pas commencé.", en: "☀️ The sun is still shining… the hunt hasn’t begun.", es: "☀️ El sol aún brilla… la caza no ha empezado." },
       ragnarok:   { fr: "🍂 Il ne neige pas encore… le grand hiver n’est pas arrivé.", en: "🍂 It isn’t snowing yet… the great winter hasn’t come.", es: "🍂 Todavía no nieva… el gran invierno no ha llegado." },
       astro:      { fr: "🌙 Il fait trop sombre… le petit robot dort encore.", en: "🌙 It’s too dark… the little robot is still asleep.", es: "🌙 Está demasiado oscuro… el pequeño robot sigue durmiendo." },
+      halloween:  { fr: "🎃 La citrouille n’est pas encore allumée…", en: "🎃 The pumpkin isn’t lit yet…", es: "🎃 La calabaza todavía no está encendida…" },
       echecs:     { fr: "♚ Le roi noir attend son adversaire…", en: "♚ The black king is waiting for his opponent…", es: "♚ El rey negro espera a su rival…" }
     };
     var light = function () { return currentTheme() === "light" ||
@@ -137,6 +139,12 @@
     onClicks(top[1], 5, function () {
       if (secrets.hidden || isUnlocked("astro")) return;
       if (light()) unlock("astro"); else toast(WRONG.astro[lang()]);
+    });
+
+    // Halloween : 13 clics sur le score Elo, avec le thème Orange (la citrouille)
+    onClicks(document.querySelector(".stat-value"), 13, function () {
+      if (secrets.hidden || isUnlocked("halloween")) return;
+      if (currentTheme() === "orange") unlock("halloween"); else toast(WRONG.halloween[lang()]);
     });
 
     // Échecs : toucher le roi noir (n°1 des animés), puis le roi blanc (n°1 des jeux) dans les 4 secondes
@@ -171,7 +179,7 @@
     if (reset) {
       reset.addEventListener("click", function () {
         try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); } catch (e) {}
-        if (["bloodborne", "astro", "ragnarok", "echecs"].indexOf(currentTheme()) > -1) applyTheme("auto");
+        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween"].indexOf(currentTheme()) > -1) applyTheme("auto");
         document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
         refreshLocks();
         toast(MSG.relocked[lang()]);
