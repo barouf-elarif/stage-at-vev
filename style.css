@@ -51,8 +51,46 @@ html[data-theme="eclipse"] .hero { background: radial-gradient(circle at 85% 20%
 html[data-theme="eclipse"] .card h2 { border-bottom-color: var(--accent); }
 html[data-theme="eclipse"] .stat-label .duo-link { color: #58cc02; }
 
+/* Thème Noël : vert sapin, rouge, doré et neige */
+html[data-theme="noel"] {
+  --navy: #0f3d24;
+  --navy-light: #7a0f1c;
+  --accent: #c8102e;
+  --accent-hover: #e0283f;
+  --bg: #fbf6ee;
+  --card: #ffffff;
+  --text: #2b2b2b;
+  --muted: #6b5f55;
+  --border: #eadfcd;
+  --heading: #0f3d24;
+  --chip-bg: #fbe9eb;
+  --chip-text: #a10d24;
+  --chip-hover: #f6d3d8;
+  color-scheme: light;
+}
+html[data-theme="noel"] .card h2 { border-bottom-color: #d4a017; }
+html[data-theme="noel"] .skills li,
+html[data-theme="noel"] .day { border-left-color: #1f7a45; }
+html[data-theme="noel"] .hero { position: relative; }
+html[data-theme="noel"] .hero > * { position: relative; z-index: 1; }
+html[data-theme="noel"] .hero > .lang-switch { z-index: 30; }
+html[data-theme="noel"] .hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(3px 3px at 20px 30px, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 90px 120px, #fff 50%, transparent 51%),
+    radial-gradient(4px 4px at 150px 60px, rgba(255,255,255,.9) 50%, transparent 51%),
+    radial-gradient(2px 2px at 60px 170px, #fff 50%, transparent 51%),
+    radial-gradient(3px 3px at 180px 150px, rgba(255,255,255,.8) 50%, transparent 51%);
+  background-size: 200px 200px;
+  animation: neige 12s linear infinite;
+  opacity: .85;
+}
+@keyframes neige { from { background-position: 0 0; } to { background-position: 40px 200px; } }
+@media (prefers-reduced-motion: reduce) { html[data-theme="noel"] .hero::before { animation: none; } }
+
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]):not([data-theme="eclipse"]) {
+  html:not([data-theme="light"]):not([data-theme="eclipse"]):not([data-theme="noel"]) {
     --navy: #0b141c;
     --navy-light: #1b2b3a;
     --accent: #3bb3a4;
@@ -362,4 +400,4 @@ kbd { font-family: inherit; font-size: .85em; background: var(--bg); border: 1px
 
 /* Ajustements du thème sombre */
 html[data-theme="dark"] .stat-label .duo-link { color: #58cc02; }
-@media (prefers-color-scheme: dark) { html:not([data-theme="light"]):not([data-theme="eclipse"]) .stat-label .duo-link { color: #58cc02; } }
+@media (prefers-color-scheme: dark) { html:not([data-theme="light"]):not([data-theme="eclipse"]):not([data-theme="noel"]) .stat-label .duo-link { color: #58cc02; } }
