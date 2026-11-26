@@ -16,6 +16,12 @@
       b.classList.toggle("active", b.dataset.themeChoice === choice);
     });
     try { localStorage.setItem("theme", choice); } catch (e) {}
+    // Garder le thème quand on passe du CV à la page Centres d'intérêt (et inversement)
+    document.querySelectorAll('a[href^="index.html"], a[href^="interets.html"]').forEach(function (a) {
+      var base = a.getAttribute("href").replace(/\?[^#]*/, "");
+      var page = base.split("#")[0], hash = base.indexOf("#") > -1 ? base.slice(base.indexOf("#")) : "";
+      a.setAttribute("href", page + (choice === "auto" ? "" : "?theme=" + choice) + hash);
+    });
   }
 
   buttons.forEach(function (b) {
@@ -131,6 +137,7 @@
   }
 
   var saved = null;
-  try { saved = localStorage.getItem("theme"); } catch (e) {}
+  var fromUrl = location.search.match(/[?&]theme=([a-z]+)/);
+  try { saved = fromUrl ? fromUrl[1] : localStorage.getItem("theme"); } catch (e) { saved = fromUrl && fromUrl[1]; }
   applyTheme(saved);
 })();
