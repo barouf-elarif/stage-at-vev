@@ -30,6 +30,58 @@ html[data-theme="dark"] {
   --chip-hover: #1f4640;
   color-scheme: dark;
 }
+/* Thème Violet */
+html[data-theme="violet"] {
+  --navy: #2a1145;
+  --navy-light: #5b2a86;
+  --accent: #8b3fd9;
+  --accent-hover: #a259f0;
+  --bg: #f6f2fb;
+  --card: #ffffff;
+  --text: #2d2a33;
+  --muted: #6b6572;
+  --border: #e4daf1;
+  --heading: #2a1145;
+  --chip-bg: #f0e6fb;
+  --chip-text: #6a2bb0;
+  --chip-hover: #e2d0f7;
+  color-scheme: light;
+}
+/* Thème Vert */
+html[data-theme="vert"] {
+  --navy: #0d3b22;
+  --navy-light: #1f6b3a;
+  --accent: #2e9d4f;
+  --accent-hover: #27873f;
+  --bg: #f1f8f2;
+  --card: #ffffff;
+  --text: #2d2a33;
+  --muted: #6b6572;
+  --border: #d7eadb;
+  --heading: #0d3b22;
+  --chip-bg: #e3f4e7;
+  --chip-text: #1f6b3a;
+  --chip-hover: #cdebd5;
+  color-scheme: light;
+}
+/* Thème Orange */
+html[data-theme="orange"] {
+  --navy: #4a1d05;
+  --navy-light: #c2560f;
+  --accent: #e8701a;
+  --accent-hover: #cf5f10;
+  --bg: #fdf5ee;
+  --card: #ffffff;
+  --text: #2d2a33;
+  --muted: #6b6572;
+  --border: #f1e0d0;
+  --heading: #4a1d05;
+  --chip-bg: #fdeadb;
+  --chip-text: #a8480b;
+  --chip-hover: #fad8bd;
+  color-scheme: light;
+}
+
 /* Thème Éclipse : noir et rouge */
 html[data-theme="eclipse"] {
   --navy: #000000;
@@ -90,7 +142,7 @@ html[data-theme="noel"] .hero::before {
 @media (prefers-reduced-motion: reduce) { html[data-theme="noel"] .hero::before { animation: none; } }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]):not([data-theme="eclipse"]):not([data-theme="noel"]) {
+  html:not([data-theme]) {
     --navy: #0b141c;
     --navy-light: #1b2b3a;
     --accent: #3bb3a4;
@@ -400,4 +452,4 @@ kbd { font-family: inherit; font-size: .85em; background: var(--bg); border: 1px
 
 /* Ajustements du thème sombre */
 html[data-theme="dark"] .stat-label .duo-link { color: #58cc02; }
-@media (prefers-color-scheme: dark) { html:not([data-theme="light"]):not([data-theme="eclipse"]):not([data-theme="noel"]) .stat-label .duo-link { color: #58cc02; } }
+@media (prefers-color-scheme: dark) { html:not([data-theme]) .stat-label .duo-link { color: #58cc02; } }

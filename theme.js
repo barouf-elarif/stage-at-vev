@@ -1,10 +1,11 @@
-// Menu déroulant des thèmes : automatique, clair, sombre, éclipse ou Noël
+// Menu déroulant des thèmes
+var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel"];
 (function () {
   var menu = document.querySelector(".theme-menu");
   if (!menu) return;
 
   function applyTheme(choice) {
-    if (choice === "light" || choice === "dark" || choice === "eclipse" || choice === "noel") {
+    if (THEMES.indexOf(choice) > -1) {
       document.documentElement.dataset.theme = choice;
     } else {
       delete document.documentElement.dataset.theme; // suit le réglage de l'appareil
