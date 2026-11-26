@@ -551,7 +551,7 @@ html[data-theme="ragnarok"] {
 html[data-theme="ragnarok"] .hero {
   color: #241f1c;
   background:
-    linear-gradient(112deg, transparent 0 81%, #a3161d 81% 85%, transparent 85%),
+    linear-gradient(112deg, transparent 0 71%, #a3161d 71% 75%, transparent 75%),
     radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.7) 0%, transparent 55%),
     radial-gradient(circle at 80% 80%, rgba(90,80,72,.25) 0%, transparent 50%),
     linear-gradient(160deg, #f1eee9 0%, #d6d0c8 55%, #a9a198 100%);
