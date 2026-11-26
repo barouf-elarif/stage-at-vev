@@ -5,12 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elarif Barouf — Centres d’intérêt</title>
   <meta name="description" content="Les centres d’intérêt d’Elarif Barouf : échecs, jeux vidéo et animés.">
+  <script>try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header class="hero hero-small">
     <div class="container lang-switch">
+      <details class="theme-menu">
+        <summary><span aria-hidden="true">🎨</span><span data-lang="fr">Thème</span><span data-lang="en">Theme</span><span data-lang="es">Tema</span></summary>
+        <div class="theme-list">
+          <button type="button" data-theme-choice="auto">💻 <span data-lang="fr">Automatique</span><span data-lang="en">Automatic</span><span data-lang="es">Automático</span></button>
+          <button type="button" data-theme-choice="light">☀️ <span data-lang="fr">Clair</span><span data-lang="en">Light</span><span data-lang="es">Claro</span></button>
+          <button type="button" data-theme-choice="dark">🌙 <span data-lang="fr">Sombre</span><span data-lang="en">Dark</span><span data-lang="es">Oscuro</span></button>
+        </div>
+      </details>
       <button type="button" class="lang-btn" data-set-lang="fr" title="Français" aria-label="Français"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ED2939"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="es" title="Español" aria-label="Español"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/></svg></button>
@@ -251,6 +260,6 @@
       setLang(titles[saved] ? saved : "fr");
     })();
   </script>
-
+  <script src="theme.js"></script>
 </body>
 </html>
