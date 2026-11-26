@@ -39,9 +39,9 @@
   // ===== Thèmes secrets =====
   // Trouver la section : 8 clics de suite sur le score Elo (comme les 8 cases d'un côté de l'échiquier).
   // Ensuite chaque thème a son énigme :
-  //  - Échecs     : 4 clics sur le score Elo (le mat du berger se joue en 4 coups)
+  //  - Échecs     : les deux rois face à face : le roi noir (n°1 des animés) puis le roi blanc (n°1 des jeux)
   //  - Bloodborne : le ciel noir et rouge (thème Éclipse), puis 3 clics sur la place n°1 des jeux
-  //  - Astro      : 5 clics sur la place n°2 des jeux (une pression par lettre de « ASTRO »)
+  //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
   var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" } };
@@ -102,7 +102,7 @@
     if (found) secrets.hidden = false;
     refreshLocks();
 
-    // Score Elo : 8 clics pour trouver la section, puis 4 clics pour le thème Échecs
+    // Score Elo : 8 clics pour trouver la section
     var elo = document.querySelector(".stat-value");
     if (elo) {
       var eloClicks = 0, eloTimer = null;
@@ -116,9 +116,6 @@
           try { localStorage.setItem("secrets", "1"); } catch (e) {}
           secrets.classList.remove("secret-reveal"); void secrets.offsetWidth; secrets.classList.add("secret-reveal");
           secrets.scrollIntoView({ behavior: "smooth", block: "center" });
-        } else if (!secrets.hidden && eloClicks === 4) {
-          eloClicks = 0;
-          unlock("echecs");
         }
       });
     }
@@ -127,13 +124,33 @@
     // Mauvais thème : un petit message pour dire qu'on est sur la bonne piste
     var WRONG = {
       bloodborne: { fr: "☀️ Le soleil brille encore… la chasse n’a pas commencé.", en: "☀️ The sun is still shining… the hunt hasn’t begun.", es: "☀️ El sol aún brilla… la caza no ha empezado." },
-      ragnarok:   { fr: "🍂 Il ne neige pas encore… le grand hiver n’est pas arrivé.", en: "🍂 It isn’t snowing yet… the great winter hasn’t come.", es: "🍂 Todavía no nieva… el gran invierno no ha llegado." }
+      ragnarok:   { fr: "🍂 Il ne neige pas encore… le grand hiver n’est pas arrivé.", en: "🍂 It isn’t snowing yet… the great winter hasn’t come.", es: "🍂 Todavía no nieva… el gran invierno no ha llegado." },
+      astro:      { fr: "🌙 Il fait trop sombre… le petit robot dort encore.", en: "🌙 It’s too dark… the little robot is still asleep.", es: "🌙 Está demasiado oscuro… el pequeño robot sigue durmiendo." },
+      echecs:     { fr: "♚ Le roi noir attend son adversaire…", en: "♚ The black king is waiting for his opponent…", es: "♚ El rey negro espera a su rival…" }
     };
+    var light = function () { return currentTheme() === "light" ||
+      (currentTheme() === "auto" && !window.matchMedia("(prefers-color-scheme: dark)").matches); };
     onClicks(top[0], 3, function () {
       if (secrets.hidden || isUnlocked("bloodborne")) return;
       if (currentTheme() === "eclipse") unlock("bloodborne"); else toast(WRONG.bloodborne[lang()]);
     });
-    onClicks(top[1], 5, function () { if (!secrets.hidden) unlock("astro"); });
+    onClicks(top[1], 5, function () {
+      if (secrets.hidden || isUnlocked("astro")) return;
+      if (light()) unlock("astro"); else toast(WRONG.astro[lang()]);
+    });
+
+    // Échecs : toucher le roi noir (n°1 des animés), puis le roi blanc (n°1 des jeux) dans les 4 secondes
+    var blackKing = document.querySelector("#animes .top3:not(.top-rest) > li .rank");
+    var blackTime = 0;
+    if (blackKing) blackKing.addEventListener("click", function () {
+      if (secrets.hidden || isUnlocked("echecs")) return;
+      blackTime = Date.now();
+      toast(WRONG.echecs[lang()]);
+    });
+    if (top[0]) top[0].addEventListener("click", function () {
+      if (secrets.hidden || isUnlocked("echecs") || !blackTime) return;
+      if (Date.now() - blackTime < 4000) { blackTime = 0; unlock("echecs"); }
+    });
     onClicks(top[2], 3, function () {
       if (secrets.hidden || isUnlocked("ragnarok")) return;
       if (currentTheme() === "noel") unlock("ragnarok"); else toast(WRONG.ragnarok[lang()]);
