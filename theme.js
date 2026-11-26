@@ -1,10 +1,10 @@
-// Menu déroulant des thèmes : automatique, clair ou sombre
+// Menu déroulant des thèmes : automatique, clair, sombre ou éclipse
 (function () {
   var menu = document.querySelector(".theme-menu");
   if (!menu) return;
 
   function applyTheme(choice) {
-    if (choice === "light" || choice === "dark") {
+    if (choice === "light" || choice === "dark" || choice === "eclipse") {
       document.documentElement.dataset.theme = choice;
     } else {
       delete document.documentElement.dataset.theme; // suit le réglage de l'appareil
