@@ -30,6 +30,29 @@
     if (menu && !menu.contains(e.target)) menu.open = false;
   });
 
+  // Thèmes secrets : la section est cachée. Cliquer 5 fois de suite sur le score Elo la fait apparaître.
+  var secrets = document.getElementById("secrets");
+  var elo = document.querySelector(".stat-value");
+  if (secrets && elo) {
+    var unlocked = false;
+    try { unlocked = localStorage.getItem("secrets") === "1"; } catch (e) {}
+    if (unlocked) secrets.hidden = false;
+
+    var clicks = 0, timer = null;
+    elo.addEventListener("click", function () {
+      clicks++;
+      clearTimeout(timer);
+      timer = setTimeout(function () { clicks = 0; }, 1500);
+      if (clicks >= 5) {
+        clicks = 0;
+        secrets.hidden = false;
+        secrets.classList.add("secret-reveal");
+        try { localStorage.setItem("secrets", "1"); } catch (e) {}
+        secrets.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
   var saved = null;
   try { saved = localStorage.getItem("theme"); } catch (e) {}
   applyTheme(saved);
