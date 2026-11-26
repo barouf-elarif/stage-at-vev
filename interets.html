@@ -232,15 +232,28 @@
 
     <section id="secrets" class="card" hidden>
       <h2>🔒 <span data-lang="fr">Thèmes secrets</span><span data-lang="en">Secret themes</span><span data-lang="es">Temas secretos</span></h2>
-      <p data-lang="fr">Bravo, tu as trouvé les thèmes cachés ! Ils sont inspirés de mon top 3 des jeux vidéo et des échecs, et s’appliquent à tout le site. Pour revenir à un thème normal, utilise le menu « Thème » en haut.</p>
-      <p data-lang="en">Well done, you found the hidden themes! They are inspired by my top 3 video games and by chess, and apply to the whole site. To go back to a normal theme, use the “Theme” menu at the top.</p>
-      <p data-lang="es">¡Bravo, has encontrado los temas ocultos! Están inspirados en mi top 3 de videojuegos y en el ajedrez, y se aplican a todo el sitio. Para volver a un tema normal, usa el menú «&nbsp;Tema&nbsp;» de arriba.</p>
+      <p data-lang="fr">Bravo, tu as trouvé les thèmes cachés ! En les trouvant, tu as débloqué le thème Échecs. Les autres sont verrouillés 🔒 : clique dessus pour lire l’indice qui permet de les débloquer. Pour revenir à un thème normal, utilise le menu « Thème » en haut.</p>
+      <p data-lang="en">Well done, you found the hidden themes! Finding them unlocked the Chess theme. The others are locked 🔒: click one to read the clue that unlocks it. To go back to a normal theme, use the “Theme” menu at the top.</p>
+      <p data-lang="es">¡Bravo, has encontrado los temas ocultos! Al encontrarlos, has desbloqueado el tema Ajedrez. Los demás están bloqueados 🔒: haz clic en uno para leer la pista que lo desbloquea. Para volver a un tema normal, usa el menú «&nbsp;Tema&nbsp;» de arriba.</p>
       <div class="secret-grid">
-        <button type="button" class="secret-btn" data-theme-choice="bloodborne"><span class="swatch sw-bloodborne"></span><span class="secret-name">Bloodborne</span></button>
-        <button type="button" class="secret-btn" data-theme-choice="astro"><span class="swatch sw-astro"></span><span class="secret-name">Astro’s Playroom</span></button>
-        <button type="button" class="secret-btn" data-theme-choice="ragnarok"><span class="swatch sw-ragnarok"></span><span class="secret-name">God of War</span></button>
-        <button type="button" class="secret-btn" data-theme-choice="echecs"><span class="swatch sw-echecs"></span><span class="secret-name"><span data-lang="fr">Échecs</span><span data-lang="en">Chess</span><span data-lang="es">Ajedrez</span></span></button>
+        <div class="secret-item">
+          <button type="button" class="secret-btn" data-theme-choice="bloodborne" data-secret="bloodborne"><span class="swatch sw-bloodborne"></span><span class="secret-name">Bloodborne</span></button>
+          <p class="secret-hint"><span data-lang="fr">Indice : le chasseur t’attend tout en haut du classement… frappe 3 fois.</span><span data-lang="en">Clue: the hunter waits at the very top of the ranking… strike 3 times.</span><span data-lang="es">Pista: el cazador te espera en lo más alto de la clasificación… golpea 3 veces.</span></p>
+        </div>
+        <div class="secret-item">
+          <button type="button" class="secret-btn" data-theme-choice="astro" data-secret="astro"><span class="swatch sw-astro"></span><span class="secret-name">Astro’s Playroom</span></button>
+          <p class="secret-hint"><span data-lang="fr">Indice : le petit robot est sur la deuxième marche… appuie 3 fois sur sa place.</span><span data-lang="en">Clue: the little robot is on the second step… press its place 3 times.</span><span data-lang="es">Pista: el pequeño robot está en el segundo puesto… pulsa 3 veces su lugar.</span></p>
+        </div>
+        <div class="secret-item">
+          <button type="button" class="secret-btn" data-theme-choice="ragnarok" data-secret="ragnarok"><span class="swatch sw-ragnarok"></span><span class="secret-name">God of War</span></button>
+          <p class="secret-hint"><span data-lang="fr">Indice : le dieu de la guerre a fini troisième… et il n’aime pas ça. Frappe 3 fois.</span><span data-lang="en">Clue: the god of war finished third… and he doesn’t like it. Strike 3 times.</span><span data-lang="es">Pista: el dios de la guerra quedó tercero… y no le gusta. Golpea 3 veces.</span></p>
+        </div>
+        <div class="secret-item">
+          <button type="button" class="secret-btn" data-theme-choice="echecs" data-secret="echecs"><span class="swatch sw-echecs"></span><span class="secret-name"><span data-lang="fr">Échecs</span><span data-lang="en">Chess</span><span data-lang="es">Ajedrez</span></span></button>
+          <p class="secret-hint"><span data-lang="fr">Indice : insiste sur mon score aux échecs.</span><span data-lang="en">Clue: keep clicking my chess score.</span><span data-lang="es">Pista: insiste en mi puntuación de ajedrez.</span></p>
+        </div>
       </div>
+      <p class="secret-toast" role="status" aria-live="polite" hidden></p>
     </section>
 
   </main>
