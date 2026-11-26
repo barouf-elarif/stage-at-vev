@@ -157,6 +157,74 @@
     }
   }
 
+  // ===== Téléphone : carrousel des parties du CV =====
+  var track = document.querySelector("main.swipe");
+  if (track) {
+    var mq = window.matchMedia("(max-width: 700px)");
+    var slides = Array.prototype.slice.call(track.querySelectorAll(".card"));
+    var links = document.querySelectorAll('.nav a[href^="#"]');
+    var current = null;
+
+    function fit(card) {   // la hauteur du carrousel suit la partie affichée
+      var cs = getComputedStyle(track);
+      var bar = track.offsetHeight - track.clientHeight;   // barre de défilement éventuelle
+      track.style.height = (card.offsetHeight + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + bar + 4) + "px";
+    }
+
+    function setActive(card) {
+      if (!card || card === current) return;
+      current = card;
+      fit(card);
+      links.forEach(function (a) {
+        var on = a.getAttribute("href") === "#" + card.id;
+        a.classList.toggle("active", on);
+        if (on) a.parentElement.scrollTo({ left: a.offsetLeft - 20, behavior: "smooth" });
+      });
+    }
+
+    function nearest() {
+      var mid = track.scrollLeft + track.clientWidth / 2, best = null, dist = Infinity;
+      slides.forEach(function (c) {
+        var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+        if (d < dist) { dist = d; best = c; }
+      });
+      return best;
+    }
+
+    var t = null;
+    track.addEventListener("scroll", function () {
+      if (!mq.matches) return;
+      clearTimeout(t);
+      t = setTimeout(function () { setActive(nearest()); }, 80);
+    }, { passive: true });
+
+    // Un lien du menu (ou un bouton) vers une partie : on glisse jusqu'à elle
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || !mq.matches) return;
+      var card = document.getElementById(a.getAttribute("href").slice(1));
+      if (!card || slides.indexOf(card) < 0) return;
+      e.preventDefault();
+      track.scrollTo({ left: card.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: "smooth" });
+      setActive(card);
+      var navH = document.querySelector(".nav").offsetHeight;
+      var y = track.getBoundingClientRect().top + window.scrollY - navH - 10;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+
+    // Une photo ou un menu qui s'ouvre dans une partie change sa hauteur
+    if (window.ResizeObserver) {
+      slides.forEach(function (c) { new ResizeObserver(function () { if (mq.matches && c === current) fit(c); }).observe(c); });
+    }
+
+    function onMq() {
+      if (mq.matches) { current = null; setActive(nearest() || slides[0]); }
+      else { track.style.height = ""; links.forEach(function (a) { a.classList.remove("active"); }); current = null; }
+    }
+    (mq.addEventListener ? mq.addEventListener("change", onMq) : mq.addListener(onMq));
+    onMq();
+  }
+
   // Décorations des côtés : elles bougent quand on fait défiler la page
   var ticking = false;
   function onScroll() {

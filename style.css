@@ -729,3 +729,24 @@ html[data-theme="echecs"] body::after { background-image: url("data:image/svg+xm
   color: var(--muted); border: 1px dashed var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer;
 }
 .secret-reset:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ===== Téléphone : les parties du CV en carrousel, on glisse à gauche / à droite ===== */
+.swipe-hint { display: none; }
+@media (max-width: 700px) {
+  main.swipe {
+    position: relative;
+    display: flex; align-items: flex-start; gap: 14px;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    padding-top: 14px; scroll-padding: 0 20px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  main.swipe::-webkit-scrollbar { display: none; }
+  main.swipe > .grid { display: contents; }
+  main.swipe .card { flex: 0 0 100%; margin-bottom: 0; scroll-snap-align: center; scroll-snap-stop: always; }
+  .swipe-hint {
+    display: block; text-align: center; margin: 14px 0 0;
+    font-size: .82rem; color: var(--muted);
+  }
+  .nav a.active { color: var(--accent); font-weight: 700; }
+}
