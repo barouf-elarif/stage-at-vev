@@ -37,11 +37,20 @@
   });
 
   // ===== Thèmes secrets =====
-  // 1) La section est cachée : 5 clics de suite sur le score Elo la font apparaître (et débloquent Échecs).
-  // 2) Les autres thèmes sont verrouillés : 3 clics sur la place du jeu dans le top 3 les débloquent.
+  // Trouver la section : 8 clics de suite sur le score Elo (comme les 8 cases d'un côté de l'échiquier).
+  // Ensuite chaque thème a son énigme :
+  //  - Échecs     : 4 clics sur le score Elo (le mat du berger se joue en 4 coups)
+  //  - Bloodborne : la nuit doit être tombée (thème Sombre ou Éclipse), puis 3 clics sur la place n°1 des jeux
+  //  - Astro      : 5 clics sur la place n°2 des jeux (une pression par lettre de « ASTRO »)
+  //  - God of War : le soleil doit être dévoré (thème Éclipse), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
   var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" } };
-  var MSG = { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " };
+  var MSG = {
+    unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
+    relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
+  };
+  function lang() { return document.documentElement.lang || "fr"; }
+  function currentTheme() { return document.documentElement.dataset.theme || "auto"; }
 
   function getUnlocked() {
     try { return JSON.parse(localStorage.getItem("unlocked") || "[]"); } catch (e) { return []; }
@@ -54,6 +63,16 @@
     });
   }
 
+  function toast(text) {
+    var t = document.querySelector(".secret-toast");
+    if (!t) return;
+    t.textContent = text;
+    t.hidden = false;
+    clearTimeout(t._t);
+    t._t = setTimeout(function () { t.hidden = true; }, 3500);
+  }
+
+  // Compte les clics rapides (moins de 1,5 s entre deux clics)
   function onClicks(el, needed, action) {
     if (!el) return;
     var clicks = 0, timer = null;
@@ -73,15 +92,8 @@
     refreshLocks();
     var btn = document.querySelector('[data-secret="' + id + '"]');
     if (btn) { btn.classList.remove("just-unlocked"); void btn.offsetWidth; btn.classList.add("just-unlocked"); }
-    if (secrets && !secrets.hidden) {
-      var lang = document.documentElement.lang || "fr";
-      var name = typeof NAMES[id] === "string" ? NAMES[id] : NAMES[id][lang];
-      var toast = secrets.querySelector(".secret-toast");
-      toast.textContent = (MSG[lang] || MSG.fr) + name;
-      toast.hidden = false;
-      clearTimeout(toast._t);
-      toast._t = setTimeout(function () { toast.hidden = true; }, 3500);
-    }
+    var name = typeof NAMES[id] === "string" ? NAMES[id] : NAMES[id][lang()];
+    toast(MSG.unlocked[lang()] + name);
   }
 
   if (secrets) {
@@ -90,33 +102,59 @@
     if (found) secrets.hidden = false;
     refreshLocks();
 
-    onClicks(document.querySelector(".stat-value"), 5, function () {
-      var first = secrets.hidden;
-      secrets.hidden = false;
-      try { localStorage.setItem("secrets", "1"); } catch (e) {}
-      if (first) {
-        secrets.classList.add("secret-reveal");
-        secrets.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-      unlock("echecs");
-    });
+    // Score Elo : 8 clics pour trouver la section, puis 4 clics pour le thème Échecs
+    var elo = document.querySelector(".stat-value");
+    if (elo) {
+      var eloClicks = 0, eloTimer = null;
+      elo.addEventListener("click", function () {
+        eloClicks++;
+        clearTimeout(eloTimer);
+        eloTimer = setTimeout(function () { eloClicks = 0; }, 1500);
+        if (secrets.hidden && eloClicks >= 8) {
+          eloClicks = 0;
+          secrets.hidden = false;
+          try { localStorage.setItem("secrets", "1"); } catch (e) {}
+          secrets.classList.remove("secret-reveal"); void secrets.offsetWidth; secrets.classList.add("secret-reveal");
+          secrets.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else if (!secrets.hidden && eloClicks === 4) {
+          eloClicks = 0;
+          unlock("echecs");
+        }
+      });
+    }
 
-    // 3 clics sur la place 1, 2 ou 3 du top des jeux vidéo (seulement une fois la section trouvée)
     var top = document.querySelectorAll("#jeux .top3:not(.top-rest) > li .rank");
-    ["bloodborne", "astro", "ragnarok"].forEach(function (id, i) {
-      onClicks(top[i], 3, function () { if (!secrets.hidden) unlock(id); });
-    });
+    var night = function () { return ["dark", "eclipse"].indexOf(currentTheme()) > -1 ||
+      (currentTheme() === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches); };
+    onClicks(top[0], 3, function () { if (!secrets.hidden && night()) unlock("bloodborne"); });
+    onClicks(top[1], 5, function () { if (!secrets.hidden) unlock("astro"); });
+    onClicks(top[2], 3, function () { if (!secrets.hidden && currentTheme() === "eclipse") unlock("ragnarok"); });
 
     // Clic sur un thème verrouillé : afficher son indice
     document.querySelectorAll("[data-secret]").forEach(function (b) {
       b.addEventListener("click", function (e) {
         if (!b.classList.contains("locked")) return;
         e.stopImmediatePropagation();
-        var item = b.parentElement;
-        item.classList.add("show-hint");
+        b.parentElement.classList.add("show-hint");
         b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
       }, true);
     });
+
+    // Bouton pour tout reverrouiller et refaire les énigmes
+    var reset = document.querySelector(".secret-reset");
+    if (reset) {
+      reset.addEventListener("click", function () {
+        try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); } catch (e) {}
+        if (["bloodborne", "astro", "ragnarok", "echecs"].indexOf(currentTheme()) > -1) applyTheme("auto");
+        document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
+        refreshLocks();
+        toast(MSG.relocked[lang()]);
+        setTimeout(function () {
+          secrets.hidden = true;
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 1200);
+      });
+    }
   }
 
   // Décorations des côtés : elles bougent quand on fait défiler la page

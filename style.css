@@ -724,3 +724,8 @@ html[data-theme="echecs"] body::after { background-image: url("data:image/svg+xm
 
 /* Téléphone : éviter le zoom quand on tape vite (déblocage des thèmes secrets) */
 .stat-value, .top3 .rank { touch-action: manipulation; }
+.secret-reset {
+  margin-top: 16px; background: none; font: inherit; font-size: .9rem; font-weight: 600;
+  color: var(--muted); border: 1px dashed var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer;
+}
+.secret-reset:hover { color: var(--accent); border-color: var(--accent); }
