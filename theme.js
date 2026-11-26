@@ -139,7 +139,9 @@
           var list = getEggs();
           if (list.indexOf(id) < 0) list.push(id);
           try { localStorage.setItem("eggs", JSON.stringify(list)); } catch (err) {}
-          b.classList.add("egg-found");
+          // petite animation, puis l'objet disparaît
+          b.classList.add("egg-pop");
+          setTimeout(function () { b.classList.remove("egg-pop"); b.classList.add("egg-found"); }, 450);
           var target = EGGS[id].unlocks;
           var pair = Object.keys(EGGS).filter(function (k) { return EGGS[k].unlocks === target; });
           var got = pair.filter(function (k) { return list.indexOf(k) > -1; }).length;
