@@ -40,9 +40,9 @@
   // Trouver la section : 8 clics de suite sur le score Elo (comme les 8 cases d'un côté de l'échiquier).
   // Ensuite chaque thème a son énigme :
   //  - Échecs     : 4 clics sur le score Elo (le mat du berger se joue en 4 coups)
-  //  - Bloodborne : la nuit doit être tombée (thème Sombre ou Éclipse), puis 3 clics sur la place n°1 des jeux
+  //  - Bloodborne : le ciel noir et rouge (thème Éclipse), puis 3 clics sur la place n°1 des jeux
   //  - Astro      : 5 clics sur la place n°2 des jeux (une pression par lettre de « ASTRO »)
-  //  - God of War : le soleil doit être dévoré (thème Éclipse), puis 3 clics sur la place n°3 des jeux
+  //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
   var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" } };
   var MSG = {
@@ -124,21 +124,19 @@
     }
 
     var top = document.querySelectorAll("#jeux .top3:not(.top-rest) > li .rank");
-    var night = function () { return ["dark", "eclipse"].indexOf(currentTheme()) > -1 ||
-      (currentTheme() === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches); };
     // Mauvais thème : un petit message pour dire qu'on est sur la bonne piste
     var WRONG = {
-      bloodborne: { fr: "☀️ Il fait encore jour… la chasse n’a pas commencé.", en: "☀️ It’s still daytime… the hunt hasn’t begun.", es: "☀️ Todavía es de día… la caza no ha empezado." },
-      ragnarok:   { fr: "☀️ Le soleil brille encore… le Ragnarök n’a pas commencé.", en: "☀️ The sun is still shining… Ragnarök hasn’t begun.", es: "☀️ El sol aún brilla… el Ragnarök no ha empezado." }
+      bloodborne: { fr: "☀️ Le soleil brille encore… la chasse n’a pas commencé.", en: "☀️ The sun is still shining… the hunt hasn’t begun.", es: "☀️ El sol aún brilla… la caza no ha empezado." },
+      ragnarok:   { fr: "🍂 Il ne neige pas encore… le grand hiver n’est pas arrivé.", en: "🍂 It isn’t snowing yet… the great winter hasn’t come.", es: "🍂 Todavía no nieva… el gran invierno no ha llegado." }
     };
     onClicks(top[0], 3, function () {
       if (secrets.hidden || isUnlocked("bloodborne")) return;
-      if (night()) unlock("bloodborne"); else toast(WRONG.bloodborne[lang()]);
+      if (currentTheme() === "eclipse") unlock("bloodborne"); else toast(WRONG.bloodborne[lang()]);
     });
     onClicks(top[1], 5, function () { if (!secrets.hidden) unlock("astro"); });
     onClicks(top[2], 3, function () {
       if (secrets.hidden || isUnlocked("ragnarok")) return;
-      if (currentTheme() === "eclipse") unlock("ragnarok"); else toast(WRONG.ragnarok[lang()]);
+      if (currentTheme() === "noel") unlock("ragnarok"); else toast(WRONG.ragnarok[lang()]);
     });
 
     // Clic sur un thème verrouillé : afficher son indice
