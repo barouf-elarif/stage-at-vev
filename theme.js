@@ -44,7 +44,7 @@
   //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
-  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween" };
+  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
   var MSG = {
     unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
     relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
@@ -102,15 +102,24 @@
   }
 
 
-  // ===== Halloween (dans le menu, verrouillé) =====
-  // Une citrouille est cachée dans le thème Orange, un balai dans le thème Violet.
-  // Il faut trouver les deux pour débloquer Halloween.
-  var EGG_MSG = {
-    pumpkin: { fr: "🎃 Citrouille trouvée !", en: "🎃 Pumpkin found!", es: "🎃 ¡Calabaza encontrada!" },
-    broom:   { fr: "🧹 Balai trouvé !", en: "🧹 Broom found!", es: "🧹 ¡Escoba encontrada!" },
-    hint:    { fr: "🔒 Halloween est verrouillé. Une citrouille se cache dans le thème Orange, et un balai dans le thème Violet…",
-               en: "🔒 Halloween is locked. A pumpkin hides in the Orange theme, and a broom in the Purple theme…",
-               es: "🔒 Halloween está bloqueado. Una calabaza se esconde en el tema Naranja y una escoba en el tema Morado…" }
+  // ===== Thèmes de saison verrouillés dans le menu : Halloween et Noël =====
+  // Chaque thème se débloque en trouvant deux objets cachés dans le haut de la page,
+  // chacun visible seulement avec un certain thème.
+  //   Halloween : une citrouille (thème Orange) + un balai (thème Violet)
+  //   Noël      : une étoile (thème Vert, comme le sapin) + un flocon (thème Sombre, la nuit d'hiver)
+  var EGGS = {
+    pumpkin: { unlocks: "halloween", msg: { fr: "🎃 Citrouille trouvée !", en: "🎃 Pumpkin found!", es: "🎃 ¡Calabaza encontrada!" } },
+    broom:   { unlocks: "halloween", msg: { fr: "🧹 Balai trouvé !", en: "🧹 Broom found!", es: "🧹 ¡Escoba encontrada!" } },
+    star:    { unlocks: "noel", msg: { fr: "⭐ Étoile trouvée !", en: "⭐ Star found!", es: "⭐ ¡Estrella encontrada!" } },
+    flake:   { unlocks: "noel", msg: { fr: "❄️ Flocon trouvé !", en: "❄️ Snowflake found!", es: "❄️ ¡Copo encontrado!" } }
+  };
+  var LOCK_HINT = {
+    halloween: { fr: "🔒 Halloween est verrouillé. Une citrouille se cache dans le thème Orange, et un balai dans le thème Violet…",
+                 en: "🔒 Halloween is locked. A pumpkin hides in the Orange theme, and a broom in the Purple theme…",
+                 es: "🔒 Halloween está bloqueado. Una calabaza se esconde en el tema Naranja y una escoba en el tema Morado…" },
+    noel:      { fr: "🔒 Noël est verrouillé. L’étoile du sapin se cache dans le thème Vert, et un flocon tombe dans la nuit du thème Sombre…",
+                 en: "🔒 Christmas is locked. The tree’s star hides in the Green theme, and a snowflake falls in the night of the Dark theme…",
+                 es: "🔒 Navidad está bloqueada. La estrella del árbol se esconde en el tema Verde y un copo cae en la noche del tema Oscuro…" }
   };
   function getEggs() { try { return JSON.parse(localStorage.getItem("eggs") || "[]"); } catch (e) { return []; } }
 
@@ -118,34 +127,37 @@
   function placeEggs() {
     if (!hero) return;
     var found = getEggs();
-    [["pumpkin", "🎃"], ["broom", "🧹"]].forEach(function (e) {
-      var b = hero.querySelector(".egg-" + e[0]);
+    Object.keys(EGGS).forEach(function (id) {
+      var b = hero.querySelector(".egg-" + id);
       if (!b) {
         b = document.createElement("button");
         b.type = "button";
-        b.className = "egg egg-" + e[0];
-        b.setAttribute("aria-label", e[0]);
+        b.className = "egg egg-" + id;
+        b.setAttribute("aria-label", id);
         hero.appendChild(b);
         b.addEventListener("click", function () {
           var list = getEggs();
-          if (list.indexOf(e[0]) < 0) list.push(e[0]);
+          if (list.indexOf(id) < 0) list.push(id);
           try { localStorage.setItem("eggs", JSON.stringify(list)); } catch (err) {}
           b.classList.add("egg-found");
-          if (list.indexOf("pumpkin") > -1 && list.indexOf("broom") > -1) unlock("halloween");
-          else toast(EGG_MSG[e[0]][lang()] + " (1/2)");
+          var target = EGGS[id].unlocks;
+          var pair = Object.keys(EGGS).filter(function (k) { return EGGS[k].unlocks === target; });
+          var got = pair.filter(function (k) { return list.indexOf(k) > -1; }).length;
+          if (got === pair.length) unlock(target);
+          else toast(EGGS[id].msg[lang()] + " (" + got + "/" + pair.length + ")");
         });
       }
-      b.classList.toggle("egg-found", found.indexOf(e[0]) > -1);
+      b.classList.toggle("egg-found", found.indexOf(id) > -1);
     });
   }
   placeEggs();
 
-  // Halloween verrouillé dans le menu : afficher l'indice au lieu de l'appliquer
+  // Thème verrouillé dans le menu : afficher l'indice au lieu de l'appliquer
   document.querySelectorAll("[data-menu-lock]").forEach(function (b) {
     b.addEventListener("click", function (e) {
       if (!b.classList.contains("locked")) return;
       e.stopImmediatePropagation();
-      toast(EGG_MSG.hint[lang()]);
+      toast(LOCK_HINT[b.dataset.menuLock][lang()]);
     }, true);
   });
   refreshLocks();
@@ -225,7 +237,7 @@
     if (reset) {
       reset.addEventListener("click", function () {
         try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); localStorage.removeItem("eggs"); } catch (e) {}
-        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween"].indexOf(currentTheme()) > -1) applyTheme("auto");
+        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel"].indexOf(currentTheme()) > -1) applyTheme("auto");
         document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
         refreshLocks(); placeEggs();
         toast(MSG.relocked[lang()]);
