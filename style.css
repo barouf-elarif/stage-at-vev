@@ -567,6 +567,10 @@ html[data-theme="echecs"] #animes .top3:not(.top-rest) li:nth-child(3) .rank::be
 html[data-theme="echecs"] .top3.top-rest li .rank { width: 30px; height: 30px; }
 html[data-theme="echecs"] #jeux .top3.top-rest li .rank { background: #fff; color: #111; }
 html[data-theme="echecs"] #animes .top3.top-rest li .rank { background: #111; color: #f0d9b5; }
+html[data-theme="echecs"] .top3.top-rest li .rank { font-size: 0; }
+html[data-theme="echecs"] .top3.top-rest li .rank::before { font-size: 1.2rem; line-height: 1; }
+html[data-theme="echecs"] #jeux .top3.top-rest li .rank::before { content: "♙"; }
+html[data-theme="echecs"] #animes .top3.top-rest li .rank::before { content: "♟"; }
 
 /* Thèmes secrets sombres : lien Duolingo lisible */
 html[data-theme="bloodborne"] .stat-label .duo-link,
