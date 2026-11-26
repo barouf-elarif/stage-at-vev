@@ -120,12 +120,12 @@ html[data-theme="noel"] {
   --chip-hover: #c9e6d0;
   color-scheme: light;
 }
-html[data-theme="noel"] .hero { background: linear-gradient(135deg, #0b3a20 0%, #1a5e34 55%, #2a7a45 80%, #8a1222 100%); }
+html[data-theme="noel"] .hero { background: linear-gradient(135deg, #0f3d24, #7a0f1c); }
 html[data-theme="noel"] .nav { background: #0f4a2a; border-bottom-color: #0b3a20; }
 html[data-theme="noel"] .nav a { color: #e6f3e9; }
 html[data-theme="noel"] .nav a:hover { color: #ffd76a; }
 html[data-theme="noel"] footer { color: #2a6a42; }
-html[data-theme="noel"] .card h2 { border-bottom-color: #d4a017; }
+html[data-theme="noel"] .card h2 { border-bottom-color: #2a8a4f; }
 html[data-theme="noel"] .skills li,
 html[data-theme="noel"] .day { border-left-color: #1f7a45; }
 html[data-theme="noel"] .hero { position: relative; }
@@ -526,12 +526,35 @@ html[data-theme="echecs"] {
   --heading: #000000; --chip-bg: #e6e6e6; --chip-text: #111111; --chip-hover: #d4d4d4;
   color-scheme: light;
 }
+html[data-theme="echecs"] body { background: repeating-conic-gradient(#e6e6e6 0 25%, #f5f5f5 0 50%) 0 0 / 56px 56px; }
 html[data-theme="echecs"] .hero {
-  background: repeating-conic-gradient(#0a0a0a 0 25%, #1d1d1d 0 50%) 0 0 / 64px 64px;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.93) 0%, rgba(0,0,0,.8) 45%, rgba(0,0,0,.2) 100%),
+    repeating-conic-gradient(#0a0a0a 0 25%, #f0f0f0 0 50%) 0 0 / 70px 70px;
 }
-html[data-theme="echecs"] .card h2 { border-bottom-style: double; border-bottom-width: 4px; }
-html[data-theme="echecs"] .rank { background: #111; }
+html[data-theme="echecs"] .nav { background: #0a0a0a; border-bottom: 4px solid #0a0a0a; }
+html[data-theme="echecs"] .nav a { color: #f0f0f0; }
+html[data-theme="echecs"] .nav a:hover { color: #bbbbbb; }
+html[data-theme="echecs"] .card { border: 2px solid #111; border-radius: 4px; }
+html[data-theme="echecs"] .card h2 { position: relative; border-bottom: none; padding-bottom: 16px; }
+html[data-theme="echecs"] .card h2::before { content: "♞ "; }
+html[data-theme="echecs"] .card h2::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
+  background: repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0 / 10px 10px;
+  outline: 1px solid #111;
+}
+html[data-theme="echecs"] .skills li { border-left: 6px solid #111; background: #f4f4f4; }
+html[data-theme="echecs"] .skills li:nth-child(even) { border-left-color: #bbb; }
+html[data-theme="echecs"] .day { border-left: 6px solid #111; }
+html[data-theme="echecs"] .day li::marker { content: "♟  "; }
+html[data-theme="echecs"] .day ul ul li::marker { content: "♙  "; }
+html[data-theme="echecs"] .chips li { border: 1px solid #111; }
+html[data-theme="echecs"] .btn { background: #fff; color: #111; border: 2px solid #fff; }
+html[data-theme="echecs"] .btn:hover { background: #111; color: #fff; }
+html[data-theme="echecs"] .rank { background: #111; border-radius: 4px; }
 html[data-theme="echecs"] .top3 li:first-child .rank { background: #fff; color: #111; border: 2px solid #111; }
+html[data-theme="echecs"] .top3 li:first-child .rank { font-size: 0; }
+html[data-theme="echecs"] .top3 li:first-child .rank::before { content: "♔"; font-size: 1.4rem; line-height: 1; }
 
 /* Thèmes secrets sombres : lien Duolingo lisible */
 html[data-theme="bloodborne"] .stat-label .duo-link,
