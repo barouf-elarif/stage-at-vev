@@ -113,6 +113,23 @@
     });
   }
 
+  // Décorations des côtés : elles bougent quand on fait défiler la page
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      document.documentElement.style.setProperty("--sy", window.scrollY);
+      document.documentElement.style.setProperty("--sp", max > 0 ? Math.min(1, window.scrollY / max) : 0);
+      ticking = false;
+    });
+  }
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
   var saved = null;
   try { saved = localStorage.getItem("theme"); } catch (e) {}
   applyTheme(saved);
