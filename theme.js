@@ -126,9 +126,20 @@
     var top = document.querySelectorAll("#jeux .top3:not(.top-rest) > li .rank");
     var night = function () { return ["dark", "eclipse"].indexOf(currentTheme()) > -1 ||
       (currentTheme() === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches); };
-    onClicks(top[0], 3, function () { if (!secrets.hidden && night()) unlock("bloodborne"); });
+    // Mauvais thème : un petit message pour dire qu'on est sur la bonne piste
+    var WRONG = {
+      bloodborne: { fr: "☀️ Il fait encore jour… la chasse n’a pas commencé.", en: "☀️ It’s still daytime… the hunt hasn’t begun.", es: "☀️ Todavía es de día… la caza no ha empezado." },
+      ragnarok:   { fr: "☀️ Le soleil brille encore… le Ragnarök n’a pas commencé.", en: "☀️ The sun is still shining… Ragnarök hasn’t begun.", es: "☀️ El sol aún brilla… el Ragnarök no ha empezado." }
+    };
+    onClicks(top[0], 3, function () {
+      if (secrets.hidden || isUnlocked("bloodborne")) return;
+      if (night()) unlock("bloodborne"); else toast(WRONG.bloodborne[lang()]);
+    });
     onClicks(top[1], 5, function () { if (!secrets.hidden) unlock("astro"); });
-    onClicks(top[2], 3, function () { if (!secrets.hidden && currentTheme() === "eclipse") unlock("ragnarok"); });
+    onClicks(top[2], 3, function () {
+      if (secrets.hidden || isUnlocked("ragnarok")) return;
+      if (currentTheme() === "eclipse") unlock("ragnarok"); else toast(WRONG.ragnarok[lang()]);
+    });
 
     // Clic sur un thème verrouillé : afficher son indice
     document.querySelectorAll("[data-secret]").forEach(function (b) {
