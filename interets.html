@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elarif Barouf — Centres d’intérêt</title>
   <meta name="description" content="Les centres d’intérêt d’Elarif Barouf : échecs, jeux vidéo et animés.">
-  <script>try { var t = localStorage.getItem("theme"); if (["light","dark","violet","vert","orange","eclipse","noel"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <script>try { var t = localStorage.getItem("theme"); if (["light","dark","violet","vert","orange","eclipse","noel","bloodborne","astro","ragnarok","echecs"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -228,6 +228,19 @@
           </li>
         </ol>
       </details>
+    </section>
+
+    <section id="secrets" class="card">
+      <h2>🔒 <span data-lang="fr">Thèmes secrets</span><span data-lang="en">Secret themes</span><span data-lang="es">Temas secretos</span></h2>
+      <p data-lang="fr">Tu as trouvé les thèmes cachés ! Ils sont inspirés de mon top 3 des jeux vidéo et des échecs, et s’appliquent à tout le site. Pour revenir à un thème normal, utilise le menu « Thème » en haut.</p>
+      <p data-lang="en">You found the hidden themes! They are inspired by my top 3 video games and by chess, and apply to the whole site. To go back to a normal theme, use the “Theme” menu at the top.</p>
+      <p data-lang="es">¡Has encontrado los temas ocultos! Están inspirados en mi top 3 de videojuegos y en el ajedrez, y se aplican a todo el sitio. Para volver a un tema normal, usa el menú «&nbsp;Tema&nbsp;» de arriba.</p>
+      <div class="secret-grid">
+        <button type="button" class="secret-btn" data-theme-choice="bloodborne"><span class="swatch sw-bloodborne"></span><span class="secret-name">Bloodborne</span></button>
+        <button type="button" class="secret-btn" data-theme-choice="astro"><span class="swatch sw-astro"></span><span class="secret-name">Astro’s Playroom</span></button>
+        <button type="button" class="secret-btn" data-theme-choice="ragnarok"><span class="swatch sw-ragnarok"></span><span class="secret-name">God of War Ragnarök</span></button>
+        <button type="button" class="secret-btn" data-theme-choice="echecs"><span class="swatch sw-echecs"></span><span class="secret-name"><span data-lang="fr">Échecs</span><span data-lang="en">Chess</span><span data-lang="es">Ajedrez</span></span></button>
+      </div>
     </section>
 
   </main>

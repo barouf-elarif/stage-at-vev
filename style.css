@@ -453,3 +453,77 @@ kbd { font-family: inherit; font-size: .85em; background: var(--bg); border: 1px
 /* Ajustements du thème sombre */
 html[data-theme="dark"] .stat-label .duo-link { color: #58cc02; }
 @media (prefers-color-scheme: dark) { html:not([data-theme]) .stat-label .duo-link { color: #58cc02; } }
+
+/* ===== Thèmes secrets (page Centres d'intérêt) ===== */
+.secret-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; }
+.secret-btn {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  background: var(--bg); color: var(--text); font: inherit; font-weight: 600;
+  border: 2px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer;
+  transition: transform .15s, border-color .15s;
+}
+.secret-btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+.secret-btn.active { border-color: var(--accent); }
+.secret-btn.active .secret-name::after { content: " ✓"; color: var(--accent); }
+.swatch { flex: none; width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(0,0,0,.15); }
+.sw-bloodborne { background: linear-gradient(135deg, #050303 0 45%, #7a0c10 45% 75%, #b08d57 75%); }
+.sw-astro      { background: linear-gradient(135deg, #0a2a8a 0 40%, #2fb8ff 40% 75%, #ffd21f 75%); }
+.sw-ragnarok   { background: linear-gradient(135deg, #0a1620 0 40%, #7cc4e8 40% 72%, #d2462a 72%); }
+.sw-echecs     { background: repeating-conic-gradient(#111 0 25%, #f2f2f2 0 50%) 0 0 / 19px 19px; }
+
+/* Bloodborne : gothique, noir, rouge sang et or vieilli */
+html[data-theme="bloodborne"] {
+  --navy: #050303; --navy-light: #3a0a0c;
+  --accent: #9b1218; --accent-hover: #b81c23;
+  --bg: #0e0b0a; --card: #17120f; --text: #d9cfc0; --muted: #9a8c7a; --border: #2e241c;
+  --heading: #e8dcc4; --chip-bg: #2a1210; --chip-text: #e0a08a; --chip-hover: #3a1814;
+  color-scheme: dark;
+}
+html[data-theme="bloodborne"] h1,
+html[data-theme="bloodborne"] h2,
+html[data-theme="bloodborne"] h3,
+html[data-theme="bloodborne"] .game { font-family: Georgia, "Times New Roman", serif; letter-spacing: .03em; }
+html[data-theme="bloodborne"] .card h2 { border-bottom-color: #b08d57; }
+html[data-theme="bloodborne"] .hero { background: radial-gradient(ellipse at 80% 0%, #4a0b0f 0%, #140405 45%, #050303 80%); }
+
+/* Astro's Playroom : bleu vif, ciel et jaune, ambiance jouet */
+html[data-theme="astro"] {
+  --navy: #0a2a8a; --navy-light: #2fb8ff;
+  --accent: #1e6bff; --accent-hover: #0f56e0;
+  --bg: #eef6ff; --card: #ffffff; --text: #1d2a44; --muted: #5d6b85; --border: #d3e4fb;
+  --heading: #0a2a8a; --chip-bg: #fff4c2; --chip-text: #7a5a00; --chip-hover: #ffe98a;
+  color-scheme: light;
+}
+html[data-theme="astro"] .card { border-radius: 18px; border-width: 2px; }
+html[data-theme="astro"] .card h2 { border-bottom-color: #ffd21f; }
+html[data-theme="astro"] .btn { border-radius: 999px; }
+
+/* God of War Ragnarök : glace nordique et braises */
+html[data-theme="ragnarok"] {
+  --navy: #0a1620; --navy-light: #3a5a70;
+  --accent: #d2462a; --accent-hover: #e85a3c;
+  --bg: #0d141b; --card: #141e28; --text: #dbe6ee; --muted: #8fa3b3; --border: #24343f;
+  --heading: #e9f4fb; --chip-bg: #18303d; --chip-text: #9fd6f0; --chip-hover: #20404f;
+  color-scheme: dark;
+}
+html[data-theme="ragnarok"] .card h2 { border-bottom-color: #7cc4e8; }
+html[data-theme="ragnarok"] h1 { letter-spacing: .08em; }
+
+/* Échecs : noir et blanc, damier */
+html[data-theme="echecs"] {
+  --navy: #0a0a0a; --navy-light: #2a2a2a;
+  --accent: #111111; --accent-hover: #333333;
+  --bg: #efefef; --card: #ffffff; --text: #1a1a1a; --muted: #666666; --border: #d6d6d6;
+  --heading: #000000; --chip-bg: #e6e6e6; --chip-text: #111111; --chip-hover: #d4d4d4;
+  color-scheme: light;
+}
+html[data-theme="echecs"] .hero {
+  background: repeating-conic-gradient(#0a0a0a 0 25%, #1d1d1d 0 50%) 0 0 / 64px 64px;
+}
+html[data-theme="echecs"] .card h2 { border-bottom-style: double; border-bottom-width: 4px; }
+html[data-theme="echecs"] .rank { background: #111; }
+html[data-theme="echecs"] .top3 li:first-child .rank { background: #fff; color: #111; border: 2px solid #111; }
+
+/* Thèmes secrets sombres : lien Duolingo lisible */
+html[data-theme="bloodborne"] .stat-label .duo-link,
+html[data-theme="ragnarok"] .stat-label .duo-link { color: #58cc02; }

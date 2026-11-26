@@ -1,8 +1,9 @@
-// Menu déroulant des thèmes
-var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel"];
+// Thèmes du site : menu déroulant + thèmes secrets (page Centres d'intérêt)
 (function () {
+  var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel",
+                "bloodborne", "astro", "ragnarok", "echecs"];
   var menu = document.querySelector(".theme-menu");
-  if (!menu) return;
+  var buttons = document.querySelectorAll("[data-theme-choice]");
 
   function applyTheme(choice) {
     if (THEMES.indexOf(choice) > -1) {
@@ -11,22 +12,22 @@ var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel"];
       delete document.documentElement.dataset.theme; // suit le réglage de l'appareil
       choice = "auto";
     }
-    menu.querySelectorAll("[data-theme-choice]").forEach(function (b) {
+    buttons.forEach(function (b) {
       b.classList.toggle("active", b.dataset.themeChoice === choice);
     });
     try { localStorage.setItem("theme", choice); } catch (e) {}
   }
 
-  menu.querySelectorAll("[data-theme-choice]").forEach(function (b) {
+  buttons.forEach(function (b) {
     b.addEventListener("click", function () {
       applyTheme(b.dataset.themeChoice);
-      menu.open = false;
+      if (menu) menu.open = false;
     });
   });
 
   // Fermer le menu quand on clique ailleurs
   document.addEventListener("click", function (e) {
-    if (!menu.contains(e.target)) menu.open = false;
+    if (menu && !menu.contains(e.target)) menu.open = false;
   });
 
   var saved = null;
