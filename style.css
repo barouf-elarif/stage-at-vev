@@ -472,7 +472,7 @@ html[data-theme="dark"] .stat-label .duo-link { color: #58cc02; }
 .secret-btn.active .secret-name::after { content: " ✓"; color: var(--accent); }
 .swatch { flex: none; width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(0,0,0,.15); }
 .sw-bloodborne { background: linear-gradient(135deg, #3a4a5a 0 40%, #12161c 40% 72%, #a3141b 72%); }
-.sw-astro      { background: linear-gradient(135deg, #ffffff 0 45%, #d7e6f8 45% 70%, #0070d1 70%); }
+.sw-astro      { background: linear-gradient(135deg, #a9cff5 0 45%, #5ea6ec 45% 70%, #0063c4 70%); }
 .sw-ragnarok   { background: linear-gradient(135deg, #0a1620 0 40%, #7cc4e8 40% 72%, #d2462a 72%); }
 .sw-echecs     { background: repeating-linear-gradient(100deg, rgba(90,50,20,.07) 0 2px, transparent 2px 9px), repeating-conic-gradient(#b58863 0 25%, #f0d9b5 0 50%) 0 0 / 19px 19px; }
 
@@ -498,18 +498,18 @@ html[data-theme="bloodborne"] .hero {
 /* Astro's Playroom : style PS5, blanc et bleu PlayStation, sans noir */
 html[data-theme="astro"] {
   --navy: #e9f1fb; --navy-light: #ffffff;
-  --accent: #0070d1; --accent-hover: #005fb3;
-  --bg: #f3f7fc; --card: #ffffff; --text: #23324a; --muted: #62718a; --border: #d9e4f2;
-  --heading: #0a3d8f; --chip-bg: #e3efff; --chip-text: #0058a8; --chip-hover: #cfe2fb;
+  --accent: #0063c4; --accent-hover: #0052a6;
+  --bg: #d6e7fb; --card: #f4f9ff; --text: #1f2f4a; --muted: #4f6283; --border: #b7d1f0;
+  --heading: #0a3d8f; --chip-bg: #c9def8; --chip-text: #0050a0; --chip-hover: #b5d2f5;
   color-scheme: light;
 }
 html[data-theme="astro"] .hero {
-  position: relative; color: #0a3d8f;
+  position: relative; color: #08306f;
   background:
     url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='320'%20height='180'%20viewBox='0%200%20320%20180'%3E%3Cdefs%3E%3Cfilter%20id='g'%20x='-50%'%20y='-50%'%20width='200%'%20height='200%'%3E%3CfeGaussianBlur%20stdDeviation='9'/%3E%3C/filter%3E%3ClinearGradient%20id='e'%20x1='0'%20y1='0'%20x2='0'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%23bff4ff'/%3E%3Cstop%20offset='1'%20stop-color='%232fc4ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%20filter='url(%23g)'%20fill='%232fc4ff'%20opacity='.85'%3E%3Crect%20x='62'%20y='48'%20width='62'%20height='84'%20rx='31'/%3E%3Crect%20x='196'%20y='48'%20width='62'%20height='84'%20rx='31'/%3E%3C/g%3E%3Cg%20fill='url(%23e)'%3E%3Crect%20x='70'%20y='56'%20width='46'%20height='68'%20rx='23'/%3E%3Crect%20x='204'%20y='56'%20width='46'%20height='68'%20rx='23'/%3E%3C/g%3E%3Cg%20fill='%23ffffff'%20opacity='.9'%3E%3Cellipse%20cx='84'%20cy='74'%20rx='7'%20ry='10'/%3E%3Cellipse%20cx='218'%20cy='74'%20rx='7'%20ry='10'/%3E%3C/g%3E%3C/svg%3E") right 7% center / 300px auto no-repeat,
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='520'%20height='340'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cg%20stroke='%230070d1'%20stroke-width='4'%20opacity='.20'%3E%3Cpath%20d='M62%2028%20L92%2080%20L32%2080%20Z'%20transform='rotate(-12%2062%2058)'/%3E%3Ccircle%20cx='250'%20cy='70'%20r='26'/%3E%3Cpath%20d='M408%2040%20L452%2084%20M452%2040%20L408%2084'/%3E%3Crect%20x='118'%20y='205'%20width='50'%20height='50'%20rx='4'%20transform='rotate(14%20143%20230)'/%3E%3Cpath%20d='M330%20230%20L352%20268%20L308%20268%20Z'%20transform='rotate(18%20330%20255)'/%3E%3Ccircle%20cx='470'%20cy='265'%20r='14'/%3E%3C/g%3E%3Cg%20stroke='%234aa3ff'%20stroke-width='3'%20opacity='.16'%3E%3Cpath%20d='M200%20160%20L218%20178%20M218%20160%20L200%20178'/%3E%3Crect%20x='20'%20y='150'%20width='24'%20height='24'%20rx='3'%20transform='rotate(-20%2032%20162)'/%3E%3Ccircle%20cx='380'%20cy='150'%20r='10'/%3E%3Cpath%20d='M500%20160%20L512%20180%20L488%20180%20Z'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 520px 340px,
-    radial-gradient(ellipse at 82% 50%, rgba(0,112,209,.28) 0%, rgba(0,112,209,.08) 35%, transparent 60%),
-    linear-gradient(160deg, #ffffff 0%, #eef4fc 55%, #d7e6f8 100%);
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='520'%20height='340'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cg%20stroke='%23ffffff'%20stroke-width='4'%20opacity='.45'%3E%3Cpath%20d='M62%2028%20L92%2080%20L32%2080%20Z'%20transform='rotate(-12%2062%2058)'/%3E%3Ccircle%20cx='250'%20cy='70'%20r='26'/%3E%3Cpath%20d='M408%2040%20L452%2084%20M452%2040%20L408%2084'/%3E%3Crect%20x='118'%20y='205'%20width='50'%20height='50'%20rx='4'%20transform='rotate(14%20143%20230)'/%3E%3Cpath%20d='M330%20230%20L352%20268%20L308%20268%20Z'%20transform='rotate(18%20330%20255)'/%3E%3Ccircle%20cx='470'%20cy='265'%20r='14'/%3E%3C/g%3E%3Cg%20stroke='%230a3d8f'%20stroke-width='3'%20opacity='.18'%3E%3Cpath%20d='M200%20160%20L218%20178%20M218%20160%20L200%20178'/%3E%3Crect%20x='20'%20y='150'%20width='24'%20height='24'%20rx='3'%20transform='rotate(-20%2032%20162)'/%3E%3Ccircle%20cx='380'%20cy='150'%20r='10'/%3E%3Cpath%20d='M500%20160%20L512%20180%20L488%20180%20Z'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 520px 340px,
+    radial-gradient(ellipse at 82% 50%, rgba(0,60,160,.45) 0%, rgba(0,80,180,.15) 35%, transparent 60%),
+    linear-gradient(160deg, #e4f0ff 0%, #a9cff5 50%, #5ea6ec 100%);
   border-bottom: 3px solid #0070d1;
 }
 @media (max-width: 700px) {
@@ -517,13 +517,15 @@ html[data-theme="astro"] .hero {
 }
 html[data-theme="astro"] .tag { background: rgba(0,112,209,.1); color: #0058a8; }
 html[data-theme="astro"] .subtitle,
-html[data-theme="astro"] .dates { color: #23324a; }
+html[data-theme="astro"] .dates { color: #102a52; }
 html[data-theme="astro"] .back-link { color: #0058a8; }
 html[data-theme="astro"] .theme-menu summary { color: #0a3d8f; border-color: rgba(0,112,209,.4); }
 html[data-theme="astro"] .theme-menu summary:hover,
 html[data-theme="astro"] .theme-menu[open] summary { border-color: #0070d1; background: rgba(0,112,209,.08); }
 html[data-theme="astro"] .lang-btn.active { border-color: #0070d1; }
-html[data-theme="astro"] .nav { background: #ffffff; }
+html[data-theme="astro"] .nav { background: #0063c4; border-bottom-color: #0052a6; }
+html[data-theme="astro"] .nav a { color: #ffffff; }
+html[data-theme="astro"] .nav a:hover { color: #bfe3ff; }
 html[data-theme="astro"] .card { border-radius: 18px; border-width: 2px; box-shadow: 0 6px 18px rgba(0,112,209,.08); }
 html[data-theme="astro"] .card h2 { border-bottom: none; padding-bottom: 12px; background: linear-gradient(90deg, #0070d1, #6fb6ff) left bottom / 100% 4px no-repeat; }
 html[data-theme="astro"] .btn { border-radius: 999px; box-shadow: 0 4px 14px rgba(0,112,209,.35); }
