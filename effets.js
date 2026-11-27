@@ -7,7 +7,9 @@
 //      Palesang       : la chasse, frapper au bon moment pour une attaque viscérale
 //      God of War III : le combat contre les dieux, appuyer sur le bon bouton à temps
 //      Slime Rancher  : le ranch, donner à chaque slime la nourriture qu'il aime
+//  - une boutique dans chaque mini-jeu : on dépense ses Échos, Orbes ou Newbucks pour des améliorations
 //  - un événement quand on arrive tout en bas de la page
+// Et des citations dans l'en-tête pour tous les autres thèmes secrets (Bloodborne, Astro, God of War, Échecs, Halloween, Noël).
 (function () {
   var html = document.documentElement;
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -197,6 +199,35 @@
       { a: { fr: "Conseil du ranch", en: "Ranch tip", es: "Consejo del rancho" }, fr: "Les slimes dorés sont rares : attrape-les vite, ils valent une fortune.", en: "Gold slimes are rare: catch them fast, they’re worth a fortune.", es: "Los slimes dorados son raros: atrápalos rápido, valen una fortuna." }
     ]
   };
+  QUOTES.bloodborne = [
+    { a: { fr: "La Poupée", en: "The Doll", es: "La Muñeca" }, fr: "Bonjour, bon chasseur. Je suis une poupée, ici dans ce rêve pour veiller sur toi.", en: "Hello, good hunter. I am a Doll, here in this dream to look after you.", es: "Hola, buen cazador. Soy una muñeca, aquí en este sueño para cuidar de ti." },
+    { a: { fr: "Maître Willem", en: "Master Willem", es: "Maestro Willem" }, fr: "Nous sommes nés du sang, faits hommes par le sang, défaits par le sang.", en: "We are born of the blood, made men by the blood, undone by the blood.", es: "Nacemos de la sangre, la sangre nos hace hombres, la sangre nos deshace." },
+    { a: "Gehrman", fr: "Ce soir, Gehrman se joint à la chasse.", en: "Tonight, Gehrman joins the hunt.", es: "Esta noche, Gehrman se une a la caza." }
+  ];
+  QUOTES.astro = [
+    { a: { fr: "Le saviez-vous ?", en: "Did you know?", es: "¿Sabías que…?" }, fr: "Astro’s Playroom se passe à l’intérieur d’une PlayStation 5.", en: "Astro’s Playroom takes place inside a PlayStation 5.", es: "Astro’s Playroom transcurre dentro de una PlayStation 5." },
+    { a: { fr: "Le saviez-vous ?", en: "Did you know?", es: "¿Sabías que…?" }, fr: "Le jeu est installé sur chaque PS5 pour faire découvrir la manette DualSense.", en: "The game comes installed on every PS5 to show off the DualSense controller.", es: "El juego viene instalado en cada PS5 para descubrir el mando DualSense." },
+    { a: { fr: "Le saviez-vous ?", en: "Did you know?", es: "¿Sabías que…?" }, fr: "Les mondes portent le nom de pièces de la console : GPU Jungle, Cooling Springs, SSD Speedway, Memory Meadow.", en: "The worlds are named after parts of the console: GPU Jungle, Cooling Springs, SSD Speedway, Memory Meadow.", es: "Los mundos llevan el nombre de piezas de la consola: GPU Jungle, Cooling Springs, SSD Speedway, Memory Meadow." }
+  ];
+  QUOTES.ragnarok = [
+    { a: "Kratos", fr: "Ne sois pas désolé. Sois meilleur.", en: "Don’t be sorry. Be better.", es: "No lo sientas. Sé mejor." },
+    { a: { fr: "Hávamál (poème nordique)", en: "Hávamál (Norse poem)", es: "Hávamál (poema nórdico)" }, fr: "Le bétail meurt, les parents meurent, et toi aussi tu mourras ; mais la renommée ne meurt jamais pour celui qui l’a bien gagnée.", en: "Cattle die, kinsmen die, you yourself will die; but fame never dies for the one who has earned it well.", es: "Muere el ganado, mueren los parientes, tú también morirás; pero la fama nunca muere para quien la ganó bien." },
+    { a: { fr: "Mythologie nordique", en: "Norse mythology", es: "Mitología nórdica" }, fr: "Avant le Ragnarök vient le Fimbulvetr : trois hivers de suite, sans aucun été.", en: "Before Ragnarök comes Fimbulwinter: three winters in a row, with no summer.", es: "Antes del Ragnarök llega el Fimbulvetr: tres inviernos seguidos, sin ningún verano." }
+  ];
+  QUOTES.echecs = [
+    { a: "Savielly Tartakower", fr: "La partie est gagnée par celui qui fait l’avant-dernière erreur.", en: "The winner of the game is the player who makes the next-to-last mistake.", es: "La partida la gana quien comete el penúltimo error." },
+    { a: "José Raúl Capablanca", fr: "Pour progresser, il faut d’abord étudier les finales.", en: "To improve your game, you must study the endgame before everything else.", es: "Para mejorar, hay que estudiar los finales antes que nada." },
+    { a: "Bobby Fischer", fr: "Les échecs, c’est la vie.", en: "Chess is life.", es: "El ajedrez es la vida." }
+  ];
+  QUOTES.halloween = [
+    { a: "Edgar Allan Poe", fr: "Tout ce que nous voyons ou paraissons n’est qu’un rêve dans un rêve.", en: "All that we see or seem is but a dream within a dream.", es: "Todo lo que vemos o parecemos no es más que un sueño dentro de un sueño." },
+    { a: { fr: "Mary Shelley, Frankenstein", en: "Mary Shelley, Frankenstein", es: "Mary Shelley, Frankenstein" }, fr: "Prends garde, car je suis sans peur, et donc puissant.", en: "Beware; for I am fearless, and therefore powerful.", es: "Ten cuidado, porque no tengo miedo, y por eso soy poderoso." }
+  ];
+  QUOTES.noel = [
+    { a: { fr: "Charles Dickens, Un chant de Noël", en: "Charles Dickens, A Christmas Carol", es: "Charles Dickens, Cuento de Navidad" }, fr: "J’honorerai Noël dans mon cœur, et j’essaierai de le garder toute l’année.", en: "I will honour Christmas in my heart, and try to keep it all the year.", es: "Honraré la Navidad en mi corazón y trataré de conservarla todo el año." },
+    { a: "Clement Clarke Moore", fr: "Joyeux Noël à tous, et à tous une bonne nuit !", en: "Happy Christmas to all, and to all a good night!", es: "¡Feliz Navidad a todos, y a todos buenas noches!" }
+  ];
+  var QUOTE_ONLY = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel"];   // thèmes secrets avec seulement des citations
   var quoteEl = null, quoteTimer = 0, quoteI = 0;
   function paintQuote() {
     var q = QUOTES[theme()]; if (!q || !quoteEl) return;
@@ -207,7 +238,7 @@
     var dates = document.querySelector(".hero .dates") || document.querySelector(".hero h1");
     if (on && dates) {
       if (!quoteEl) { quoteEl = el("blockquote", "pq fx-quote"); dates.parentNode.insertBefore(quoteEl, dates.nextSibling); }
-      quoteI = Math.floor(Math.random() * 4);
+      quoteI = Math.floor(Math.random() * QUOTES[theme()].length);
       paintQuote();
       clearInterval(quoteTimer);
       if (!calm) quoteTimer = setInterval(function () {
@@ -376,7 +407,8 @@
     var kills = load("fx-hunt", 0);
     if (i === undefined) i = Math.min(kills, BOSSES.length - 1);
     var B = BOSSES[i];
-    hunt = { i: i, boss: 3, hp: 3, p: 0, dir: 1, zone: B.zone, zl: rnd(.15, .85 - B.zone), over: false, last: 0, raf: 0 };
+    var zone = B.zone * (owned("rune") ? 1.4 : 1), vials = owned("fiole") ? 4 : 3;
+    hunt = { i: i, boss: 3, hp: vials, maxHp: vials, dmg: owned("lame") ? 2 : 1, p: 0, dir: 1, zone: zone, zl: rnd(.1, .9 - zone), over: false, last: 0, raf: 0 };
     panel.className = "fx-panel fx-ui fx-hunt";
     panel.innerHTML = closeBtn() +
       '<p class="fx-title">🩸 ' + L(HT.title) + "</p>" +
@@ -386,8 +418,8 @@
       '<button type="button" class="fx-action hunt-strike">' + L(HT.strike) + "</button>" +
       '<p class="fx-msg" role="status" aria-live="polite"></p>' +
       '<div class="fx-foot"><span class="fx-me"></span><span class="fx-count">' + L(HT.count) + " : " + kills + " / " + BOSSES.length + '</span></div>' +
-      '<button type="button" class="fx-next" hidden></button>';
-    wireClose();
+      '<button type="button" class="fx-next" hidden></button>' + shopButton();
+    wireClose(); wireShop();
     panel.querySelector(".hunt-strike").addEventListener("click", huntStrike);
     huntPaint();
     hunt.raf = requestAnimationFrame(huntLoop);
@@ -395,8 +427,8 @@
   }
   function huntPaint() {
     if (!panel || !hunt) return;
-    panel.querySelector(".fx-foe-hp").innerHTML = pips(hunt.boss, 3, '<i class="on"></i>', "<i></i>");
-    panel.querySelector(".fx-me").innerHTML = L(HT.vials) + " " + pips(hunt.hp, 3, "🩸", '<span class="off">🩸</span>');
+    panel.querySelector(".fx-foe-hp").innerHTML = pips(Math.max(0, hunt.boss), 3, '<i class="on"></i>', "<i></i>");
+    panel.querySelector(".fx-me").innerHTML = L(HT.vials) + " " + pips(hunt.hp, hunt.maxHp, "🩸", '<span class="off">🩸</span>');
     var z = panel.querySelector(".hunt-zone");
     z.style.left = (hunt.zl * 100) + "%"; z.style.width = (hunt.zone * 100) + "%";
   }
@@ -416,7 +448,7 @@
     var msg = panel.querySelector(".fx-msg");
     var inZone = hunt.p >= hunt.zl && hunt.p <= hunt.zl + hunt.zone;
     if (inZone) {
-      hunt.boss--; snd("hit");
+      hunt.boss -= hunt.dmg; snd("hit");
       var r = panel.querySelector(".hunt-bar").getBoundingClientRect();
       burst(r.left + hunt.p * r.width, r.top + r.height / 2, 30, 4);
       msg.textContent = L(HT.hit); msg.className = "fx-msg good";
@@ -483,7 +515,8 @@
     var won = load("fx-gods", 0);
     if (i === undefined) i = Math.min(won, GODS.length - 1);
     var G = GODS[i];
-    fight = { i: i, hp: G.hp, kr: 3, want: null, t0: 0, raf: 0, over: false, started: false };
+    var hearts = owned("toison") ? 4 : 3;
+    fight = { i: i, hp: G.hp, kr: hearts, maxKr: hearts, dmg: owned("arc") ? 2 : 1, time: G.time + (owned("bottes") ? .45 : 0), want: null, t0: 0, raf: 0, over: false, started: false };
     panel.className = "fx-panel fx-ui fx-gods";
     panel.innerHTML = closeBtn() +
       '<p class="fx-title">⚡ ' + L(GT.title) + "</p>" +
@@ -493,8 +526,8 @@
       '<div class="gods-pad">' + SYMS.map(function (s) { return '<button type="button" class="gods-key k-' + s.k + '" data-k="' + s.k + '">' + s.g + "</button>"; }).join("") + "</div>" +
       '<p class="fx-msg" role="status" aria-live="polite"></p>' +
       '<div class="fx-foot"><span class="fx-me"></span><span class="fx-count">' + L(GT.count) + " : " + won + " / " + GODS.length + "</span></div>" +
-      '<button type="button" class="fx-next">' + L(GT.start) + "</button>";
-    wireClose();
+      '<button type="button" class="fx-next">' + L(GT.start) + "</button>" + shopButton();
+    wireClose(); wireShop();
     panel.querySelectorAll(".gods-key").forEach(function (b) { b.addEventListener("click", function () { fightPress(b.dataset.k, b); }); });
     panel.querySelector(".fx-next").onclick = function () { this.hidden = true; fight.started = true; fightPrompt(); };
     fightPaint();
@@ -502,8 +535,8 @@
   }
   function fightPaint() {
     if (!panel || !fight) return;
-    panel.querySelector(".gods-hp span").style.width = (fight.hp / GODS[fight.i].hp * 100) + "%";
-    panel.querySelector(".fx-me").innerHTML = "Kratos " + pips(fight.kr, 3, "❤️", '<span class="off">❤️</span>');
+    panel.querySelector(".gods-hp span").style.width = (Math.max(0, fight.hp) / GODS[fight.i].hp * 100) + "%";
+    panel.querySelector(".fx-me").innerHTML = "Kratos " + pips(fight.kr, fight.maxKr, "❤️", '<span class="off">❤️</span>');
   }
   function fightPrompt() {
     if (!fight || fight.over) return;
@@ -515,7 +548,7 @@
     cancelAnimationFrame(fight.raf);
     (function tick(now) {
       if (!fight || fight.over || !panel) return;
-      var left = 1 - (now - fight.t0) / (GODS[fight.i].time * 1000);
+      var left = 1 - (now - fight.t0) / (fight.time * 1000);
       panel.querySelector(".gods-time span").style.width = Math.max(0, left * 100) + "%";
       if (left <= 0) { fightMiss(GT.miss); return; }
       fight.raf = requestAnimationFrame(tick);
@@ -524,9 +557,11 @@
   function fightPress(k, btn) {
     if (!fight || !fight.started || fight.over || !fight.want) return;
     cancelAnimationFrame(fight.raf);
+    // le symbole est « consommé » : les clics en trop avant le symbole suivant sont ignorés
+    var want = fight.want; fight.want = null;
     var msg = panel.querySelector(".fx-msg");
-    if (k === fight.want.k) {
-      fight.hp--; snd("hit");
+    if (k === want.k) {
+      fight.hp -= fight.dmg; snd("hit");
       var r = btn.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 26, 4.5);
       msg.textContent = L(GT.hit); msg.className = "fx-msg good";
       fightPaint();
@@ -548,6 +583,7 @@
   function fightMiss(text) {
     if (!fight || fight.over) return;
     cancelAnimationFrame(fight.raf);
+    fight.want = null;
     fight.kr--; snd("miss"); shake();
     var msg = panel.querySelector(".fx-msg");
     msg.textContent = L(text); msg.className = "fx-msg bad";
@@ -575,6 +611,10 @@
     { id: "tigre", n: { fr: "Slime tigré", en: "Tabby slime", es: "Slime atigrado" }, body: "#ff9f43", light: "#ffd8a8", dark: "#b8621a", eats: "meat", plort: 15, deco: "tabby" },
     { id: "miel", n: { fr: "Slime miel", en: "Honey slime", es: "Slime miel" }, body: "#ffc94a", light: "#fff0c2", dark: "#c98d0a", eats: "fruit", plort: 25, deco: "honey" }
   ];
+  var PHOSPHO = { id: "phospho", n: { fr: "Slime phosphorescent", en: "Phosphor slime", es: "Slime fosforescente" }, body: "#7af5ff", light: "#e6feff", dark: "#1fb3c4", eats: "fruit", plort: 30, deco: "glow" };
+  var BOUM = { id: "boum", n: { fr: "Slime boum", en: "Boom slime", es: "Slime bum" }, body: "#ff6a4a", light: "#ffc9bb", dark: "#6a1408", eats: "meat", plort: 45, deco: "boom" };
+  function ranchSlimes() { return SLIMES.concat(owned("phospho") ? [PHOSPHO] : [], owned("boum") ? [BOUM] : []); }
+  function plortValue(t) { return t.plort * (owned("marche") ? 2 : 1); }
   var LARGO = { id: "largo", body: "#ff7ac8", light: "#ffd0ec", dark: "#4f6680", deco: "rock", plort: 40 };
   var GOLD = { id: "or", body: "#ffd34d", light: "#fff6c9", dark: "#d4a017", plort: 100 };
   var FOODS = [
@@ -587,6 +627,8 @@
     if (t.deco === "rock") deco = '<path d="M14 15 L17 4 L23 12 L29 1 L34 11 L41 3 L44 13 L48 9 L47 19 Z" fill="' + t.dark + '"/>';
     if (t.deco === "tabby") deco = '<path d="M11 18 L9 3 L23 10 Z M49 18 L51 3 L37 10 Z" fill="' + t.body + '"/><path d="M26 8 L27 15 M34 8 L33 15 M30 7 L30 14" stroke="' + t.dark + '" stroke-width="2.4" stroke-linecap="round"/>';
     if (t.deco === "honey") deco = '<path d="M18 9 Q18 16 21 16 Q24 16 23 9 Z M38 8 Q37 13 40 13 Q43 13 42 8 Z" fill="' + t.dark + '" opacity=".8"/>';
+    if (t.deco === "glow") deco = '<circle cx="14" cy="12" r="2" fill="#fff"/><circle cx="46" cy="16" r="1.6" fill="#fff"/><circle cx="40" cy="8" r="1.2" fill="#fff"/>';
+    if (t.deco === "boom") deco = '<path d="M14 22 L20 26 L16 32 M46 22 L40 27 L45 33 M28 10 L31 16 L27 19" fill="none" stroke="' + t.dark + '" stroke-width="2" stroke-linecap="round"/>';
     var crown = t.id === "or" ? '<path d="M20 8 L22 1 L26 6 L30 0 L34 6 L38 1 L40 8 Z" fill="#fff6c9" stroke="#d4a017" stroke-width="1"/>' : "";
     return '<svg viewBox="0 0 60 50" aria-hidden="true"><path d="M6 46 C2 30 12 6 30 6 C48 6 58 30 54 46 Z" fill="' + t.body + '"/>' + deco + crown +
       '<ellipse cx="20" cy="17" rx="6" ry="3" fill="' + t.light + '" opacity=".8"/>' +
@@ -597,7 +639,7 @@
   }
   var slimeField = null, goldTimer = 0;
   function addHeroSlime(t, left, big) {
-    var d = el("button", "sl-slime" + (big ? " sl-big" : ""), slimeSvg(t));
+    var d = el("button", "sl-slime" + (big ? " sl-big" : "") + (t.deco === "glow" ? " sl-glow" : ""), slimeSvg(t));
     d.type = "button";
     d.setAttribute("aria-label", t.n ? L(t.n) : "slime");
     d.style.left = left + "%";
@@ -605,7 +647,7 @@
     d.addEventListener("click", function (e) {
       d.classList.remove("squish"); void d.offsetWidth; d.classList.add("squish");
       var r = d.getBoundingClientRect();
-      flyTo(r.left + r.width / 2, r.top, "plort", function () { addPoints(t.plort); snd("coin"); });
+      flyTo(r.left + r.width / 2, r.top, "plort", function () { addPoints(plortValue(t)); snd("coin"); });
     });
     slimeField.appendChild(d);
     return d;
@@ -617,6 +659,8 @@
     hero.insertBefore(slimeField, hero.firstChild);
     [58, 68, 78, 88].forEach(function (left, i) { addHeroSlime(SLIMES[i], left); });
     if (load("fx-largo", false)) addHeroSlime(LARGO, 46, true);
+    if (owned("phospho")) addHeroSlime(PHOSPHO, 36);
+    if (owned("boum")) addHeroSlime(BOUM, 26);
     if (!calm) goldTimer = setTimeout(goldSlime, rnd(12000, 20000));
   }
   function stopSlimes() { clearTimeout(goldTimer); if (slimeField) { slimeField.remove(); slimeField = null; } }
@@ -669,14 +713,14 @@
       '<p class="fx-title">🥕 ' + L(RT.title) + "</p>" +
       '<p class="fx-help">' + L(RT.help) + "</p>" +
       '<div class="ranch-foods">' + FOODS.map(function (f) { return '<button type="button" class="ranch-food" data-k="' + f.k + '"><span>' + f.g + "</span>" + L(f.n) + "</button>"; }).join("") + "</div>" +
-      '<div class="ranch-pens">' + SLIMES.map(function (s) {
+      '<div class="ranch-pens">' + ranchSlimes().map(function (s) {
         return '<button type="button" class="ranch-pen" data-id="' + s.id + '"><span class="ranch-slime">' + slimeSvg(s) + "</span>" +
                '<span class="ranch-name">' + L(s.n) + '</span><span class="ranch-diet">' + (known.indexOf(s.id) > -1 ? L(RT.eats[s.eats]) : "?") + "</span>" +
                '<span class="ranch-state">' + L(RT.hungry) + "</span></button>";
       }).join("") + "</div>" +
       '<p class="fx-msg" role="status" aria-live="polite">' + (load("fx-largo", false) ? "" : L(RT.largo)) + "</p>" +
-      '<div class="fx-foot"><span class="fx-count">' + L(RT.plorts) + " : " + load("fx-plorts", 0) + "</span></div>";
-    wireClose();
+      '<div class="fx-foot"><span class="fx-count">' + L(RT.plorts) + " : " + load("fx-plorts", 0) + "</span></div>" + shopButton();
+    wireClose(); wireShop();
     panel.querySelectorAll(".ranch-food").forEach(function (b) {
       b.addEventListener("click", function () {
         panel.querySelectorAll(".ranch-food").forEach(function (o) { o.classList.toggle("sel", o === b); });
@@ -688,7 +732,7 @@
   }
   function ranchFeed(pen) {
     if (!ranch) return;
-    var s = SLIMES.filter(function (x) { return x.id === pen.dataset.id; })[0];
+    var s = ranchSlimes().filter(function (x) { return x.id === pen.dataset.id; })[0];
     var msg = panel.querySelector(".fx-msg");
     if (!ranch.food) { msg.textContent = L(RT.pickFirst); msg.className = "fx-msg"; return; }
     if (ranch.full[s.id] > Date.now()) { msg.textContent = L(RT.full); msg.className = "fx-msg"; return; }
@@ -700,11 +744,11 @@
       pen.classList.add("happy");
       pen.querySelector(".ranch-state").textContent = L(RT.happy);
       snd("hit");
-      msg.textContent = L(RT.yum) + " +" + s.plort; msg.className = "fx-msg good";
+      msg.textContent = L(RT.yum) + " +" + plortValue(s); msg.className = "fx-msg good";
       save("fx-plorts", load("fx-plorts", 0) + 1);
       panel.querySelector(".fx-count").textContent = L(RT.plorts) + " : " + load("fx-plorts", 0);
       var r = pen.getBoundingClientRect();
-      flyTo(r.left + r.width / 2, r.top + 20, "plort", function () { addPoints(s.plort); snd("coin"); });
+      flyTo(r.left + r.width / 2, r.top + 20, "plort", function () { addPoints(plortValue(s)); snd("coin"); });
       setTimeout(function () {
         if (!panel || !pen.isConnected) return;
         pen.classList.remove("happy");
@@ -715,6 +759,73 @@
       pen.classList.remove("yuck"); void pen.offsetWidth; pen.classList.add("yuck");
       msg.textContent = L(RT.beurk) + L(s.n) + " " + L(RT.eats[s.eats]); msg.className = "fx-msg bad";
     }
+  }
+
+  // =====================================================================
+  // Boutique : dépenser ses Échos de sang, Orbes rouges ou Newbucks
+  // =====================================================================
+  var SHOP = {
+    lunesang: [
+      { id: "fiole", g: "🧪", price: 1500, n: { fr: "Fiole de sang en plus", en: "Extra blood vial", es: "Vial de sangre extra" }, d: { fr: "La chasse commence avec 4 fioles au lieu de 3.", en: "The hunt starts with 4 vials instead of 3.", es: "La caza empieza con 4 viales en vez de 3." } },
+      { id: "rune", g: "👁️", price: 2500, n: { fr: "Rune « Œil du chasseur »", en: "“Hunter’s Eye” rune", es: "Runa «Ojo del cazador»" }, d: { fr: "La zone rouge est plus large : plus facile de toucher.", en: "The red zone is wider: easier to hit.", es: "La zona roja es más ancha: más fácil acertar." } },
+      { id: "lame", g: "⚔️", price: 4000, n: { fr: "Lame sacrée de Ludwig", en: "Ludwig’s Holy Blade", es: "Espada Sagrada de Ludwig" }, d: { fr: "Chaque attaque viscérale compte double.", en: "Every visceral attack counts double.", es: "Cada ataque visceral cuenta doble." } }
+    ],
+    gow3: [
+      { id: "toison", g: "🐏", price: 300, n: { fr: "Toison d’or", en: "Golden Fleece", es: "Vellocino de oro" }, d: { fr: "Kratos a 4 cœurs au lieu de 3.", en: "Kratos has 4 hearts instead of 3.", es: "Kratos tiene 4 corazones en vez de 3." } },
+      { id: "bottes", g: "👟", price: 500, n: { fr: "Bottes d’Hermès", en: "Boots of Hermes", es: "Botas de Hermes" }, d: { fr: "Plus de temps pour appuyer sur le bon bouton.", en: "More time to press the right button.", es: "Más tiempo para pulsar el botón correcto." } },
+      { id: "arc", g: "🏹", price: 800, n: { fr: "Arc d’Apollon", en: "Bow of Apollo", es: "Arco de Apolo" }, d: { fr: "Chaque coup enlève 2 points de vie au dieu.", en: "Every blow takes 2 health points from the god.", es: "Cada golpe le quita 2 puntos de vida al dios." } }
+    ],
+    slime: [
+      { id: "phospho", g: "✨", price: 150, n: { fr: "Slime phosphorescent", en: "Phosphor slime", es: "Slime fosforescente" }, d: { fr: "Un slime qui brille, pour le ranch et l’en-tête. Il aime les fruits.", en: "A glowing slime for the ranch and the header. It loves fruit.", es: "Un slime que brilla, para el rancho y la cabecera. Le encanta la fruta." } },
+      { id: "boum", g: "💥", price: 300, n: { fr: "Slime boum", en: "Boom slime", es: "Slime bum" }, d: { fr: "Un slime explosif qui aime la viande. Ses plorts valent cher.", en: "An explosive slime that loves meat. Its plorts are worth a lot.", es: "Un slime explosivo al que le encanta la carne. Sus plorts valen mucho." } },
+      { id: "marche", g: "📈", price: 500, n: { fr: "Bon plan au marché", en: "Market deal", es: "Chollo en el mercado" }, d: { fr: "Tous les plorts rapportent deux fois plus.", en: "All plorts are worth twice as much.", es: "Todos los plorts valen el doble." } }
+    ]
+  };
+  var ST = {
+    title: { fr: "Boutique", en: "Shop", es: "Tienda" },
+    open: { fr: "🛒 Boutique", en: "🛒 Shop", es: "🛒 Tienda" },
+    back: { fr: "‹ Retour au jeu", en: "‹ Back to the game", es: "‹ Volver al juego" },
+    buy: { fr: "Acheter", en: "Buy", es: "Comprar" },
+    owned: { fr: "✓ Acheté", en: "✓ Owned", es: "✓ Comprado" },
+    poor: { fr: "Pas assez…", en: "Not enough…", es: "No alcanza…" },
+    done: { fr: "Acheté : ", en: "Bought: ", es: "Comprado: " },
+    help: { fr: "Gagne de l’argent en jouant, puis achète des améliorations. Elles restent pour toujours.", en: "Earn money by playing, then buy upgrades. They stay forever.", es: "Gana dinero jugando y compra mejoras. Se quedan para siempre." }
+  };
+  function owned(id) { return load("fx-shop", []).indexOf(id) > -1; }
+  function shopButton() { return '<button type="button" class="fx-shop-btn">' + L(ST.open) + "</button>"; }
+  function wireShop() { var b = panel.querySelector(".fx-shop-btn"); if (b) b.addEventListener("click", shopOpen); }
+  function shopOpen() {
+    if (gameStop) { gameStop(); gameStop = null; }
+    var th = theme(), c = COUNTER[th], money = load(c.key, 0);
+    panel.className = "fx-panel fx-ui fx-shop fx-shop-" + th;
+    panel.innerHTML = closeBtn() +
+      '<p class="fx-title">🛒 ' + L(ST.title) + "</p>" +
+      '<p class="fx-help">' + L(ST.help) + "</p>" +
+      '<p class="fx-wallet">' + c.icon + " <b>" + money.toLocaleString(html.lang || "fr") + "</b> " + L(c.label) + "</p>" +
+      '<div class="shop-list">' + SHOP[th].map(function (it) {
+        var has = owned(it.id), can = money >= it.price;
+        return '<div class="shop-item' + (has ? " has" : "") + '"><span class="shop-ico">' + it.g + '</span><span class="shop-txt"><b>' + L(it.n) + "</b><small>" + L(it.d) + "</small></span>" +
+               '<button type="button" class="shop-buy" data-id="' + it.id + '"' + (has || !can ? " disabled" : "") + ">" +
+               (has ? L(ST.owned) : (can ? L(ST.buy) : L(ST.poor)) + "<br><small>" + c.icon + " " + it.price.toLocaleString(html.lang || "fr") + "</small>") + "</button></div>";
+      }).join("") + "</div>" +
+      '<p class="fx-msg" role="status" aria-live="polite"></p>' +
+      '<button type="button" class="fx-next">' + L(ST.back) + "</button>";
+    wireClose();
+    panel.querySelector(".fx-next").addEventListener("click", function () { GAMES[th].open(); });
+    panel.querySelectorAll(".shop-buy").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var it = SHOP[th].filter(function (x) { return x.id === b.dataset.id; })[0];
+        if (owned(it.id) || load(c.key, 0) < it.price) return;
+        var list = load("fx-shop", []); list.push(it.id); save("fx-shop", list);
+        addPoints(-it.price);
+        snd("win");
+        var r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 40, 5);
+        if (th === "slime" && slimeField && (it.id === "phospho" || it.id === "boum")) addHeroSlime(it.id === "phospho" ? PHOSPHO : BOUM, it.id === "phospho" ? 36 : 26);
+        shopOpen();
+        panel.querySelector(".fx-msg").textContent = L(ST.done) + L(it.n) + " ✓";
+        panel.querySelector(".fx-msg").className = "fx-msg good";
+      });
+    });
   }
 
   var GAMES = { lunesang: { open: function () { huntOpen(); } }, gow3: { open: function () { fightOpen(); } }, slime: { open: ranchOpen } };
@@ -791,6 +902,8 @@
     if (now === was) return;
     var fxNow = FX.indexOf(now) > -1, fxWas = FX.indexOf(was) > -1;
     if (fxWas) { stopCanvas(); showQuotes(false); showUi(false); stopSlimes(); endShown = false; }
+    if (QUOTE_ONLY.indexOf(was) > -1) showQuotes(false);
+    if (QUOTE_ONLY.indexOf(now) > -1) showQuotes(true);
     if (fxNow) {
       startCanvas(); showQuotes(true); showUi(true);
       if (now === "slime") startSlimes();
@@ -800,8 +913,8 @@
   }
   new MutationObserver(update).observe(html, { attributes: true, attributeFilter: ["data-theme"] });
   new MutationObserver(function () {
-    if (!isFx()) return;
-    paintQuote(); paintCounter(); paintMute();
+    paintQuote();
+    if (!isFx()) return; paintCounter(); paintMute();
     if (gameBtn) { gameBtn.title = L(GAME_NAME[theme()]); gameBtn.setAttribute("aria-label", gameBtn.title); }
     if (panel) openPanel();
   }).observe(html, { attributes: true, attributeFilter: ["lang"] });
