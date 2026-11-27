@@ -1116,6 +1116,60 @@ html:not([lang="es"]) [data-lang="es"] { display: none !important; }
 .lang-btn:hover { opacity: 1; transform: translateY(-2px); }
 .lang-btn.active { opacity: 1; border-color: #fff; }
 
+/* ===== Simulateur de recharge (suit les couleurs du thème choisi) ===== */
+.sim-intro { margin-bottom: 14px; }
+.sim { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 760px) { .sim { grid-template-columns: 1fr; } }
+.sim-scene { width: 100%; height: auto; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; }
+.sim-ground { fill: var(--border); }
+.sim-box { fill: var(--card); stroke: var(--accent); stroke-width: 3; }
+.sim-screen { fill: #10181c; }
+.sim-screen-text { fill: #7dffb0; font: 700 11px ui-monospace, monospace; }
+.sim-led { fill: #2ecc71; }
+.sim[data-state="auth"] .sim-led, .sim[data-state="plugged"] .sim-led { fill: #3498db; }
+.sim[data-state="charging"] .sim-led { fill: #3498db; animation: sim-blink 1s infinite; }
+.sim[data-state="full"] .sim-led { fill: #f1c40f; }
+@keyframes sim-blink { 50% { fill: #2ecc71; } }
+.sim-badge-zone { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 3 3; }
+.sim[data-state="auth"] .sim-badge-zone { stroke: #3498db; stroke-dasharray: none; }
+.sim-cable { fill: none; stroke: var(--text); stroke-width: 5; stroke-linecap: round; opacity: 0; transition: opacity .4s; }
+.sim[data-state="plugged"] .sim-cable, .sim[data-state="charging"] .sim-cable, .sim[data-state="full"] .sim-cable { opacity: 1; }
+.sim[data-plug="dc"] .sim-cable { stroke-width: 8; }
+.sim[data-state="charging"] .sim-cable { stroke: var(--accent); stroke-dasharray: 10 8; animation: sim-flow .6s linear infinite; }
+@keyframes sim-flow { to { stroke-dashoffset: -18; } }
+.sim-body { fill: var(--accent); opacity: .85; }
+.sim-window { fill: var(--card); opacity: .85; }
+.sim-wheel { fill: var(--text); }
+.sim-bat-bg { fill: var(--card); stroke: var(--text); stroke-width: 1.5; }
+.sim-bat { fill: #2ecc71; transition: width .1s linear; }
+.sim-panel { display: grid; gap: 12px; }
+.sim-steps { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; counter-reset: step; }
+.sim-steps li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 1px dashed transparent; counter-increment: step; }
+.sim-steps li::before { content: counter(step); flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 800; background: var(--border); color: var(--text); }
+.sim-steps li.sim-current { border-color: var(--accent); background: var(--chip-bg); }
+.sim-steps li.sim-current::before { background: var(--accent); color: #fff; }
+.sim-label { font-size: .85rem; color: var(--muted); }
+.sim-btn { font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; padding: 7px 12px; border-radius: 8px;
+  border: 2px solid var(--accent); background: var(--card); color: var(--text); transition: transform .1s, background .15s; }
+.sim-btn small { font-weight: 500; color: var(--muted); }
+.sim-btn:hover:not(:disabled) { background: var(--chip-hover); transform: translateY(-1px); }
+.sim-btn:disabled { opacity: .4; cursor: not-allowed; border-color: var(--border); }
+.sim-go:not(:disabled) { background: var(--accent); color: #fff; }
+.sim-stop:not(:disabled) { border-color: #c0392b; color: #c0392b; }
+.sim-btn[data-restart] > span { display: none; }
+.sim-btn[data-restart]::after { content: attr(data-label); }
+.sim-live { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
+.sim-live-title { font-weight: 800; margin-bottom: 6px; color: var(--heading); }
+.sim-live dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; margin: 0; }
+.sim-live dt { color: var(--muted); font-size: .88rem; }
+.sim-live dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sim-status { color: var(--accent); }
+.sim-speed { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: .85rem; color: var(--muted); }
+.sim-speed select { font: inherit; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
+.sim-msg { min-height: 1.5em; margin-top: 12px; font-weight: 600; }
+.sim-note { margin-top: 6px; font-size: .8rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .sim-cable, .sim-led { animation: none !important; } }
+
 /* ===== Laboratoire caché : flacon en bas à gauche + panneau des thèmes en test ===== */
 .labo-btn {
   display: none; position: fixed; left: 18px; bottom: 18px; z-index: 40;

@@ -62,6 +62,7 @@
       <a href="#interets"><span data-lang="fr">Centres d’intérêt</span><span data-lang="en">Interests</span><span data-lang="es">Intereses</span></a>
       <a href="#projets"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span></a>
       <a href="#journal"><span data-lang="fr">Journal de stage</span><span data-lang="en">Internship log</span><span data-lang="es">Diario de prácticas</span></a>
+      <a href="#simulateur"><span data-lang="fr">Simulateur</span><span data-lang="en">Simulator</span><span data-lang="es">Simulador</span></a>
       <a href="#contact"><span data-lang="fr">Contact</span><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></a>
     </div>
   </nav>
@@ -472,6 +473,66 @@
       </div>
     </section>
 
+    <section id="simulateur" class="card">
+      <h2><span data-lang="fr">Simulateur de recharge</span><span data-lang="en">Charging simulator</span><span data-lang="es">Simulador de recarga</span></h2>
+      <p class="sim-intro">
+        <span data-lang="fr">Recharge une voiture électrique comme pendant mes tests chez VEV : passe le badge, branche le câble, lance la charge et suis-la en direct.</span>
+        <span data-lang="en">Charge an electric car like during my tests at VEV: swipe the badge, plug in the cable, start charging and follow it live.</span>
+        <span data-lang="es">Carga un coche eléctrico como en mis pruebas en VEV: pasa la tarjeta, conecta el cable, inicia la carga y síguela en directo.</span>
+      </p>
+      <div class="sim">
+        <svg class="sim-scene" viewBox="0 0 360 170" aria-hidden="true">
+          <rect x="8" y="150" width="344" height="6" rx="3" class="sim-ground"/>
+          <g class="sim-charger">
+            <rect x="24" y="26" width="58" height="124" rx="10" class="sim-box"/>
+            <rect x="34" y="38" width="38" height="26" rx="4" class="sim-screen"/>
+            <circle cx="53" cy="80" r="7" class="sim-led"/>
+            <rect x="38" y="96" width="30" height="20" rx="3" class="sim-badge-zone"/>
+          </g>
+          <path class="sim-cable" d="M82 120 C120 120 130 150 170 150 C200 150 215 118 236 112"/>
+          <g class="sim-car">
+            <path d="M200 120 L214 96 C220 86 230 82 244 82 L300 82 C314 82 322 88 330 98 L344 116 L344 136 L200 136 Z" class="sim-body"/>
+            <path d="M222 100 L232 88 L262 88 L262 100 Z M270 100 L270 88 L298 88 C306 88 312 92 318 100 Z" class="sim-window"/>
+            <circle cx="232" cy="138" r="13" class="sim-wheel"/><circle cx="314" cy="138" r="13" class="sim-wheel"/>
+            <rect x="250" y="108" width="60" height="14" rx="3" class="sim-bat-bg"/>
+            <rect x="252" y="110" width="0" height="10" rx="2" class="sim-bat"/>
+          </g>
+          <text x="53" y="56" text-anchor="middle" class="sim-screen-text">--</text>
+        </svg>
+        <div class="sim-panel">
+          <ol class="sim-steps">
+            <li data-step="badge"><button type="button" class="sim-btn" data-act="badge">🪪 <span data-lang="fr">Passer le badge</span><span data-lang="en">Swipe the badge</span><span data-lang="es">Pasar la tarjeta</span></button></li>
+            <li data-step="plug">
+              <span class="sim-label"><span data-lang="fr">Brancher :</span><span data-lang="en">Plug in:</span><span data-lang="es">Conectar:</span></span>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="ac">🔌 Type 2 <small>AC · 11 kW</small></button>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="dc">⚡ Combo CCS2 <small>DC · 150 kW</small></button>
+            </li>
+            <li data-step="start"><button type="button" class="sim-btn sim-go" data-act="start">▶ <span data-lang="fr">Démarrer la charge</span><span data-lang="en">Start charging</span><span data-lang="es">Iniciar la carga</span></button></li>
+            <li data-step="stop"><button type="button" class="sim-btn sim-stop" data-act="stop">■ <span data-lang="fr">Arrêter et libérer la borne</span><span data-lang="en">Stop and release the charger</span><span data-lang="es">Detener y liberar el cargador</span></button></li>
+          </ol>
+          <div class="sim-live">
+            <p class="sim-live-title">📡 <span data-lang="fr">Plateforme (simulation)</span><span data-lang="en">Platform (simulation)</span><span data-lang="es">Plataforma (simulación)</span></p>
+            <dl>
+              <dt><span data-lang="fr">Statut</span><span data-lang="en">Status</span><span data-lang="es">Estado</span></dt><dd class="sim-status">—</dd>
+              <dt><span data-lang="fr">Puissance</span><span data-lang="en">Power</span><span data-lang="es">Potencia</span></dt><dd class="sim-power">0 kW</dd>
+              <dt><span data-lang="fr">Énergie</span><span data-lang="en">Energy</span><span data-lang="es">Energía</span></dt><dd class="sim-energy">0.0 kWh</dd>
+              <dt><span data-lang="fr">Batterie</span><span data-lang="en">Battery</span><span data-lang="es">Batería</span></dt><dd class="sim-soc">20 %</dd>
+              <dt><span data-lang="fr">Durée</span><span data-lang="en">Time</span><span data-lang="es">Duración</span></dt><dd class="sim-time">0 min</dd>
+            </dl>
+            <label class="sim-speed"><span data-lang="fr">Vitesse</span><span data-lang="en">Speed</span><span data-lang="es">Velocidad</span>
+              <select><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
+            </label>
+          </div>
+        </div>
+      </div>
+      <p class="sim-msg" role="status" aria-live="polite"></p>
+      <p class="sim-note">
+        <span data-lang="fr">Batterie de 60 kWh qui part de 20 %. En courant continu (CCS2), la puissance baisse quand la batterie se remplit, pour la protéger. Les prix du ticket sont des exemples.</span>
+        <span data-lang="en">60 kWh battery starting at 20%. With direct current (CCS2), power drops as the battery fills up, to protect it. Ticket prices are examples.</span>
+        <span data-lang="es">Batería de 60 kWh que empieza al 20 %. En corriente continua (CCS2), la potencia baja cuando la batería se llena, para protegerla. Los precios del ticket son ejemplos.</span>
+      </p>
+    </section>
+
     <section id="contact" class="card contact">
       <h2><span data-lang="fr">Contact</span><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></h2>
       <ul>
@@ -559,6 +620,7 @@
       <button type="button" class="labo-theme" data-theme-choice="lego">🧱 <span>Lego</span></button>
     </div>
   </div>
+  <script src="simulateur.js"></script>
   <script src="theme.js"></script>
   <script src="premium.js"></script>
   <script src="legendes.js"></script>
