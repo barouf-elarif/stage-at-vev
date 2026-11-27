@@ -2184,3 +2184,24 @@ html[data-theme="vert"] .egg-tree, html[data-theme="dark"] .egg-flake { display:
   html:not([data-theme]) .hero { position: relative; }
   html:not([data-theme]) .egg-flake { display: block; }
 }
+
+/* ===== Carrousel de photos (journal) ===== */
+.carousel { position: relative; max-width: 460px; outline: none; }
+.carousel:focus-visible { box-shadow: 0 0 0 3px var(--accent); border-radius: 8px; }
+.carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  overscroll-behavior-x: contain; scrollbar-width: none; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-slide { flex: 0 0 100%; margin: 0; scroll-snap-align: center; scroll-snap-stop: always; }
+.carousel-slide img { display: block; width: 100%; height: 340px; object-fit: contain; max-width: none; border: 0; border-radius: 0; }
+.carousel-slide figcaption { padding: 6px 10px 8px; font-size: .85rem; color: var(--muted); white-space: normal; }
+.carousel-btn { position: absolute; top: 170px; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%;
+  border: 0; cursor: pointer; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #fff; background: rgba(0,0,0,.5); display: grid; place-items: center; transition: background .15s; }
+.carousel-btn:hover { background: var(--accent); }
+.carousel-prev { left: 8px; }
+.carousel-next { right: 8px; }
+.carousel-dots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.carousel-dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 0; cursor: pointer; background: var(--border); transition: transform .15s, background .15s; }
+.carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+.carousel-count { margin-left: auto; font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) { .carousel-slide img { height: 260px; } .carousel-btn { top: 130px; } }
+@media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
