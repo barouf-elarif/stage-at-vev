@@ -228,11 +228,21 @@
     { a: "Clement Clarke Moore", fr: "Joyeux Noël à tous, et à tous une bonne nuit !", en: "Happy Christmas to all, and to all a good night!", es: "¡Feliz Navidad a todos, y a todos buenas noches!" }
   ];
   var QUOTE_ONLY = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel"];   // thèmes secrets avec seulement des citations
+  // La citation garde la hauteur de la plus longue déjà affichée : la page ne bouge plus quand elle change
+  // (sinon un menu déroulant ouvert plus bas, comme « Voiture » du simulateur, se refermait tout seul)
+  function holdHeight(q) {
+    var h = q.offsetHeight;
+    if (h > (q._h || 0)) { q._h = h; q.style.minHeight = h + "px"; }
+  }
+  // Ne pas changer la citation pendant qu'on utilise un menu ou un champ
+  function busyForm() { var a = document.activeElement; return !!a && /^(SELECT|INPUT|TEXTAREA)$/.test(a.tagName); }
+  window.addEventListener("resize", function () { var q = document.querySelector(".fx-quote"); if (q) { q._h = 0; q.style.minHeight = ""; } });
   var quoteEl = null, quoteTimer = 0, quoteI = 0;
   function paintQuote() {
     var q = QUOTES[theme()]; if (!q || !quoteEl) return;
     var it = q[quoteI % q.length];
     quoteEl.innerHTML = "« " + L(it) + " »<cite>— " + L(it.a) + "</cite>";
+    holdHeight(quoteEl);
   }
   function showQuotes(on) {
     var dates = document.querySelector(".hero .dates") || document.querySelector(".hero h1");
@@ -242,6 +252,7 @@
       paintQuote();
       clearInterval(quoteTimer);
       if (!calm) quoteTimer = setInterval(function () {
+        if (busyForm()) return;
         if (!quoteEl) return;
         quoteEl.classList.add("pq-out");
         setTimeout(function () { if (!quoteEl) return; quoteI++; paintQuote(); quoteEl.classList.remove("pq-out"); }, 500);

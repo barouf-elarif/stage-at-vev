@@ -12,14 +12,26 @@
 
   // Voitures (valeurs approximatives) : batterie utile (kWh), consommation (kWh/100 km), charge max en AC et en DC (kW)
   var CARS = [
-    { id: "moyenne", n: { fr: "Voiture électrique moyenne", en: "Average electric car", es: "Coche eléctrico medio" }, bat: 60, conso: 16, ac: 22, dc: 350 },
-    { id: "zoe", n: "Renault Zoé", bat: 52, conso: 17, ac: 22, dc: 50 },
-    { id: "e208", n: "Peugeot e-208", bat: 48, conso: 15.5, ac: 11, dc: 100 },
-    { id: "model3", n: "Tesla Model 3", bat: 60, conso: 14.5, ac: 11, dc: 170 },
-    { id: "ev6", n: "Kia EV6", bat: 77, conso: 17.5, ac: 11, dc: 235 },
-    { id: "500e", n: "Fiat 500e", bat: 42, conso: 14, ac: 11, dc: 85 },
-    { id: "spring", n: "Dacia Spring", bat: 27, conso: 14, ac: 7, dc: 30 },
-    { id: "perso", n: { fr: "Personnalisée…", en: "Custom…", es: "Personalizado…" }, bat: 60, conso: 16, ac: 11, dc: 150 }
+    { id: "moyenne", g: "autre", n: { fr: "Voiture électrique moyenne", en: "Average electric car", es: "Coche eléctrico medio" }, bat: 60, conso: 16, ac: 22, dc: 350 },
+    { id: "model3", g: "tesla", n: "Tesla Model 3", bat: 60, conso: 14.5, ac: 11, dc: 170 },
+    { id: "model3lr", g: "tesla", n: { fr: "Tesla Model 3 Grande Autonomie", en: "Tesla Model 3 Long Range", es: "Tesla Model 3 Gran Autonomía" }, bat: 75, conso: 15, ac: 11, dc: 250 },
+    { id: "modely", g: "tesla", n: "Tesla Model Y", bat: 60, conso: 15.5, ac: 11, dc: 175 },
+    { id: "models", g: "tesla", n: "Tesla Model S", bat: 95, conso: 18, ac: 11, dc: 250 },
+    { id: "zoe", g: "autre", n: "Renault Zoé", bat: 52, conso: 17, ac: 22, dc: 50 },
+    { id: "megane", g: "autre", n: "Renault Mégane E-Tech", bat: 60, conso: 16, ac: 22, dc: 130 },
+    { id: "e208", g: "autre", n: "Peugeot e-208", bat: 48, conso: 15.5, ac: 11, dc: 100 },
+    { id: "id3", g: "autre", n: "Volkswagen ID.3", bat: 58, conso: 15.5, ac: 11, dc: 120 },
+    { id: "mg4", g: "autre", n: "MG4", bat: 64, conso: 16, ac: 11, dc: 140 },
+    { id: "ioniq5", g: "autre", n: "Hyundai Ioniq 5", bat: 77, conso: 17, ac: 11, dc: 230 },
+    { id: "ev6", g: "autre", n: "Kia EV6", bat: 77, conso: 17.5, ac: 11, dc: 235 },
+    { id: "500e", g: "autre", n: "Fiat 500e", bat: 42, conso: 14, ac: 11, dc: 85 },
+    { id: "spring", g: "autre", n: "Dacia Spring", bat: 27, conso: 14, ac: 7, dc: 30 },
+    { id: "perso", g: "perso", n: { fr: "Personnalisée…", en: "Custom…", es: "Personalizado…" }, bat: 60, conso: 16, ac: 11, dc: 150 }
+  ];
+  var GROUPS = [
+    { g: "tesla", n: "Tesla" },
+    { g: "autre", n: { fr: "Autres marques", en: "Other brands", es: "Otras marcas" } },
+    { g: "perso", n: { fr: "À toi de choisir", en: "Your choice", es: "Tú eliges" } }
   ];
   // Puissances qu'on peut choisir à la borne selon la prise (kW)
   var POWERS = { ac: [3.7, 7.4, 11, 22], dc: [50, 100, 150, 350] };
@@ -52,14 +64,15 @@
           mTaper: "📉 Au-dessus de 80 %, la puissance baisse pour protéger la batterie.",
           ticket: function (e, d, c, pr) { return "🧾 Ticket : " + e + " kWh en " + d + ", soit " + c + " € (" + pr + " €/kWh). La borne est libérée."; },
           save: function (km, f, g) { return " 🚗 " + km + " km d’autonomie : en " + f.toLowerCase() + ", ça aurait coûté " + g + " €."; },
-          restart: "🪪 Nouvelle charge", min: "min", h: "h",
+          restart: "Nouvelle charge", min: "min", h: "h",
           info: function (c, r) { return "Recharge max de la voiture : " + c.ac + " kW en AC, " + c.dc + " kW en DC · Autonomie batterie pleine : environ " + r + " km"; },
           span: function (a, b) { return "(de " + a + " % à " + b + " %)"; },
           trees: function (n) { return "≈ " + n + " arbre" + (n > 1 ? "s" : "") + " pendant un an"; },
           fill: "un plein ≈ 5 min",
           stops: function (n) { return n === 0 ? "✅ Pas besoin de s’arrêter : une charge suffit." : "🔌 Il faut environ " + n + " arrêt" + (n > 1 ? "s" : "") + " de recharge rapide (10 → 80 %) en route."; },
           tripCo2: function (a, b) { return " 🌱 CO₂ : " + a + " kg en thermique, " + b + " kg en électrique."; },
-          noCharge: "aucune charge" },
+          noCharge: "aucune charge",
+          tesla: " · Tesla : en Europe, elle se charge avec une prise Combo CCS2, comme pendant mon test chez VEV." },
     en: { idle: "Available", auth: "Authorized", plugged: "Vehicle plugged in", charging: "Charging", full: "Target reached", done: "Finished, charger released",
           mBadge: "🪪 Badge accepted: charging is authorized. Now plug in the cable.",
           mPlug: { ac: "🔌 Type 2 plugged in: alternating current, from 3.7 to 22 kW. Choose the charger’s power.",
@@ -71,14 +84,15 @@
           mTaper: "📉 Above 80%, power drops to protect the battery.",
           ticket: function (e, d, c, pr) { return "🧾 Receipt: " + e + " kWh in " + d + ", that’s €" + c + " (€" + pr + "/kWh). The charger is released."; },
           save: function (km, f, g) { return " 🚗 " + km + " km of range: with a " + f.toLowerCase() + " car, it would have cost €" + g + "."; },
-          restart: "🪪 New charge", min: "min", h: "h",
+          restart: "New charge", min: "min", h: "h",
           info: function (c, r) { return "Car’s max charging: " + c.ac + " kW AC, " + c.dc + " kW DC · Full battery range: about " + r + " km"; },
           span: function (a, b) { return "(from " + a + "% to " + b + "%)"; },
           trees: function (n) { return "≈ " + n + " tree" + (n > 1 ? "s" : "") + " for a year"; },
           fill: "a full tank ≈ 5 min",
           stops: function (n) { return n === 0 ? "✅ No need to stop: one charge is enough." : "🔌 You need about " + n + " fast-charging stop" + (n > 1 ? "s" : "") + " (10 → 80%) on the way."; },
           tripCo2: function (a, b) { return " 🌱 CO₂: " + a + " kg with fuel, " + b + " kg electric."; },
-          noCharge: "no charging" },
+          noCharge: "no charging",
+          tesla: " · Tesla: in Europe, it charges with a Combo CCS2 plug, like during my test at VEV." },
     es: { idle: "Disponible", auth: "Autorizado", plugged: "Vehículo conectado", charging: "Cargando", full: "Objetivo alcanzado", done: "Terminado, cargador liberado",
           mBadge: "🪪 Tarjeta aceptada: la carga está autorizada. Ahora conecta el cable.",
           mPlug: { ac: "🔌 Tipo 2 conectado: corriente alterna, de 3,7 a 22 kW. Elige la potencia del cargador.",
@@ -90,14 +104,15 @@
           mTaper: "📉 Por encima del 80 %, la potencia baja para proteger la batería.",
           ticket: function (e, d, c, pr) { return "🧾 Ticket: " + e + " kWh en " + d + ", o sea " + c + " € (" + pr + " €/kWh). El cargador queda libre."; },
           save: function (km, f, g) { return " 🚗 " + km + " km de autonomía: con " + f.toLowerCase() + ", habría costado " + g + " €."; },
-          restart: "🪪 Nueva carga", min: "min", h: "h",
+          restart: "Nueva carga", min: "min", h: "h",
           info: function (c, r) { return "Carga máx. del coche: " + c.ac + " kW en AC, " + c.dc + " kW en DC · Autonomía con batería llena: unos " + r + " km"; },
           span: function (a, b) { return "(del " + a + " % al " + b + " %)"; },
           trees: function (n) { return "≈ " + n + " árbol" + (n > 1 ? "es" : "") + " durante un año"; },
           fill: "un depósito ≈ 5 min",
           stops: function (n) { return n === 0 ? "✅ No hace falta parar: una carga basta." : "🔌 Hacen falta unas " + n + " parada" + (n > 1 ? "s" : "") + " de carga rápida (10 → 80 %) en el camino."; },
           tripCo2: function (a, b) { return " 🌱 CO₂: " + a + " kg con combustible, " + b + " kg en eléctrico."; },
-          noCharge: "ninguna carga" }
+          noCharge: "ninguna carga",
+          tesla: " · Tesla: en Europa, se carga con un conector Combo CCS2, como en mi prueba en VEV." }
   };
   function tr() { return T[html.lang] || T.fr; }
   function L(o) { return typeof o === "string" ? o : (o[html.lang] || o.fr); }
@@ -160,7 +175,7 @@
              co2Fuel: liters * f.co2, co2Elec: e * CO2_ELEC };
   }
 
-  function say(msg) { $(".sim-msg").textContent = msg; }
+  function say(msg) { var m = $(".sim-msg"); m.textContent = msg; m.classList.toggle("on", !!msg); }
 
   function render() {
     var t = tr();
@@ -252,11 +267,18 @@
   });
 
   // ---------- Réglages ----------
+  // Menu des voitures en deux groupes : Tesla, ou une autre marque
   function fillCars() {
     var sel = $(".set-car");
-    sel.innerHTML = CARS.map(function (c) { return '<option value="' + c.id + '">' + L(c.n) + "</option>"; }).join("");
+    sel.innerHTML = GROUPS.map(function (gr) {
+      return '<optgroup label="' + L(gr.n) + '">' + CARS.filter(function (c) { return c.g === gr.g; }).map(function (c) {
+        return '<option value="' + c.id + '">' + L(c.n) + "</option>";
+      }).join("") + "</optgroup>";
+    }).join("");
     sel.value = cfg.car;
+    if (!sel.value) { cfg.car = "moyenne"; sel.value = "moyenne"; }
   }
+  function carEntry() { return CARS.filter(function (c) { return c.id === cfg.car; })[0] || CARS[0]; }
   function paintSettings() {
     var c = car();
     $(".set-bat").value = c.bat; $(".set-conso").value = c.conso; $(".set-maxac").value = c.ac; $(".set-maxdc").value = c.dc;
@@ -268,7 +290,10 @@
     $(".set-km").value = cfg.km; $(".out-km").textContent = cfg.km + " km";
     $(".set-trip").value = cfg.trip; $(".set-tripkm").value = cfg.tripKm;
     $(".set-trip-custom").hidden = cfg.trip !== "custom";
-    $(".set-info").textContent = tr().info({ ac: kw(c.ac), dc: kw(c.dc) }, Math.round(c.bat / c.conso * 100));
+    var e = carEntry();
+    $(".set-info").textContent = tr().info({ ac: kw(c.ac), dc: kw(c.dc) }, Math.round(c.bat / c.conso * 100)) + (e.g === "tesla" ? tr().tesla : "");
+    $(".sim-car-name").textContent = e.g === "perso" ? L({ fr: "Ma voiture", en: "My car", es: "Mi coche" }) : L(e.n);
+    $(".sim").dataset.brand = e.g;
     $$(".cmp-fuel-name").forEach(function (s) { s.textContent = L(fuel().n); });
     // les menus déroulants ne peuvent pas cacher les traductions : on écrit le texte dans la bonne langue
     Array.prototype.forEach.call($(".set-fuel").options, function (o) { o.textContent = L(FUELS[o.value].n); });
@@ -371,6 +396,15 @@
     var range = c.bat / c.conso * 100, stops = Math.max(0, Math.ceil((km - range * 0.9) / (range * 0.7)));
     $(".cmp-trip-info").textContent = t.stops(stops) + t.tripCo2(num(x.co2Fuel, 1), num(x.co2Elec, 1));
   }
+
+  // ---------- Onglets du comparatif (l'onglet choisi est gardé) ----------
+  function showTab(name) {
+    $$(".cmp-tabs [data-tab]").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.tab === name ? "true" : "false"); });
+    $$(".cmp-panel").forEach(function (p) { p.hidden = p.dataset.panel !== name; });
+    try { localStorage.setItem("sim-tab", name); } catch (e) {}
+  }
+  $$(".cmp-tabs [data-tab]").forEach(function (b) { b.addEventListener("click", function () { showTab(b.dataset.tab); }); });
+  (function () { var s = null; try { s = localStorage.getItem("sim-tab"); } catch (e) {} if (s && $('.cmp-panel[data-panel="' + s + '"]')) showTab(s); })();
 
   // Changement de langue : réécrire les textes
   new MutationObserver(function () {

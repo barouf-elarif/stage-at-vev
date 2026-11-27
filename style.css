@@ -2612,3 +2612,48 @@ html[data-theme="gow3"] .hero h1 { background-image: linear-gradient(100deg, #f4
 .cmp-trip-info { color: var(--text); font-weight: 600; }
 .set-trip-custom input { width: 6em; font: inherit; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
 .set-trip-custom[hidden] { display: none; }
+
+/* ===== Simulateur : présentation (onglets, encadrés) ===== */
+.sim-settings { padding: 4px 16px 6px; }
+.sim-settings .set-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.set-info { display: inline-block; padding: 6px 10px; border-radius: 8px; background: var(--chip-bg); color: var(--chip-text); font-weight: 600; }
+.sim-msg { min-height: 0; margin: 14px 0 0; }
+.sim-msg.on { padding: 10px 14px; border-radius: 10px; border-left: 4px solid var(--accent); background: var(--chip-bg); }
+.sim-compare { margin-top: 16px; padding: 14px 16px 16px; }
+.cmp-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.cmp-head .sim-live-title { margin: 0; font-size: 1.05rem; }
+.cmp-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.cmp-tabs button { font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; padding: 7px 12px; border-radius: 999px;
+  background: var(--card); color: var(--text); border: 1px solid var(--border); transition: background .15s, transform .1s; }
+.cmp-tabs button:hover { background: var(--chip-hover); }
+.cmp-tabs button[aria-selected="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cmp-opts { margin-bottom: 12px; border: 1px dashed var(--border); border-radius: 10px; padding: 2px 12px; }
+.cmp-opts > summary { cursor: pointer; padding: 8px 0; font-size: .88rem; font-weight: 700; color: var(--muted); list-style: none; }
+.cmp-opts > summary::-webkit-details-marker { display: none; }
+.cmp-opts > summary::after { content: " ▾"; }
+.cmp-opts[open] > summary::after { content: " ▴"; }
+.cmp-opts .cmp-settings { border-bottom: 0; padding-bottom: 6px; }
+.cmp-panel { animation: cmp-in .25s ease-out; }
+.cmp-panel[hidden] { display: none; }
+@keyframes cmp-in { from { opacity: 0; transform: translateY(4px); } }
+.cmp-month.cmp-panel, .cmp-block.cmp-panel { margin-top: 0; padding-top: 0; border-top: 0; }
+.cmp-month.cmp-panel > .sim-live-title, .cmp-block.cmp-panel > .sim-live-title { justify-content: flex-start; }
+.cmp-km-line { display: flex; align-items: baseline; gap: 8px; margin: 0 0 10px; }
+.cmp-km { font-size: 1.6rem; }
+.cmp-cards { margin-top: 14px; }
+.cmp-card { border-radius: 12px; }
+.cmp-month-grid > div { border-radius: 12px; }
+@media (max-width: 560px) {
+  .cmp-tabs { width: 100%; }
+  .cmp-tabs button { flex: 1 1 45%; padding: 7px 6px; font-size: .8rem; }
+  .cmp-month-grid { grid-template-columns: 1fr; }
+  .cmp-times { grid-template-columns: auto 1fr; }
+  .cmp-times strong { grid-column: 2; text-align: left; margin-top: -4px; }
+  .cmp-table th, .cmp-table td { padding: 5px 4px; font-size: .8rem; }
+}
+
+/* Nom de la voiture au-dessus du dessin ; une Tesla est dessinée en rouge */
+.sim-car-name { fill: var(--text); font: 700 11px system-ui, sans-serif; }
+.sim[data-brand="tesla"] .sim-body { fill: #c8102e; }
+.sim-left { display: grid; gap: 12px; }
+.set-field output { white-space: nowrap; }

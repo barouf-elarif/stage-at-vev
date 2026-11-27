@@ -557,10 +557,20 @@
     { a: "Garry Kasparov", fr: "Les échecs sont une torture mentale.", en: "Chess is mental torture.", es: "El ajedrez es una tortura mental." },
     { a: "Benjamin Franklin", fr: "La vie est une sorte de partie d’échecs.", en: "Life is a kind of chess.", es: "La vida es una especie de partida de ajedrez." }
   ];
+  // La citation garde la hauteur de la plus longue déjà affichée : la page ne bouge plus quand elle change
+  // (sinon un menu déroulant ouvert plus bas, comme « Voiture » du simulateur, se refermait tout seul)
+  function holdHeight(q) {
+    var h = q.offsetHeight;
+    if (h > (q._h || 0)) { q._h = h; q.style.minHeight = h + "px"; }
+  }
+  // Ne pas changer la citation pendant qu'on utilise un menu ou un champ
+  function busyForm() { var a = document.activeElement; return !!a && /^(SELECT|INPUT|TEXTAREA)$/.test(a.tagName); }
+  window.addEventListener("resize", function () { var q = document.querySelector(".pq:not(.fx-quote)"); if (q) { q._h = 0; q.style.minHeight = ""; } });
   var quoteEl = null, quoteTimer = null, quoteI = 0;
   function paintQuote() {
     var q = QUOTES[quoteI];
     quoteEl.innerHTML = "« " + (q[html.lang] || q.fr) + " »<cite>— " + q.a + "</cite>";
+    holdHeight(quoteEl);
   }
   function showQuotes(on) {
     var dates = document.querySelector(".hero .dates");
@@ -571,6 +581,7 @@
       paintQuote();
       dates.parentNode.insertBefore(quoteEl, dates.nextSibling);
       if (!calm) quoteTimer = setInterval(function () {
+        if (busyForm()) return;
         quoteEl.classList.add("pq-out");
         setTimeout(function () { if (!quoteEl) return; quoteI = (quoteI + 1) % QUOTES.length; paintQuote(); quoteEl.classList.remove("pq-out"); }, 500);
       }, 7000);

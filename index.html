@@ -540,6 +540,7 @@
         <p class="set-info"></p>
       </details>
       <div class="sim">
+        <div class="sim-left">
         <svg class="sim-scene" viewBox="0 0 360 170" aria-hidden="true">
           <rect x="8" y="150" width="344" height="6" rx="3" class="sim-ground"/>
           <g class="sim-charger">
@@ -557,18 +558,8 @@
             <rect x="252" y="110" width="0" height="10" rx="2" class="sim-bat"/>
           </g>
           <text x="53" y="56" text-anchor="middle" class="sim-screen-text">--</text>
+          <text x="272" y="72" text-anchor="middle" class="sim-car-name"></text>
         </svg>
-        <div class="sim-panel">
-          <ol class="sim-steps">
-            <li data-step="badge"><button type="button" class="sim-btn" data-act="badge">🪪 <span data-lang="fr">Passer le badge</span><span data-lang="en">Swipe the badge</span><span data-lang="es">Pasar la tarjeta</span></button></li>
-            <li data-step="plug">
-              <span class="sim-label"><span data-lang="fr">Brancher :</span><span data-lang="en">Plug in:</span><span data-lang="es">Conectar:</span></span>
-              <button type="button" class="sim-btn" data-act="plug" data-plug="ac">🔌 Type 2 <small>AC · 3,7–22 kW</small></button>
-              <button type="button" class="sim-btn" data-act="plug" data-plug="dc">⚡ Combo CCS2 <small>DC · 50–350 kW</small></button>
-            </li>
-            <li data-step="start"><button type="button" class="sim-btn sim-go" data-act="start">▶ <span data-lang="fr">Démarrer la charge</span><span data-lang="en">Start charging</span><span data-lang="es">Iniciar la carga</span></button></li>
-            <li data-step="stop"><button type="button" class="sim-btn sim-stop" data-act="stop">■ <span data-lang="fr">Arrêter et libérer la borne</span><span data-lang="en">Stop and release the charger</span><span data-lang="es">Detener y liberar el cargador</span></button></li>
-          </ol>
           <div class="sim-live">
             <p class="sim-live-title">📡 <span data-lang="fr">Plateforme (simulation)</span><span data-lang="en">Platform (simulation)</span><span data-lang="es">Plataforma (simulación)</span></p>
             <dl>
@@ -586,18 +577,37 @@
             </label>
           </div>
         </div>
+        <div class="sim-panel">
+          <ol class="sim-steps">
+            <li data-step="badge"><button type="button" class="sim-btn" data-act="badge">🪪 <span data-lang="fr">Passer le badge</span><span data-lang="en">Swipe the badge</span><span data-lang="es">Pasar la tarjeta</span></button></li>
+            <li data-step="plug">
+              <span class="sim-label"><span data-lang="fr">Brancher :</span><span data-lang="en">Plug in:</span><span data-lang="es">Conectar:</span></span>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="ac">🔌 Type 2 <small>AC · 3,7–22 kW</small></button>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="dc">⚡ Combo CCS2 <small>DC · 50–350 kW</small></button>
+            </li>
+            <li data-step="start"><button type="button" class="sim-btn sim-go" data-act="start">▶ <span data-lang="fr">Démarrer la charge</span><span data-lang="en">Start charging</span><span data-lang="es">Iniciar la carga</span></button></li>
+            <li data-step="stop"><button type="button" class="sim-btn sim-stop" data-act="stop">■ <span data-lang="fr">Arrêter et libérer la borne</span><span data-lang="en">Stop and release the charger</span><span data-lang="es">Detener y liberar el cargador</span></button></li>
+          </ol>
+        </div>
       </div>
       <p class="sim-msg" role="status" aria-live="polite"></p>
       <div class="sim-compare">
-        <p class="sim-live-title">⛽ <span data-lang="fr">Comparatif : électrique ou thermique ?</span><span data-lang="en">Comparison: electric or fuel?</span><span data-lang="es">Comparativa: ¿eléctrico o combustión?</span></p>
-        <div class="set-grid cmp-settings">
+        <div class="cmp-head">
+          <p class="sim-live-title">⛽ <span data-lang="fr">Comparatif : électrique ou thermique ?</span><span data-lang="en">Comparison: electric or fuel?</span><span data-lang="es">Comparativa: ¿eléctrico o combustión?</span></p>
+          <div class="cmp-tabs" role="tablist"><button type="button" role="tab" data-tab="charge" aria-selected="true">🔋 <span data-lang="fr">Cette charge</span><span data-lang="en">This charge</span><span data-lang="es">Esta carga</span></button><button type="button" role="tab" data-tab="month" aria-selected="false">📅 <span data-lang="fr">Mois et années</span><span data-lang="en">Months and years</span><span data-lang="es">Meses y años</span></button><button type="button" role="tab" data-tab="time" aria-selected="false">⏱️ <span data-lang="fr">Temps de charge</span><span data-lang="en">Charging time</span><span data-lang="es">Tiempo de carga</span></button><button type="button" role="tab" data-tab="trip" aria-selected="false">🗺️ <span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span></button></div>
+        </div>
+        <details class="cmp-opts">
+          <summary>⚙️ <span data-lang="fr">Prix et consommation (carburant, électricité à la maison)</span><span data-lang="en">Prices and consumption (fuel, home electricity)</span><span data-lang="es">Precios y consumo (combustible, electricidad en casa)</span></summary>
+          <div class="set-grid cmp-settings">
           <label class="set-field">⛽ <span data-lang="fr">Carburant</span><span data-lang="en">Fuel</span><span data-lang="es">Combustible</span><select class="set-fuel"><option value="diesel">Diesel</option><option value="essence">Essence</option></select></label>
           <label class="set-field">💶 <span data-lang="fr">Prix du carburant (€/L)</span><span data-lang="en">Fuel price (€/L)</span><span data-lang="es">Precio del combustible (€/L)</span><input type="number" class="set-fuelprice" min="0.5" max="4" step="0.01"></label>
           <label class="set-field">📉 <span data-lang="fr">Consommation (L/100 km)</span><span data-lang="en">Consumption (L/100 km)</span><span data-lang="es">Consumo (L/100 km)</span><input type="number" class="set-fuelconso" min="2" max="20" step="0.1"></label>
           <label class="set-field">🏠 <span data-lang="fr">Électricité à la maison (€/kWh)</span><span data-lang="en">Home electricity (€/kWh)</span><span data-lang="es">Electricidad en casa (€/kWh)</span><input type="number" class="set-home" min="0" max="1" step="0.01"></label>
         </div>
-        <p class="cmp-km-line"><span data-lang="fr">Autonomie récupérée :</span><span data-lang="en">Range gained:</span><span data-lang="es">Autonomía recuperada:</span> <strong class="cmp-km">0 km</strong></p>
-        <div class="cmp-rows">
+        </details>
+        <div class="cmp-panel" data-panel="charge">
+          <p class="cmp-km-line"><span data-lang="fr">Autonomie récupérée :</span><span data-lang="en">Range gained:</span><span data-lang="es">Autonomía recuperada:</span> <strong class="cmp-km">0 km</strong></p>
+          <div class="cmp-rows">
           <span class="cmp-name">⛽ <span class="cmp-fuel-name"></span></span>
           <span class="cmp-track"><span class="cmp-bar cmp-bar-diesel"></span></span><strong class="cmp-diesel">0,00 €</strong>
           <span class="cmp-name">⚡ <span data-lang="fr">Électrique, à la borne</span><span data-lang="en">Electric, at the charger</span><span data-lang="es">Eléctrico, en el cargador</span></span>
@@ -605,20 +615,19 @@
           <span class="cmp-name">🏠 <span data-lang="fr">Électrique, à la maison</span><span data-lang="en">Electric, at home</span><span data-lang="es">Eléctrico, en casa</span></span>
           <span class="cmp-track"><span class="cmp-bar cmp-bar-home"></span></span><strong class="cmp-home">0,00 €</strong>
         </div>
-        <p class="cmp-totals">
+          <p class="cmp-totals">
           <span>💰 <span data-lang="fr">Économie à la borne :</span><span data-lang="en">Savings at the charger:</span><span data-lang="es">Ahorro en el cargador:</span> <strong class="cmp-save">0,00 €</strong></span>
           <span>🌱 CO₂ : <strong class="cmp-co2">0 kg → 0 kg</strong></span>
         </p>
-        <div class="cmp-cards">
+          <div class="cmp-cards">
           <div class="cmp-card"><span class="cmp-card-t">💶 <span data-lang="fr">Coût aux 100 km</span><span data-lang="en">Cost per 100 km</span><span data-lang="es">Coste cada 100 km</span></span><span class="c100"></span></div>
           <div class="cmp-card"><span class="cmp-card-t">🌳 <span data-lang="fr">CO₂ évité sur 1 an</span><span data-lang="en">CO₂ avoided in 1 year</span><span data-lang="es">CO₂ evitado en 1 año</span></span><span class="cco2"></span></div>
           <div class="cmp-card"><span class="cmp-card-t">⏱️ <span data-lang="fr">Pour récupérer 100 km</span><span data-lang="en">To gain 100 km</span><span data-lang="es">Para recuperar 100 km</span></span><span class="ctime"></span></div>
           <div class="cmp-card"><span class="cmp-card-t">🛣️ <span data-lang="fr">Autonomie batterie pleine</span><span data-lang="en">Full battery range</span><span data-lang="es">Autonomía con batería llena</span></span><span class="crange"></span></div>
         </div>
-
-        <div class="cmp-month">
-          <p class="sim-live-title"><span>📅 <span data-lang="fr">Et sur un mois ?</span><span data-lang="en">And over a month?</span><span data-lang="es">¿Y en un mes?</span></span>
-            <label class="sim-speed cmp-month-km"><span data-lang="fr">Je roule</span><span data-lang="en">I drive</span><span data-lang="es">Conduzco</span> <output class="out-km"></output> <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span>
+        </div>
+        <div class="cmp-month cmp-panel" data-panel="month" hidden>
+          <p class="sim-live-title"><label class="sim-speed cmp-month-km"><span data-lang="fr">Je roule</span><span data-lang="en">I drive</span><span data-lang="es">Conduzco</span> <output class="out-km"></output> <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span>
               <input type="range" class="set-km" min="100" max="4000" step="100" value="1000"></label>
           </p>
           <div class="cmp-month-grid">
@@ -635,16 +644,13 @@
             </tbody>
           </table>
         </div>
-
-        <div class="cmp-block">
+        <div class="cmp-block cmp-panel" data-panel="time" hidden>
           <p class="sim-live-title"><span>⏱️ <span data-lang="fr">Combien de temps pour charger ?</span><span data-lang="en">How long does it take to charge?</span><span data-lang="es">¿Cuánto tarda en cargar?</span></span> <small class="cmp-span"></small></p>
           <div class="cmp-times"></div>
           <p class="cmp-hint"><span data-lang="fr">La voiture limite parfois la puissance : une borne de 350 kW ne charge pas plus vite qu’une de 50 kW si la voiture n’accepte que 50 kW.</span><span data-lang="en">The car sometimes limits the power: a 350 kW charger is no faster than a 50 kW one if the car only accepts 50 kW.</span><span data-lang="es">El coche a veces limita la potencia: un cargador de 350 kW no carga más rápido que uno de 50 kW si el coche solo acepta 50 kW.</span></p>
         </div>
-
-        <div class="cmp-block">
-          <p class="sim-live-title"><span>🗺️ <span data-lang="fr">Et pour un trajet ?</span><span data-lang="en">And for a trip?</span><span data-lang="es">¿Y para un viaje?</span></span>
-            <label class="sim-speed"><span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span><select class="set-trip">
+        <div class="cmp-block cmp-panel" data-panel="trip" hidden>
+          <p class="sim-live-title"><label class="sim-speed"><span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span><select class="set-trip">
               <option value="30">30 km</option>
               <option value="200" selected>Nice → Marseille (200 km)</option>
               <option value="470">Nice → Lyon (470 km)</option>
