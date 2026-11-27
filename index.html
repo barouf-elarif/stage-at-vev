@@ -504,8 +504,8 @@
             <li data-step="badge"><button type="button" class="sim-btn" data-act="badge">🪪 <span data-lang="fr">Passer le badge</span><span data-lang="en">Swipe the badge</span><span data-lang="es">Pasar la tarjeta</span></button></li>
             <li data-step="plug">
               <span class="sim-label"><span data-lang="fr">Brancher :</span><span data-lang="en">Plug in:</span><span data-lang="es">Conectar:</span></span>
-              <button type="button" class="sim-btn" data-act="plug" data-plug="ac">🔌 Type 2 <small>AC · 11 kW</small></button>
-              <button type="button" class="sim-btn" data-act="plug" data-plug="dc">⚡ Combo CCS2 <small>DC · 150 kW</small></button>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="ac">🔌 Type 2 <small>AC · 3,7–22 kW</small></button>
+              <button type="button" class="sim-btn" data-act="plug" data-plug="dc">⚡ Combo CCS2 <small>DC · 50–350 kW</small></button>
             </li>
             <li data-step="start"><button type="button" class="sim-btn sim-go" data-act="start">▶ <span data-lang="fr">Démarrer la charge</span><span data-lang="en">Start charging</span><span data-lang="es">Iniciar la carga</span></button></li>
             <li data-step="stop"><button type="button" class="sim-btn sim-stop" data-act="stop">■ <span data-lang="fr">Arrêter et libérer la borne</span><span data-lang="en">Stop and release the charger</span><span data-lang="es">Detener y liberar el cargador</span></button></li>
@@ -519,17 +519,36 @@
               <dt><span data-lang="fr">Batterie</span><span data-lang="en">Battery</span><span data-lang="es">Batería</span></dt><dd class="sim-soc">20 %</dd>
               <dt><span data-lang="fr">Durée</span><span data-lang="en">Time</span><span data-lang="es">Duración</span></dt><dd class="sim-time">0 min</dd>
             </dl>
-            <label class="sim-speed"><span data-lang="fr">Vitesse</span><span data-lang="en">Speed</span><span data-lang="es">Velocidad</span>
+            <label class="sim-speed sim-power-select">⚡ <span data-lang="fr">Puissance de la borne</span><span data-lang="en">Charger power</span><span data-lang="es">Potencia del cargador</span>
+              <select disabled><option>—</option></select>
+            </label>
+            <label class="sim-speed">⏩ <span data-lang="fr">Vitesse de la simulation</span><span data-lang="en">Simulation speed</span><span data-lang="es">Velocidad de la simulación</span>
               <select><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
             </label>
           </div>
         </div>
       </div>
       <p class="sim-msg" role="status" aria-live="polite"></p>
+      <div class="sim-compare">
+        <p class="sim-live-title">⛽ <span data-lang="fr">Comparatif : électrique ou diesel ?</span><span data-lang="en">Comparison: electric or diesel?</span><span data-lang="es">Comparativa: ¿eléctrico o diésel?</span></p>
+        <p class="cmp-km-line"><span data-lang="fr">Autonomie récupérée :</span><span data-lang="en">Range gained:</span><span data-lang="es">Autonomía recuperada:</span> <strong class="cmp-km">0 km</strong></p>
+        <div class="cmp-rows">
+          <span class="cmp-name">⛽ <span data-lang="fr">Même trajet en diesel</span><span data-lang="en">Same trip with diesel</span><span data-lang="es">Mismo trayecto en diésel</span></span>
+          <span class="cmp-track"><span class="cmp-bar cmp-bar-diesel"></span></span><strong class="cmp-diesel">0,00 €</strong>
+          <span class="cmp-name">⚡ <span data-lang="fr">Électrique, à la borne</span><span data-lang="en">Electric, at the charger</span><span data-lang="es">Eléctrico, en el cargador</span></span>
+          <span class="cmp-track"><span class="cmp-bar cmp-bar-elec"></span></span><strong class="cmp-elec">0,00 €</strong>
+          <span class="cmp-name">🏠 <span data-lang="fr">Électrique, à la maison</span><span data-lang="en">Electric, at home</span><span data-lang="es">Eléctrico, en casa</span></span>
+          <span class="cmp-track"><span class="cmp-bar cmp-bar-home"></span></span><strong class="cmp-home">0,00 €</strong>
+        </div>
+        <p class="cmp-totals">
+          <span>💰 <span data-lang="fr">Économie à la borne :</span><span data-lang="en">Savings at the charger:</span><span data-lang="es">Ahorro en el cargador:</span> <strong class="cmp-save">0,00 €</strong></span>
+          <span>🌱 CO₂ : <strong class="cmp-co2">0 kg → 0 kg</strong></span>
+        </p>
+      </div>
       <p class="sim-note">
-        <span data-lang="fr">Batterie de 60 kWh qui part de 20 %. En courant continu (CCS2), la puissance baisse quand la batterie se remplit, pour la protéger. Les prix du ticket sont des exemples.</span>
-        <span data-lang="en">60 kWh battery starting at 20%. With direct current (CCS2), power drops as the battery fills up, to protect it. Ticket prices are examples.</span>
-        <span data-lang="es">Batería de 60 kWh que empieza al 20 %. En corriente continua (CCS2), la potencia baja cuando la batería se llena, para protegerla. Los precios del ticket son ejemplos.</span>
+        <span data-lang="fr">Batterie de 60 kWh qui part de 20 %. En courant continu (CCS2), la puissance baisse quand la batterie se remplit, pour la protéger. Prix à la borne : 0,56 €/kWh. Comparatif (estimations moyennes) : voiture électrique à 16 kWh/100 km, diesel à 6 L/100 km et 1,70 €/L, recharge à la maison à 0,25 €/kWh, 2,65 kg de CO₂ par litre de gazole et environ 50 g par kWh d’électricité en France.</span>
+        <span data-lang="en">60 kWh battery starting at 20%. With direct current (CCS2), power drops as the battery fills up, to protect it. Charger price: €0.56/kWh. Comparison (average estimates): electric car at 16 kWh/100 km, diesel at 6 L/100 km and €1.70/L, home charging at €0.25/kWh, 2.65 kg of CO₂ per litre of diesel and about 50 g per kWh of electricity in France.</span>
+        <span data-lang="es">Batería de 60 kWh que empieza al 20 %. En corriente continua (CCS2), la potencia baja cuando la batería se llena, para protegerla. Precio en el cargador: 0,56 €/kWh. Comparativa (estimaciones medias): coche eléctrico a 16 kWh/100 km, diésel a 6 L/100 km y 1,70 €/L, carga en casa a 0,25 €/kWh, 2,65 kg de CO₂ por litro de gasóleo y unos 50 g por kWh de electricidad en Francia.</span>
       </p>
     </section>
 

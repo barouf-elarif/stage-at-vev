@@ -1167,6 +1167,19 @@ html:not([lang="es"]) [data-lang="es"] { display: none !important; }
 .sim-speed { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: .85rem; color: var(--muted); }
 .sim-speed select { font: inherit; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
 .sim-msg { min-height: 1.5em; margin-top: 12px; font-weight: 600; }
+.sim-compare { margin-top: 10px; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
+.cmp-km-line { margin-bottom: 8px; }
+.cmp-km { font-size: 1.15rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cmp-rows { display: grid; grid-template-columns: auto 1fr auto; gap: 6px 12px; align-items: center; }
+.cmp-name { font-size: .88rem; }
+.cmp-track { height: 12px; border-radius: 6px; background: var(--border); overflow: hidden; }
+.cmp-bar { display: block; height: 100%; width: 0; border-radius: 6px; transition: width .2s; }
+.cmp-bar-diesel { background: #c0392b; }
+.cmp-bar-elec { background: var(--accent); }
+.cmp-bar-home { background: #2ecc71; }
+.cmp-rows strong { font-variant-numeric: tabular-nums; text-align: right; min-width: 4.5em; }
+.cmp-totals { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; }
+.cmp-save { color: #2ecc71; }
 .sim-note { margin-top: 6px; font-size: .8rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .sim-cable, .sim-led { animation: none !important; } }
 
