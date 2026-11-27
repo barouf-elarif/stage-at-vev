@@ -1,12 +1,12 @@
 // Thèmes du site : menu déroulant + thèmes secrets (page Centres d'intérêt)
 (function () {
   var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego", "noel",
-                "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur"];
+                "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur", "gow3", "slime"];
   var menus = document.querySelectorAll(".theme-menu");   // « Thème » et « Thème 2 »
   var buttons = document.querySelectorAll("[data-theme-choice]");
 
   // Thèmes qu'il faut débloquer avant de pouvoir les utiliser
-  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur"];
+  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur", "gow3", "slime"];
   // Thèmes en test : rangés dans le laboratoire caché, tous débloqués d'un coup avec lui
   var LAB_THEMES = ["duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego"];
   function keyFor(choice) {
@@ -17,7 +17,8 @@
   function applyTheme(choice) {
     // Un thème verrouillé (venu de l'adresse ?theme=… ou de la mémoire) n'est jamais appliqué
     var key = keyFor(choice);
-    if (key && !isUnlocked(key)) {
+    // (Le Mur est aussi rangé dans le laboratoire : il marche si le laboratoire est débloqué)
+    if (key && !isUnlocked(key) && !(choice === "mur" && isUnlocked("labo"))) {
       choice = "auto";
       if (/[?&]theme=/.test(location.search) && history.replaceState) {
         history.replaceState(null, "", location.pathname + location.hash);
@@ -67,8 +68,9 @@
   //  - Bloodborne : le ciel noir et rouge (thème Éclipse), puis 3 clics sur la place n°1 des jeux
   //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
+  //  - Slime Rancher : la couleur des carottes (thème Orange), puis 3 clics sur la place n°8 des jeux (le slime)
   var secrets = document.getElementById("secrets");
-  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", premium: { fr: "Échecs Premium", en: "Premium Chess", es: "Ajedrez Premium" }, lunesang: { fr: "Lune de sang", en: "Blood Moon", es: "Luna de sangre" }, mur: { fr: "Le Mur", en: "The Wall", es: "El Muro" }, noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
+  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", premium: { fr: "Échecs Premium", en: "Premium Chess", es: "Ajedrez Premium" }, lunesang: { fr: "Palesang", en: "Paleblood", es: "Sangre pálida" }, gow3: "God of War III", slime: "Slime Rancher", mur: { fr: "Le Mur", en: "The Wall", es: "El Muro" }, noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
   var MSG = {
     unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
     relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
@@ -89,7 +91,7 @@
     document.documentElement.classList.toggle("has-echecs", isUnlocked("echecs"));
     document.documentElement.classList.toggle("has-premium", isUnlocked("premium"));
     document.documentElement.classList.toggle("has-labo", isUnlocked("labo"));
-    ["bloodborne", "lunesang", "mur"].forEach(function (id) { document.documentElement.classList.toggle("has-" + id, isUnlocked(id)); });
+    ["bloodborne", "lunesang", "mur", "ragnarok", "gow3", "slime"].forEach(function (id) { document.documentElement.classList.toggle("has-" + id, isUnlocked(id)); });
   }
 
   function toast(text) {
@@ -224,6 +226,7 @@
       bloodborne: { fr: "☀️ Le soleil brille encore… la chasse n’a pas commencé.", en: "☀️ The sun is still shining… the hunt hasn’t begun.", es: "☀️ El sol aún brilla… la caza no ha empezado." },
       ragnarok:   { fr: "🍂 Il ne neige pas encore… le grand hiver n’est pas arrivé.", en: "🍂 It isn’t snowing yet… the great winter hasn’t come.", es: "🍂 Todavía no nieva… el gran invierno no ha llegado." },
       astro:      { fr: "🌙 Il fait trop sombre… le petit robot dort encore.", en: "🌙 It’s too dark… the little robot is still asleep.", es: "🌙 Está demasiado oscuro… el pequeño robot sigue durmiendo." },
+      slime:      { fr: "🥕 Le slime renifle… cette couleur ne lui donne pas faim.", en: "🥕 The slime sniffs… this colour doesn’t make it hungry.", es: "🥕 El slime olfatea… este color no le da hambre." },
       echecs:     { fr: "♚ Le roi noir attend son adversaire…", en: "♚ The black king is waiting for his opponent…", es: "♚ El rey negro espera a su rival…" }
     };
     var light = function () { return currentTheme() === "light" ||
@@ -248,6 +251,12 @@
     if (top[0]) top[0].addEventListener("click", function () {
       if (secrets.hidden || isUnlocked("echecs") || !blackTime) return;
       if (Date.now() - blackTime < 4000) { blackTime = 0; unlock("echecs"); }
+    });
+    // Slime Rancher : thème Orange (la couleur des carottes), puis 3 carottes au slime (place n°8 des jeux)
+    var slimeRank = document.querySelectorAll("#jeux .top3.top-rest > li .rank")[4];
+    onClicks(slimeRank, 3, function () {
+      if (secrets.hidden || isUnlocked("slime")) return;
+      if (currentTheme() === "orange") unlock("slime"); else toast(WRONG.slime[lang()]);
     });
     onClicks(top[2], 3, function () {
       if (secrets.hidden || isUnlocked("ragnarok")) return;
@@ -302,7 +311,7 @@
     }
   }
 
-  // ===== Thèmes légendaires (encore plus secrets) : Lune de sang et Le Mur =====
+  // ===== Thèmes légendaires (encore plus secrets) : Palesang, Le Mur et God of War III =====
   // Effets et cinématiques dans legendes.js ; ici seulement la façon de les débloquer.
   function unlockLegend(id) {
     if (isUnlocked(id)) return;
@@ -310,7 +319,7 @@
     if (window.legendCinematic) window.legendCinematic(id);
     setTimeout(function () { applyTheme(id); }, 2600);
   }
-  // Lune de sang : avec le thème Bloodborne, frapper trois fois la lune du haut de page
+  // Palesang : avec le thème Bloodborne, frapper trois fois la lune du haut de page
   // (ou être sur Bloodborne / Éclipse entre minuit et 1 h du matin)
   var moonHits = 0, moonTimer = null;
   function placeMoon() {
@@ -349,6 +358,25 @@
       wallLine.classList.remove("wall-shake"); void wallLine.offsetWidth; wallLine.classList.add("wall-shake");
       if (wallHits >= 3) { wallHits = 0; unlockLegend("mur"); }
       else toast({ fr: "🧱 Le mur tremble… (", en: "🧱 The wall shakes… (", es: "🧱 El muro tiembla… (" }[lang()] + wallHits + "/3)");
+    });
+  }
+
+  // God of War III : avec le thème God of War, trois coups sous le nom du jeu (place n°3 des jeux) : retour en Grèce
+  var gowLine = document.querySelector("#jeux .top3:not(.top-rest) > li:nth-child(3) .meta");
+  if (gowLine) {
+    var gowHits = 0, gowTimer = null;
+    gowLine.addEventListener("click", function () {
+      if (!secrets || secrets.hidden || !isUnlocked("ragnarok") || isUnlocked("gow3")) return;
+      if (currentTheme() !== "ragnarok") {
+        toast({ fr: "⚡ L’Olympe ne t’entend pas… reviens avec le thème God of War.", en: "⚡ Olympus can’t hear you… come back with the God of War theme.", es: "⚡ El Olimpo no te oye… vuelve con el tema God of War." }[lang()]);
+        return;
+      }
+      gowHits++;
+      clearTimeout(gowTimer);
+      gowTimer = setTimeout(function () { gowHits = 0; }, 2500);
+      gowLine.classList.remove("wall-shake"); void gowLine.offsetWidth; gowLine.classList.add("wall-shake");
+      if (gowHits >= 3) { gowHits = 0; unlockLegend("gow3"); }
+      else toast({ fr: "⚡ Le tonnerre gronde sur l’Olympe… (", en: "⚡ Thunder rumbles over Olympus… (", es: "⚡ El trueno retumba sobre el Olimpo… (" }[lang()] + gowHits + "/3)");
     });
   }
 
@@ -413,7 +441,7 @@
 
   // ===== Bouton à côté des drapeaux : tout débloquer / tout verrouiller =====
   var lockAll = document.querySelector(".lock-all");
-  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium", "lunesang", "mur", "labo"];
+  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium", "lunesang", "mur", "gow3", "slime", "labo"];
   var LOCK_MSG = {
     open:   { fr: "🔓 Tous les thèmes sont débloqués !", en: "🔓 All themes are unlocked!", es: "🔓 ¡Todos los temas están desbloqueados!" },
     closed: { fr: "🔒 Tous les thèmes sont verrouillés.", en: "🔒 All themes are locked.", es: "🔒 Todos los temas están bloqueados." },
