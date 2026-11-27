@@ -192,9 +192,25 @@
     render();
   });
 
+  // Économie par mois selon les kilomètres parcourus (indépendant de la charge en cours)
+  function money(x) { return html.lang === "en" ? "€" + Math.round(x) : Math.round(x) + " €"; }
+  function renderMonth() {
+    var km = parseInt($(".cmp-month-km select").value, 10);
+    var c = compare(km / 100 * EV_CONSO);
+    $(".m-diesel").textContent = money(c.diesel);
+    $(".m-elec").textContent = money(c.elec);
+    $(".m-home").textContent = money(c.home);
+    $(".m-save").textContent = money(c.diesel - c.elec);
+    $(".m-save-year").textContent = money((c.diesel - c.elec) * 12);
+    $(".m-save-home").textContent = money(c.diesel - c.home);
+    $(".m-save-home-year").textContent = money((c.diesel - c.home) * 12);
+  }
+  $(".cmp-month-km select").addEventListener("change", renderMonth);
+
   // Changement de langue : réécrire les textes
-  new MutationObserver(function () { var p = maxPower; fillPowers(); if (plug) { maxPower = p; $(".sim-power-select select").value = p; } render(); say(""); }).observe(html, { attributes: true, attributeFilter: ["lang"] });
+  new MutationObserver(function () { var p = maxPower; fillPowers(); if (plug) { maxPower = p; $(".sim-power-select select").value = p; } render(); renderMonth(); say(""); }).observe(html, { attributes: true, attributeFilter: ["lang"] });
 
   reset();
   render();
+  renderMonth();
 })();

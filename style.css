@@ -1180,6 +1180,16 @@ html:not([lang="es"]) [data-lang="es"] { display: none !important; }
 .cmp-rows strong { font-variant-numeric: tabular-nums; text-align: right; min-width: 4.5em; }
 .cmp-totals { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; }
 .cmp-save { color: #2ecc71; }
+.cmp-month { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.cmp-month .sim-live-title { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.cmp-month-km { margin: 0; font-weight: 500; }
+.cmp-month-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0; }
+.cmp-month-grid > div { display: grid; gap: 2px; text-align: center; padding: 8px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); font-size: .85rem; }
+.cmp-month-grid strong { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.m-diesel { color: #c0392b; }
+.m-elec { color: var(--accent); }
+.m-home { color: #2ecc71; }
+.cmp-month-save strong, .cmp-month-home strong { color: #2ecc71; }
 .sim-note { margin-top: 6px; font-size: .8rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .sim-cable, .sim-led { animation: none !important; } }
 
