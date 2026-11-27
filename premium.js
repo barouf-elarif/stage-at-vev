@@ -4,6 +4,7 @@
 //  - explosion d'étincelles à chaque clic, et les pièces du classement qui tournent
 //  - éclat de lumière qui traverse l'écran quand on choisit le thème
 //  - cinématique « Promotion » quand on débloque le thème
+//  - puzzles « Mat en 1 » (bouton ♞), citations de grands joueurs, curseur cavalier
 (function () {
   var html = document.documentElement;
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -350,11 +351,167 @@
     if (window.scrollY < 100) mateShown = false;
   }, { passive: true });
 
+  // =====================================================================
+  // 4) Puzzle « Mat en 1 » : bouton ♞ en bas à droite, les Blancs jouent et matent en un coup
+  // =====================================================================
+  var PUZZLES = [
+    { // le mat du couloir
+      board: ["......k.", ".....ppp", "........", "........", "........", "........", ".....PPP", "R.....K."],
+      sol: "a1a8", name: { fr: "Le mat du couloir", en: "Back-rank mate", es: "El mate del pasillo" } },
+    { // le coup du berger
+      board: ["r.bqkb.r", "pppp.ppp", "..n..n..", "....p..Q", "..B.P...", "........", "PPPP.PPP", "RNB.K.NR"],
+      sol: "h5f7", name: { fr: "Le coup du berger", en: "Scholar’s mate", es: "El mate del pastor" } },
+    { // le mat à l'étouffée : le roi est enfermé par ses propres pièces
+      board: ["......rk", "......pp", "........", "......N.", "........", "........", ".....PPP", "......K."],
+      sol: "g5f7", name: { fr: "Le mat à l’étouffée", en: "Smothered mate", es: "El mate de la coz" } },
+    { // la dame soutenue par le fou
+      board: [".......k", ".....ppp", "........", ".......Q", "........", "...B....", ".....PPP", "......K."],
+      sol: "h5h7", name: { fr: "La dame soutenue par le fou", en: "Queen backed by the bishop", es: "La dama apoyada por el alfil" } },
+    { // finale roi et tour
+      board: ["k.......", "........", ".K......", "........", "........", "........", "........", ".......R"],
+      sol: "h1h8", name: { fr: "Finale roi et tour", en: "King and rook endgame", es: "Final de rey y torre" } }
+  ];
+  var PT = {
+    fr: { title: "Mat en 1", turn: "Les Blancs jouent et font échec et mat en un coup.", pick: "Clique sur une pièce blanche, puis sur sa case d’arrivée.",
+          wrong: "Pas tout à fait… cherche encore !", right: "Échec et mat ! ♛ Bravo !", next: "Puzzle suivant ›", solved: function (n, t) { return "Résolus : " + n + " / " + t; },
+          all: "Tous les puzzles sont résolus : tu mérites ton titre de Grand Maître ♛", open: "Puzzle d’échecs", close: "Fermer" },
+    en: { title: "Mate in 1", turn: "White to play and checkmate in one move.", pick: "Click a white piece, then its destination square.",
+          wrong: "Not quite… keep looking!", right: "Checkmate! ♛ Well done!", next: "Next puzzle ›", solved: function (n, t) { return "Solved: " + n + " / " + t; },
+          all: "All puzzles solved: you’ve earned your Grandmaster title ♛", open: "Chess puzzle", close: "Close" },
+    es: { title: "Mate en 1", turn: "Juegan las blancas y dan jaque mate en una jugada.", pick: "Haz clic en una pieza blanca y luego en su casilla de llegada.",
+          wrong: "No del todo… ¡sigue buscando!", right: "¡Jaque mate! ♛ ¡Bravo!", next: "Siguiente puzzle ›", solved: function (n, t) { return "Resueltos: " + n + " / " + t; },
+          all: "Todos los puzzles resueltos: te has ganado el título de Gran Maestro ♛", open: "Puzzle de ajedrez", close: "Cerrar" }
+  };
+  function pt() { return PT[html.lang] || PT.fr; }
+  function solvedList() { try { return JSON.parse(localStorage.getItem("premium-puzzles") || "[]"); } catch (e) { return []; } }
+  function saveSolved(l) { try { localStorage.setItem("premium-puzzles", JSON.stringify(l)); } catch (e) {} }
+  var pzBtn = null, pzPanel = null, pzIndex = 0, pzSel = null, pzDone = false;
+
+  function showPuzzleBtn(on) {
+    if (on && !pzBtn) {
+      pzBtn = document.createElement("button");
+      pzBtn.type = "button"; pzBtn.className = "pz-btn"; pzBtn.textContent = "♞";
+      pzBtn.title = pt().open; pzBtn.setAttribute("aria-label", pt().open);
+      pzBtn.addEventListener("click", function (e) { e.stopPropagation(); pzPanel ? closePuzzle() : openPuzzle(); });
+      document.body.appendChild(pzBtn);
+    } else if (!on && pzBtn) { pzBtn.remove(); pzBtn = null; closePuzzle(); }
+  }
+  function openPuzzle() {
+    var done = solvedList();
+    // on commence par le premier puzzle pas encore résolu
+    pzIndex = 0;
+    for (var i = 0; i < PUZZLES.length; i++) if (done.indexOf(i) < 0) { pzIndex = i; break; }
+    pzPanel = document.createElement("div");
+    pzPanel.className = "pz-panel";
+    pzPanel.setAttribute("role", "dialog");
+    pzPanel.addEventListener("click", function (e) { e.stopPropagation(); });
+    document.body.appendChild(pzPanel);
+    pzBtn.setAttribute("aria-expanded", "true");
+    drawPuzzle();
+  }
+  function closePuzzle() {
+    if (!pzPanel) return;
+    pzPanel.remove(); pzPanel = null;
+    if (pzBtn) pzBtn.setAttribute("aria-expanded", "false");
+  }
+  function drawPuzzle() {
+    var P = PUZZLES[pzIndex], t = pt(), done = solvedList();
+    pzSel = null; pzDone = false;
+    var cells = "";
+    for (var r = 0; r < 8; r++) for (var f = 0; f < 8; f++) {
+      var ch = P.board[r][f], name = String.fromCharCode(97 + f) + (8 - r);
+      cells += '<button type="button" class="pz-sq ' + ((r + f) % 2 ? "dark" : "light") + '" data-sq="' + name + '"' +
+               (ch !== "." ? ' data-color="' + (ch === ch.toUpperCase() ? "w" : "b") + '"' : "") + ' aria-label="' + name + '">' +
+               (ch !== "." ? '<span class="pz-piece ' + (ch === ch.toUpperCase() ? "w" : "b") + '">' + GLYPH[ch] + "</span>" : "") + "</button>";
+    }
+    pzPanel.innerHTML =
+      '<button type="button" class="pz-close" aria-label="' + t.close + '">×</button>' +
+      '<p class="pz-title">♞ ' + t.title + ' · <span>' + (P.name[html.lang] || P.name.fr) + "</span></p>" +
+      '<p class="pz-turn">' + t.turn + "</p>" +
+      '<div class="pz-board">' + cells + "</div>" +
+      '<p class="pz-msg" role="status" aria-live="polite">' + t.pick + "</p>" +
+      '<div class="pz-foot"><span class="pz-count">' + t.solved(done.length, PUZZLES.length) + '</span><button type="button" class="pz-next">' + t.next + "</button></div>";
+    pzPanel.querySelector(".pz-close").addEventListener("click", closePuzzle);
+    pzPanel.querySelector(".pz-next").addEventListener("click", function () { pzIndex = (pzIndex + 1) % PUZZLES.length; drawPuzzle(); });
+    pzPanel.querySelector(".pz-board").addEventListener("click", onSquare);
+  }
+  function onSquare(e) {
+    var b = e.target.closest(".pz-sq");
+    if (!b || pzDone) return;
+    var msg = pzPanel.querySelector(".pz-msg");
+    if (b.dataset.color === "w") {   // choisir (ou changer) la pièce blanche
+      if (pzSel) pzSel.classList.remove("sel");
+      pzSel = b; b.classList.add("sel");
+      return;
+    }
+    if (!pzSel) return;
+    var P = PUZZLES[pzIndex], mv = pzSel.dataset.sq + b.dataset.sq;
+    if (mv === P.sol) {
+      pzDone = true;
+      var piece = pzSel.querySelector(".pz-piece");
+      b.innerHTML = ""; b.appendChild(piece);
+      pzSel.classList.remove("sel"); b.classList.add("mate");
+      msg.textContent = pt().right; msg.className = "pz-msg ok";
+      var done = solvedList();
+      if (done.indexOf(pzIndex) < 0) { done.push(pzIndex); saveSolved(done); }
+      pzPanel.querySelector(".pz-count").textContent = pt().solved(done.length, PUZZLES.length);
+      if (done.length === PUZZLES.length) msg.textContent += " " + pt().all;
+      var rc = b.getBoundingClientRect();
+      if (running) burst(rc.left + rc.width / 2, rc.top + rc.height / 2, 60, 5);
+      chime();
+    } else {
+      msg.textContent = pt().wrong; msg.className = "pz-msg ko";
+      pzPanel.querySelector(".pz-board").classList.remove("shake"); void pzPanel.offsetWidth;
+      pzPanel.querySelector(".pz-board").classList.add("shake");
+      pzSel.classList.remove("sel"); pzSel = null;
+    }
+  }
+  document.addEventListener("click", function (e) {   // clic en dehors : on ferme
+    if (pzPanel && !pzPanel.contains(e.target) && e.target !== pzBtn) closePuzzle();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePuzzle(); });
+
+  // =====================================================================
+  // 5) Citations de grands joueurs dans l'en-tête, qui changent toutes les 7 secondes
+  // =====================================================================
+  var QUOTES = [
+    { a: "François-André Philidor", fr: "Les pions sont l’âme des échecs.", en: "Pawns are the soul of chess.", es: "Los peones son el alma del ajedrez." },
+    { a: "Emanuel Lasker", fr: "Quand tu trouves un bon coup, cherches-en un meilleur.", en: "When you see a good move, look for a better one.", es: "Cuando veas una buena jugada, busca una mejor." },
+    { a: "Paul Morphy", fr: "Aide tes pièces, et elles t’aideront.", en: "Help your pieces so they can help you.", es: "Ayuda a tus piezas y ellas te ayudarán." },
+    { a: "Siegbert Tarrasch", fr: "Les échecs, comme la musique et l’amour, ont le pouvoir de rendre les gens heureux.", en: "Chess, like love, like music, has the power to make men happy.", es: "El ajedrez, como el amor y la música, tiene el poder de hacer feliz a la gente." },
+    { a: "Irving Chernev", fr: "Chaque maître des échecs a d’abord été un débutant.", en: "Every chess master was once a beginner.", es: "Todo maestro de ajedrez fue alguna vez un principiante." }
+  ];
+  var quoteEl = null, quoteTimer = null, quoteI = 0;
+  function paintQuote() {
+    var q = QUOTES[quoteI];
+    quoteEl.innerHTML = "« " + (q[html.lang] || q.fr) + " »<cite>— " + q.a + "</cite>";
+  }
+  function showQuotes(on) {
+    var dates = document.querySelector(".hero .dates");
+    if (on && !quoteEl && dates) {
+      quoteEl = document.createElement("blockquote");
+      quoteEl.className = "pq";
+      quoteI = Math.floor(Math.random() * QUOTES.length);
+      paintQuote();
+      dates.parentNode.insertBefore(quoteEl, dates.nextSibling);
+      if (!calm) quoteTimer = setInterval(function () {
+        quoteEl.classList.add("pq-out");
+        setTimeout(function () { if (!quoteEl) return; quoteI = (quoteI + 1) % QUOTES.length; paintQuote(); quoteEl.classList.remove("pq-out"); }, 500);
+      }, 7000);
+    } else if (!on && quoteEl) { clearInterval(quoteTimer); quoteEl.remove(); quoteEl = null; }
+  }
+  // changement de langue : réécrire le bouton, la citation et le puzzle ouvert
+  new MutationObserver(function () {
+    if (quoteEl) paintQuote();
+    if (pzBtn) { pzBtn.title = pt().open; pzBtn.setAttribute("aria-label", pt().open); }
+    if (pzPanel) drawPuzzle();
+  }).observe(html, { attributes: true, attributeFilter: ["lang"] });
+
   function features(on) {
     if (on) {
       if (window.matchMedia("(min-width: 1180px)").matches) startBoard();
-      showMute(true); countElo();
-    } else { stopBoard(); showMute(false); resetElo(); mateShown = false; }
+      showMute(true); countElo(); showPuzzleBtn(true); showQuotes(true);
+    } else { stopBoard(); showMute(false); resetElo(); mateShown = false; showPuzzleBtn(false); showQuotes(false); }
   }
   window.matchMedia("(min-width: 1180px)").addEventListener("change", function (m) {
     if (!isPremium()) return;

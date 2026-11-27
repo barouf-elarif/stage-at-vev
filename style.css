@@ -1744,7 +1744,61 @@ html[data-theme="premium"] .top3 li:hover { transform: translateX(6px); box-shad
 @keyframes gm-fall { to { transform: rotate(90deg) translateX(6px); } }
 .gm-text { font-size: 1.4rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase;
   background: linear-gradient(90deg, #c0c4c8, #fff8dc, #d4af37); -webkit-background-clip: text; background-clip: text; color: transparent; }
-@media print { .opera, .premium-mute, .gm-mate { display: none !important; } }
+/* Puzzle « Mat en 1 » */
+.pz-btn {
+  position: fixed; right: 18px; bottom: 72px; z-index: 40; width: 44px; height: 44px; border-radius: 50%;
+  font-size: 24px; line-height: 1; cursor: pointer; background: linear-gradient(180deg, #f3d77a, #c9a227); color: #14110a;
+  border: 2px solid #14110a; box-shadow: 0 6px 16px rgba(0,0,0,.35), 0 0 0 0 rgba(212,175,55,.7);
+  animation: pz-pulse 2.6s ease-out infinite; transition: transform .2s;
+}
+.pz-btn:hover, .pz-btn[aria-expanded="true"] { transform: translateY(-3px) rotate(-10deg); }
+@keyframes pz-pulse { 0% { box-shadow: 0 6px 16px rgba(0,0,0,.35), 0 0 0 0 rgba(212,175,55,.7); } 70%, 100% { box-shadow: 0 6px 16px rgba(0,0,0,.35), 0 0 0 14px rgba(212,175,55,0); } }
+.pz-panel {
+  position: fixed; right: 18px; bottom: 126px; z-index: 70; width: min(340px, calc(100vw - 36px));
+  padding: 16px; border-radius: 14px; background: #14110a; color: #f4ecd2; border: 2px solid #d4af37;
+  box-shadow: 0 18px 40px rgba(0,0,0,.5), 0 0 30px rgba(212,175,55,.25); animation: pz-in .3s cubic-bezier(.2,1.4,.4,1);
+}
+@keyframes pz-in { from { opacity: 0; transform: translateY(12px) scale(.96); } }
+.pz-close { position: absolute; top: 6px; right: 10px; border: 0; background: none; color: #bfae7a; font-size: 1.5rem; cursor: pointer; }
+.pz-close:hover { color: #fff3c4; }
+.pz-title { margin: 0 24px 2px 0; font-weight: 800; color: #f3d77a; }
+.pz-title span { font-weight: 600; color: #e9d9a6; }
+.pz-turn { margin: 0 0 10px; font-size: .82rem; color: #bfae7a; }
+.pz-board { display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); aspect-ratio: 1; border: 3px solid #c0c4c8; border-radius: 4px; overflow: hidden; }
+.pz-board.shake { animation: pz-shake .4s; }
+@keyframes pz-shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.pz-sq { position: relative; padding: 0; border: 0; cursor: pointer; display: grid; place-items: center; font: inherit; }
+.pz-sq.light { background: #f4ecd2; }
+.pz-sq.dark { background: #b8902f; }
+.pz-sq:hover { box-shadow: inset 0 0 0 3px rgba(255,255,255,.55); }
+.pz-sq.sel { box-shadow: inset 0 0 0 3px #2ecc71; background: #e3f7c7; }
+.pz-sq.mate { background: #f3d77a; box-shadow: inset 0 0 0 3px #fff3c4, 0 0 18px #d4af37; z-index: 1; }
+.pz-piece { font-size: clamp(22px, 6.5vw, 32px); line-height: 1; }
+.pz-piece.w { color: #fffdf2; text-shadow: 0 0 2px #14110a, 0 1px 0 #14110a, 0 0 1px #14110a; }
+.pz-piece.b { color: #14110a; }
+.pz-msg { min-height: 2.6em; margin: 10px 0 6px; font-size: .88rem; }
+.pz-msg.ok { color: #f3d77a; font-weight: 800; }
+.pz-msg.ko { color: #ff9b8a; }
+.pz-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pz-count { font-size: .8rem; color: #bfae7a; font-variant-numeric: tabular-nums; }
+.pz-next { font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; padding: 6px 12px; border-radius: 8px;
+  background: linear-gradient(180deg, #f3d77a, #c9a227); color: #14110a; border: 0; }
+.pz-next:hover { background: linear-gradient(180deg, #f4f5f6, #b8bcc2); }
+
+/* Citations de grands joueurs dans l'en-tête */
+.pq { margin: 14px 0 18px; max-width: 560px; padding: 8px 0 8px 14px; border-left: 3px solid #d4af37;
+  font-style: italic; color: #f4ecd2; transition: opacity .5s, transform .5s; }
+.pq cite { display: block; margin-top: 4px; font-style: normal; font-size: .82rem; color: #d4af37; letter-spacing: .03em; }
+.pq.pq-out { opacity: 0; transform: translateY(-6px); }
+
+/* Curseur cavalier doré (souris uniquement) */
+@media (pointer: fine) {
+  html[data-theme="premium"] body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='2' y='26' font-size='26' fill='%23d4af37' stroke='%2314110a' stroke-width='1.2'%3E%E2%99%9E%3C/text%3E%3C/svg%3E") 6 4, auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) { .pz-btn, .pz-panel, .pz-board.shake { animation: none; } }
+@media print { .opera, .premium-mute, .gm-mate, .pz-btn, .pz-panel, .pq { display: none !important; } }
 
 /* ===================== Thèmes légendaires ===================== */
 
