@@ -1509,6 +1509,7 @@ html[data-theme="bloodborne"] .stat-label .duo-link { color: #58cc02; }
 
 /* Thèmes secrets verrouillés */
 .secret-item { display: flex; flex-direction: column; gap: 6px; }
+.secret-col { display: flex; flex-direction: column; gap: 12px; }   /* un jeu, et son thème caché juste en dessous */
 .secret-btn.locked { cursor: help; opacity: .75; }
 .secret-btn.locked .swatch { filter: grayscale(1) blur(1.5px); position: relative; }
 .secret-btn.locked .secret-name::after { content: " 🔒"; }

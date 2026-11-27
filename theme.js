@@ -6,9 +6,9 @@
   var buttons = document.querySelectorAll("[data-theme-choice]");
 
   // Thèmes qu'il faut débloquer avant de pouvoir les utiliser
-  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur", "gow3", "slime"];
+  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "gow3", "slime"];
   // Thèmes en test : rangés dans le laboratoire caché, tous débloqués d'un coup avec lui
-  var LAB_THEMES = ["duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego"];
+  var LAB_THEMES = ["duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego", "mur"];
   function keyFor(choice) {
     if (LAB_THEMES.indexOf(choice) > -1) return "labo";
     return LOCKABLE.indexOf(choice) > -1 ? choice : null;
@@ -17,8 +17,7 @@
   function applyTheme(choice) {
     // Un thème verrouillé (venu de l'adresse ?theme=… ou de la mémoire) n'est jamais appliqué
     var key = keyFor(choice);
-    // (Le Mur est aussi rangé dans le laboratoire : il marche si le laboratoire est débloqué)
-    if (key && !isUnlocked(key) && !(choice === "mur" && isUnlocked("labo"))) {
+    if (key && !isUnlocked(key)) {
       choice = "auto";
       if (/[?&]theme=/.test(location.search) && history.replaceState) {
         history.replaceState(null, "", location.pathname + location.hash);
@@ -311,7 +310,7 @@
     }
   }
 
-  // ===== Thèmes légendaires (encore plus secrets) : Palesang, Le Mur et God of War III =====
+  // ===== Thèmes légendaires (encore plus secrets) : Palesang et God of War III =====
   // Effets et cinématiques dans legendes.js ; ici seulement la façon de les débloquer.
   function unlockLegend(id) {
     if (isUnlocked(id)) return;
@@ -345,21 +344,6 @@
   }
   new MutationObserver(placeMoon).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   setTimeout(placeMoon, 0);
-
-  // Le Mur : section secrète trouvée, puis trois coups sous le nom de L'Attaque des Titans (page Centres d'intérêt)
-  var wallLine = document.querySelector("#animes .top3:not(.top-rest) > li:first-child .meta");
-  if (wallLine) {
-    var wallHits = 0, wallTimer = null;
-    wallLine.addEventListener("click", function () {
-      if (!secrets || secrets.hidden || isUnlocked("mur")) return;
-      wallHits++;
-      clearTimeout(wallTimer);
-      wallTimer = setTimeout(function () { wallHits = 0; }, 2500);
-      wallLine.classList.remove("wall-shake"); void wallLine.offsetWidth; wallLine.classList.add("wall-shake");
-      if (wallHits >= 3) { wallHits = 0; unlockLegend("mur"); }
-      else toast({ fr: "🧱 Le mur tremble… (", en: "🧱 The wall shakes… (", es: "🧱 El muro tiembla… (" }[lang()] + wallHits + "/3)");
-    });
-  }
 
   // God of War III : avec le thème God of War, trois coups sous le nom du jeu (place n°3 des jeux) : retour en Grèce
   var gowLine = document.querySelector("#jeux .top3:not(.top-rest) > li:nth-child(3) .meta");
@@ -441,7 +425,7 @@
 
   // ===== Bouton à côté des drapeaux : tout débloquer / tout verrouiller =====
   var lockAll = document.querySelector(".lock-all");
-  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium", "lunesang", "mur", "gow3", "slime", "labo"];
+  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium", "lunesang", "gow3", "slime", "labo"];
   var LOCK_MSG = {
     open:   { fr: "🔓 Tous les thèmes sont débloqués !", en: "🔓 All themes are unlocked!", es: "🔓 ¡Todos los temas están desbloqueados!" },
     closed: { fr: "🔒 Tous les thèmes sont verrouillés.", en: "🔒 All themes are locked.", es: "🔒 Todos los temas están bloqueados." },

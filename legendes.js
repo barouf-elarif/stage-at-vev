@@ -1,6 +1,6 @@
 // Thèmes légendaires (encore plus secrets que les thèmes secrets) : effets, sons et cinématiques
 //  - Palesang (après Bloodborne) : brume, corbeaux, cloche, vague rouge au clic
-//  - Le Mur (L'Attaque des Titans) : un géant se lève derrière le mur quand on fait défiler, vapeur, grondement
+//  - Le Mur (L'Attaque des Titans, maintenant dans les thèmes en test du laboratoire) : un géant se lève derrière le mur quand on fait défiler, vapeur, grondement
 //  - God of War III (après God of War) : l'Olympe en feu, braises, éclairs et tonnerre
 // Et le thème secret Slime Rancher : des slimes qui sautent dans l'en-tête, un plort à chaque clic
 // La façon de les débloquer est dans theme.js.
