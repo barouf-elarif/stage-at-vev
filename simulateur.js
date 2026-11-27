@@ -416,6 +416,9 @@
     fillCars(); paintSettings(); render(); renderMonth(); renderTimes(); renderTrip(); say("");
   }).observe(html, { attributes: true, attributeFilter: ["lang"] });
 
+  // Firefox se souvient de l'état des champs quand on recharge la page (F5), même s'ils étaient grisés :
+  // on remet tous les réglages actifs au démarrage (sinon le menu « Voiture » pouvait rester bloqué)
+  $$(".sim-settings select, .sim-settings input, .sim-compare select, .sim-compare input, .sim-speed-sel").forEach(function (el) { el.disabled = false; });
   fillCars(); paintSettings();
   reset(); render(); renderMonth(); renderTimes(); renderTrip();
 })();

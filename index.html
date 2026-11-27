@@ -528,14 +528,14 @@
       <details class="sim-settings" open>
         <summary>⚙️ <span data-lang="fr">Réglages : choisis ta voiture et ta charge</span><span data-lang="en">Settings: choose your car and your charge</span><span data-lang="es">Ajustes: elige tu coche y tu carga</span></summary>
         <div class="set-grid">
-          <label class="set-field set-wide">🚗 <span data-lang="fr">Voiture</span><span data-lang="en">Car</span><span data-lang="es">Coche</span><select class="set-car"></select></label>
-          <label class="set-field set-custom">🔋 <span data-lang="fr">Batterie (kWh)</span><span data-lang="en">Battery (kWh)</span><span data-lang="es">Batería (kWh)</span><input type="number" class="set-bat" min="15" max="130" step="1"></label>
-          <label class="set-field set-custom">📉 <span data-lang="fr">Consommation (kWh/100 km)</span><span data-lang="en">Consumption (kWh/100 km)</span><span data-lang="es">Consumo (kWh/100 km)</span><input type="number" class="set-conso" min="10" max="35" step="0.5"></label>
-          <label class="set-field set-custom">🔌 <span data-lang="fr">Charge max en AC (kW)</span><span data-lang="en">Max AC charging (kW)</span><span data-lang="es">Carga máx. en AC (kW)</span><input type="number" class="set-maxac" min="3" max="22" step="0.1"></label>
-          <label class="set-field set-custom">⚡ <span data-lang="fr">Charge max en DC (kW)</span><span data-lang="en">Max DC charging (kW)</span><span data-lang="es">Carga máx. en DC (kW)</span><input type="number" class="set-maxdc" min="20" max="350" step="5"></label>
-          <label class="set-field">🔋 <span data-lang="fr">Batterie au départ</span><span data-lang="en">Battery at start</span><span data-lang="es">Batería al inicio</span> <output class="out-start"></output><input type="range" class="set-start" min="0" max="90" step="5"></label>
-          <label class="set-field">🎯 <span data-lang="fr">Objectif de charge</span><span data-lang="en">Charge target</span><span data-lang="es">Objetivo de carga</span> <output class="out-target"></output><input type="range" class="set-target" min="20" max="100" step="5"></label>
-          <label class="set-field">💶 <span data-lang="fr">Prix à la borne (€/kWh)</span><span data-lang="en">Charger price (€/kWh)</span><span data-lang="es">Precio en el cargador (€/kWh)</span><input type="number" class="set-price" min="0" max="2" step="0.01"></label>
+          <label class="set-field set-wide">🚗 <span data-lang="fr">Voiture</span><span data-lang="en">Car</span><span data-lang="es">Coche</span><select autocomplete="off" class="set-car"></select></label>
+          <label class="set-field set-custom">🔋 <span data-lang="fr">Batterie (kWh)</span><span data-lang="en">Battery (kWh)</span><span data-lang="es">Batería (kWh)</span><input autocomplete="off" type="number" class="set-bat" min="15" max="130" step="1"></label>
+          <label class="set-field set-custom">📉 <span data-lang="fr">Consommation (kWh/100 km)</span><span data-lang="en">Consumption (kWh/100 km)</span><span data-lang="es">Consumo (kWh/100 km)</span><input autocomplete="off" type="number" class="set-conso" min="10" max="35" step="0.5"></label>
+          <label class="set-field set-custom">🔌 <span data-lang="fr">Charge max en AC (kW)</span><span data-lang="en">Max AC charging (kW)</span><span data-lang="es">Carga máx. en AC (kW)</span><input autocomplete="off" type="number" class="set-maxac" min="3" max="22" step="0.1"></label>
+          <label class="set-field set-custom">⚡ <span data-lang="fr">Charge max en DC (kW)</span><span data-lang="en">Max DC charging (kW)</span><span data-lang="es">Carga máx. en DC (kW)</span><input autocomplete="off" type="number" class="set-maxdc" min="20" max="350" step="5"></label>
+          <label class="set-field">🔋 <span data-lang="fr">Batterie au départ</span><span data-lang="en">Battery at start</span><span data-lang="es">Batería al inicio</span> <output class="out-start"></output><input autocomplete="off" type="range" class="set-start" min="0" max="90" step="5"></label>
+          <label class="set-field">🎯 <span data-lang="fr">Objectif de charge</span><span data-lang="en">Charge target</span><span data-lang="es">Objetivo de carga</span> <output class="out-target"></output><input autocomplete="off" type="range" class="set-target" min="20" max="100" step="5"></label>
+          <label class="set-field">💶 <span data-lang="fr">Prix à la borne (€/kWh)</span><span data-lang="en">Charger price (€/kWh)</span><span data-lang="es">Precio en el cargador (€/kWh)</span><input autocomplete="off" type="number" class="set-price" min="0" max="2" step="0.01"></label>
         </div>
         <p class="set-info"></p>
       </details>
@@ -570,10 +570,10 @@
               <dt><span data-lang="fr">Durée</span><span data-lang="en">Time</span><span data-lang="es">Duración</span></dt><dd class="sim-time">0 min</dd>
             </dl>
             <label class="sim-speed sim-power-select">⚡ <span data-lang="fr">Puissance de la borne</span><span data-lang="en">Charger power</span><span data-lang="es">Potencia del cargador</span>
-              <select disabled><option>—</option></select>
+              <select autocomplete="off" disabled><option>—</option></select>
             </label>
             <label class="sim-speed">⏩ <span data-lang="fr">Vitesse de la simulation</span><span data-lang="en">Simulation speed</span><span data-lang="es">Velocidad de la simulación</span>
-              <select class="sim-speed-sel"><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
+              <select autocomplete="off" class="sim-speed-sel"><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
             </label>
           </div>
         </div>
@@ -599,10 +599,10 @@
         <details class="cmp-opts">
           <summary>⚙️ <span data-lang="fr">Prix et consommation (carburant, électricité à la maison)</span><span data-lang="en">Prices and consumption (fuel, home electricity)</span><span data-lang="es">Precios y consumo (combustible, electricidad en casa)</span></summary>
           <div class="set-grid cmp-settings">
-          <label class="set-field">⛽ <span data-lang="fr">Carburant</span><span data-lang="en">Fuel</span><span data-lang="es">Combustible</span><select class="set-fuel"><option value="diesel">Diesel</option><option value="essence">Essence</option></select></label>
-          <label class="set-field">💶 <span data-lang="fr">Prix du carburant (€/L)</span><span data-lang="en">Fuel price (€/L)</span><span data-lang="es">Precio del combustible (€/L)</span><input type="number" class="set-fuelprice" min="0.5" max="4" step="0.01"></label>
-          <label class="set-field">📉 <span data-lang="fr">Consommation (L/100 km)</span><span data-lang="en">Consumption (L/100 km)</span><span data-lang="es">Consumo (L/100 km)</span><input type="number" class="set-fuelconso" min="2" max="20" step="0.1"></label>
-          <label class="set-field">🏠 <span data-lang="fr">Électricité à la maison (€/kWh)</span><span data-lang="en">Home electricity (€/kWh)</span><span data-lang="es">Electricidad en casa (€/kWh)</span><input type="number" class="set-home" min="0" max="1" step="0.01"></label>
+          <label class="set-field">⛽ <span data-lang="fr">Carburant</span><span data-lang="en">Fuel</span><span data-lang="es">Combustible</span><select autocomplete="off" class="set-fuel"><option value="diesel">Diesel</option><option value="essence">Essence</option></select></label>
+          <label class="set-field">💶 <span data-lang="fr">Prix du carburant (€/L)</span><span data-lang="en">Fuel price (€/L)</span><span data-lang="es">Precio del combustible (€/L)</span><input autocomplete="off" type="number" class="set-fuelprice" min="0.5" max="4" step="0.01"></label>
+          <label class="set-field">📉 <span data-lang="fr">Consommation (L/100 km)</span><span data-lang="en">Consumption (L/100 km)</span><span data-lang="es">Consumo (L/100 km)</span><input autocomplete="off" type="number" class="set-fuelconso" min="2" max="20" step="0.1"></label>
+          <label class="set-field">🏠 <span data-lang="fr">Électricité à la maison (€/kWh)</span><span data-lang="en">Home electricity (€/kWh)</span><span data-lang="es">Electricidad en casa (€/kWh)</span><input autocomplete="off" type="number" class="set-home" min="0" max="1" step="0.01"></label>
         </div>
         </details>
         <div class="cmp-panel" data-panel="charge">
@@ -628,7 +628,7 @@
         </div>
         <div class="cmp-month cmp-panel" data-panel="month" hidden>
           <p class="sim-live-title"><label class="sim-speed cmp-month-km"><span data-lang="fr">Je roule</span><span data-lang="en">I drive</span><span data-lang="es">Conduzco</span> <output class="out-km"></output> <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span>
-              <input type="range" class="set-km" min="100" max="4000" step="100" value="1000"></label>
+              <input autocomplete="off" type="range" class="set-km" min="100" max="4000" step="100" value="1000"></label>
           </p>
           <div class="cmp-month-grid">
             <div><span>⛽ <span class="cmp-fuel-name"></span></span><strong class="m-diesel">—</strong></div>
@@ -650,14 +650,14 @@
           <p class="cmp-hint"><span data-lang="fr">La voiture limite parfois la puissance : une borne de 350 kW ne charge pas plus vite qu’une de 50 kW si la voiture n’accepte que 50 kW.</span><span data-lang="en">The car sometimes limits the power: a 350 kW charger is no faster than a 50 kW one if the car only accepts 50 kW.</span><span data-lang="es">El coche a veces limita la potencia: un cargador de 350 kW no carga más rápido que uno de 50 kW si el coche solo acepta 50 kW.</span></p>
         </div>
         <div class="cmp-block cmp-panel" data-panel="trip" hidden>
-          <p class="sim-live-title"><label class="sim-speed"><span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span><select class="set-trip">
+          <p class="sim-live-title"><label class="sim-speed"><span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span><select autocomplete="off" class="set-trip">
               <option value="30">30 km</option>
               <option value="200" selected>Nice → Marseille (200 km)</option>
               <option value="470">Nice → Lyon (470 km)</option>
               <option value="930">Nice → Paris (930 km)</option>
               <option value="custom">…</option>
             </select></label>
-            <label class="sim-speed set-trip-custom" hidden><input type="number" class="set-tripkm" min="1" max="5000" step="1" value="100"> km</label>
+            <label class="sim-speed set-trip-custom" hidden><input autocomplete="off" type="number" class="set-tripkm" min="1" max="5000" step="1" value="100"> km</label>
           </p>
           <div class="cmp-month-grid">
             <div><span>⛽ <span class="cmp-fuel-name"></span></span><strong class="t-fuel">—</strong></div>
