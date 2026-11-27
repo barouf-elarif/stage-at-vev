@@ -1,16 +1,23 @@
 // Thèmes du site : menu déroulant + thèmes secrets (page Centres d'intérêt)
 (function () {
-  var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "noel",
-                "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium"];
+  var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego", "noel",
+                "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur"];
   var menus = document.querySelectorAll(".theme-menu");   // « Thème » et « Thème 2 »
   var buttons = document.querySelectorAll("[data-theme-choice]");
 
   // Thèmes qu'il faut débloquer avant de pouvoir les utiliser
-  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium"];
+  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium", "lunesang", "mur"];
+  // Thèmes en test : rangés dans le laboratoire caché, tous débloqués d'un coup avec lui
+  var LAB_THEMES = ["duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "vev", "lego"];
+  function keyFor(choice) {
+    if (LAB_THEMES.indexOf(choice) > -1) return "labo";
+    return LOCKABLE.indexOf(choice) > -1 ? choice : null;
+  }
 
   function applyTheme(choice) {
     // Un thème verrouillé (venu de l'adresse ?theme=… ou de la mémoire) n'est jamais appliqué
-    if (LOCKABLE.indexOf(choice) > -1 && !isUnlocked(choice)) {
+    var key = keyFor(choice);
+    if (key && !isUnlocked(key)) {
       choice = "auto";
       if (/[?&]theme=/.test(location.search) && history.replaceState) {
         history.replaceState(null, "", location.pathname + location.hash);
@@ -61,7 +68,7 @@
   //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
-  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", premium: { fr: "Échecs Premium", en: "Premium Chess", es: "Ajedrez Premium" }, noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
+  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", premium: { fr: "Échecs Premium", en: "Premium Chess", es: "Ajedrez Premium" }, lunesang: { fr: "Lune de sang", en: "Blood Moon", es: "Luna de sangre" }, mur: { fr: "Le Mur", en: "The Wall", es: "El Muro" }, noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
   var MSG = {
     unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
     relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
@@ -81,6 +88,8 @@
     // Échecs Premium : l'indice n'apparaît qu'après Échecs, le bouton qu'après la promotion
     document.documentElement.classList.toggle("has-echecs", isUnlocked("echecs"));
     document.documentElement.classList.toggle("has-premium", isUnlocked("premium"));
+    document.documentElement.classList.toggle("has-labo", isUnlocked("labo"));
+    ["bloodborne", "lunesang", "mur"].forEach(function (id) { document.documentElement.classList.toggle("has-" + id, isUnlocked(id)); });
   }
 
   function toast(text) {
@@ -281,7 +290,7 @@
     if (reset) {
       reset.addEventListener("click", function () {
         try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); localStorage.removeItem("eggs"); } catch (e) {}
-        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium"].indexOf(currentTheme()) > -1) applyTheme("auto");
+        applyTheme(currentTheme());   // retombe sur « automatique » si le thème vient d'être verrouillé
         document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
         refreshLocks(); placeEggs();
         toast(MSG.relocked[lang()]);
@@ -293,9 +302,118 @@
     }
   }
 
+  // ===== Thèmes légendaires (encore plus secrets) : Lune de sang et Le Mur =====
+  // Effets et cinématiques dans legendes.js ; ici seulement la façon de les débloquer.
+  function unlockLegend(id) {
+    if (isUnlocked(id)) return;
+    unlock(id);
+    if (window.legendCinematic) window.legendCinematic(id);
+    setTimeout(function () { applyTheme(id); }, 2600);
+  }
+  // Lune de sang : avec le thème Bloodborne, frapper trois fois la lune du haut de page
+  // (ou être sur Bloodborne / Éclipse entre minuit et 1 h du matin)
+  var moonHits = 0, moonTimer = null;
+  function placeMoon() {
+    var hero = document.querySelector(".hero");
+    if (!hero) return;
+    var moon = hero.querySelector(".bb-moon");
+    var show = currentTheme() === "bloodborne" && isUnlocked("bloodborne") && !isUnlocked("lunesang");
+    if (show && !moon) {
+      moon = document.createElement("button");
+      moon.type = "button"; moon.className = "bb-moon"; moon.setAttribute("aria-label", "lune");
+      hero.appendChild(moon);
+      moon.addEventListener("click", function () {
+        moonHits++;
+        clearTimeout(moonTimer);
+        moonTimer = setTimeout(function () { moonHits = 0; }, 2500);
+        moon.classList.remove("hit"); void moon.offsetWidth; moon.classList.add("hit");
+        if (moonHits >= 3) { moonHits = 0; moon.remove(); unlockLegend("lunesang"); }
+        else toast({ fr: "🌕 La lune frémit… (", en: "🌕 The moon trembles… (", es: "🌕 La luna tiembla… (" }[lang()] + moonHits + "/3)");
+      });
+    } else if (!show && moon) moon.remove();
+    if ((currentTheme() === "bloodborne" || currentTheme() === "eclipse") && isUnlocked("bloodborne") &&
+        !isUnlocked("lunesang") && new Date().getHours() === 0) unlockLegend("lunesang");
+  }
+  new MutationObserver(placeMoon).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  setTimeout(placeMoon, 0);
+
+  // Le Mur : section secrète trouvée, puis trois coups sous le nom de L'Attaque des Titans (page Centres d'intérêt)
+  var wallLine = document.querySelector("#animes .top3:not(.top-rest) > li:first-child .meta");
+  if (wallLine) {
+    var wallHits = 0, wallTimer = null;
+    wallLine.addEventListener("click", function () {
+      if (!secrets || secrets.hidden || isUnlocked("mur")) return;
+      wallHits++;
+      clearTimeout(wallTimer);
+      wallTimer = setTimeout(function () { wallHits = 0; }, 2500);
+      wallLine.classList.remove("wall-shake"); void wallLine.offsetWidth; wallLine.classList.add("wall-shake");
+      if (wallHits >= 3) { wallHits = 0; unlockLegend("mur"); }
+      else toast({ fr: "🧱 Le mur tremble… (", en: "🧱 The wall shakes… (", es: "🧱 El muro tiembla… (" }[lang()] + wallHits + "/3)");
+    });
+  }
+
+  // ===== Laboratoire caché (thèmes en test) =====
+  // Pour l'ouvrir la première fois : rester appuyé 3 secondes sur le « © » tout en bas de la page
+  // (ça marche aussi au doigt sur téléphone), ou taper « labo » au clavier n'importe où.
+  // Ensuite un petit flacon 🧪 apparaît en bas à gauche de l'écran.
+  var labBtn = document.querySelector(".labo-btn");
+  var labPanel = document.querySelector(".labo-panel");
+  var LAB_MSG = { fr: "🧪 Laboratoire débloqué ! Le flacon en bas à gauche ouvre mes thèmes en test.",
+                  en: "🧪 Lab unlocked! The flask at the bottom left opens my test themes.",
+                  es: "🧪 ¡Laboratorio desbloqueado! El frasco abajo a la izquierda abre mis temas de prueba." };
+  function openLab(open) {
+    if (!labPanel || !labBtn) return;
+    labPanel.hidden = !open;
+    labBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  function closeLab() { openLab(false); }
+  function unlockLab() {
+    if (isUnlocked("labo")) { openLab(true); return; }
+    var list = getUnlocked(); list.push("labo");
+    try { localStorage.setItem("unlocked", JSON.stringify(list)); } catch (e) {}
+    refreshLocks();
+    if (typeof refreshLockAll === "function") refreshLockAll();
+    if (labBtn) { labBtn.classList.remove("labo-pop"); void labBtn.offsetWidth; labBtn.classList.add("labo-pop"); }
+    toast(LAB_MSG[lang()]);
+    setTimeout(function () { openLab(true); }, 700);
+  }
+  if (labBtn) labBtn.addEventListener("click", function (e) { e.stopPropagation(); openLab(labPanel.hidden); });
+  var labClose = document.querySelector(".labo-close");
+  if (labClose) labClose.addEventListener("click", closeLab);
+  document.addEventListener("click", function (e) {
+    if (labPanel && !labPanel.hidden && !labPanel.contains(e.target) && e.target !== labBtn) closeLab();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLab(); });
+
+  // Appui long sur le « © »
+  var key = document.querySelector(".labo-key");
+  if (key) {
+    var pressTimer = null;
+    var start = function (e) {
+      if (e.button !== undefined && e.button !== 0) return;
+      key.classList.add("pressing");
+      clearTimeout(pressTimer);
+      pressTimer = setTimeout(function () { key.classList.remove("pressing"); unlockLab(); }, 3000);
+    };
+    var stop = function () { clearTimeout(pressTimer); key.classList.remove("pressing"); };
+    key.addEventListener("pointerdown", start);
+    ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { key.addEventListener(ev, stop); });
+    key.addEventListener("contextmenu", function (e) { e.preventDefault(); });   // pas de menu au doigt
+  }
+
+  // Taper « labo » au clavier
+  var typed = "";
+  document.addEventListener("keydown", function (e) {
+    var t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (!e.key || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-4);
+    if (typed === "labo") { typed = ""; unlockLab(); }
+  });
+
   // ===== Bouton à côté des drapeaux : tout débloquer / tout verrouiller =====
   var lockAll = document.querySelector(".lock-all");
-  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium"];
+  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium", "lunesang", "mur", "labo"];
   var LOCK_MSG = {
     open:   { fr: "🔓 Tous les thèmes sont débloqués !", en: "🔓 All themes are unlocked!", es: "🔓 ¡Todos los temas están desbloqueados!" },
     closed: { fr: "🔒 Tous les thèmes sont verrouillés.", en: "🔒 All themes are locked.", es: "🔒 Todos los temas están bloqueados." },
@@ -315,8 +433,8 @@
       if (allUnlocked()) {
         // Tout verrouiller (comme le bouton « Tout reverrouiller » de la page Centres d'intérêt)
         try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); localStorage.removeItem("eggs"); } catch (e) {}
-        if (ALL_LOCKED.indexOf(currentTheme()) > -1) applyTheme("auto");
         if (secrets) secrets.hidden = true;
+        closeLab();
         document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
         toast(LOCK_MSG.closed[lang()]);
       } else {
@@ -330,6 +448,7 @@
         toast(LOCK_MSG.open[lang()]);
       }
       refreshLocks(); placeEggs(); refreshLockAll();
+      applyTheme(currentTheme());
     });
     // Le texte de l'infobulle suit la langue choisie
     new MutationObserver(refreshLockAll).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
@@ -420,6 +539,25 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
+
+  // ===== Défilement : un rafraîchissement ramène en haut, et les liens « # » ne changent plus l'adresse =====
+  // (avant, « Voir mon journal de stage » ajoutait #journal à l'adresse, et chaque rafraîchissement renvoyait au journal)
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  function dropHash() {
+    if (location.hash && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+  }
+  var navEntry = window.performance && performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
+  if (navEntry && navEntry.type === "reload") { dropHash(); window.scrollTo(0, 0); }
+  else window.addEventListener("load", function () { setTimeout(dropHash, 50); });   // arrivée depuis l'autre page avec une ancre
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented) return;   // le carrousel du téléphone s'en occupe déjà
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var target = document.getElementById(a.getAttribute("href").slice(1));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   var saved = null;
   var fromUrl = location.search.match(/[?&]theme=([a-z]+)/);

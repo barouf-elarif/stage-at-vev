@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elarif Barouf — Stagiaire en informatique</title>
   <meta name="description" content="Elarif Barouf, élève en 1CIEL au lycée Eucalyptus à Nice. Stage du 23 novembre au 25 décembre.">
-  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); var u = JSON.parse(localStorage.getItem("unlocked") || "[]"); if (["noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1 && u.indexOf(t) < 0) t = null; if (["light","dark","violet","vert","orange","eclipse","duolingo","chess","neon","retro","ocean","carnet","espace","sakura","terminal","volcan","bonbon","manga","noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); var u = JSON.parse(localStorage.getItem("unlocked") || "[]"); if (["noel","bloodborne","astro","ragnarok","echecs","halloween","premium","lunesang","mur"].indexOf(t) > -1 && u.indexOf(t) < 0) t = null; if (["duolingo","chess","neon","retro","ocean","carnet","espace","sakura","terminal","volcan","bonbon","manga","vev","lego"].indexOf(t) > -1 && u.indexOf("labo") < 0) t = null; if (["light","dark","violet","vert","orange","eclipse","duolingo","chess","neon","retro","ocean","carnet","espace","sakura","terminal","volcan","bonbon","manga","vev","lego","noel","bloodborne","astro","ragnarok","echecs","halloween","premium","lunesang","mur"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,23 +24,6 @@
           <button type="button" data-theme-choice="eclipse">🌑 <span data-lang="fr">Éclipse</span><span data-lang="en">Eclipse</span><span data-lang="es">Eclipse</span></button>
           <button type="button" data-theme-choice="halloween" data-menu-lock="halloween">🎃 <span>Halloween</span></button>
           <button type="button" data-theme-choice="noel" data-menu-lock="noel">🎄 <span data-lang="fr">Noël</span><span data-lang="en">Christmas</span><span data-lang="es">Navidad</span></button>
-        </div>
-      </details>
-      <details class="theme-menu">
-        <summary><span aria-hidden="true">🧪</span><span data-lang="fr">Thème test</span><span data-lang="en">Test themes</span><span data-lang="es">Temas de prueba</span></summary>
-        <div class="theme-list">
-          <button type="button" data-theme-choice="duolingo">🦉 <span>Duolingo</span></button>
-          <button type="button" data-theme-choice="chess">♟️ <span>Chess</span></button>
-          <button type="button" data-theme-choice="neon">🌆 <span data-lang="fr">Néon</span><span data-lang="en">Neon</span><span data-lang="es">Neón</span></button>
-          <button type="button" data-theme-choice="retro">👾 <span data-lang="fr">Rétro</span><span data-lang="en">Retro</span><span data-lang="es">Retro</span></button>
-          <button type="button" data-theme-choice="ocean">🌊 <span data-lang="fr">Océan</span><span data-lang="en">Ocean</span><span data-lang="es">Océano</span></button>
-          <button type="button" data-theme-choice="carnet">📓 <span data-lang="fr">Carnet</span><span data-lang="en">Notebook</span><span data-lang="es">Cuaderno</span></button>
-          <button type="button" data-theme-choice="espace">🚀 <span data-lang="fr">Espace</span><span data-lang="en">Space</span><span data-lang="es">Espacio</span></button>
-          <button type="button" data-theme-choice="sakura">🌸 <span data-lang="fr">Sakura</span><span data-lang="en">Sakura</span><span data-lang="es">Sakura</span></button>
-          <button type="button" data-theme-choice="terminal">⌨️ <span data-lang="fr">Terminal</span><span data-lang="en">Terminal</span><span data-lang="es">Terminal</span></button>
-          <button type="button" data-theme-choice="volcan">🌋 <span data-lang="fr">Volcan</span><span data-lang="en">Volcano</span><span data-lang="es">Volcán</span></button>
-          <button type="button" data-theme-choice="bonbon">🍬 <span data-lang="fr">Bonbon</span><span data-lang="en">Candy</span><span data-lang="es">Caramelo</span></button>
-          <button type="button" data-theme-choice="manga">💥 <span data-lang="fr">Manga</span><span data-lang="en">Manga</span><span data-lang="es">Manga</span></button>
         </div>
       </details>
       <button type="button" class="lang-btn" data-set-lang="fr" title="Français" aria-label="Français"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ED2939"/></svg></button>
@@ -502,7 +485,7 @@
   </main>
 
   <footer>
-    <div class="container">© Elarif Barouf · VEV</div>
+    <div class="container"><span class="labo-key">©</span> Elarif Barouf · VEV</div>
   </footer>
 
   <script>
@@ -551,7 +534,33 @@
       });
     })();
   </script>
+  <!-- Laboratoire caché : thèmes en test (se débloque en restant appuyé 3 s sur le « © » du pied de page, ou en tapant « labo ») -->
+  <button type="button" class="labo-btn" aria-expanded="false" title="Laboratoire">🧪</button>
+  <div class="labo-panel" role="dialog" aria-label="Laboratoire" hidden>
+    <div class="labo-head">
+      <p class="labo-title">🧪 <span data-lang="fr">Laboratoire</span><span data-lang="en">Lab</span><span data-lang="es">Laboratorio</span></p>
+      <button type="button" class="labo-close" aria-label="Fermer">✕</button>
+    </div>
+    <p class="labo-sub"><span data-lang="fr">Mes thèmes en test, pas encore terminés.</span><span data-lang="en">My test themes, not finished yet.</span><span data-lang="es">Mis temas de prueba, aún sin terminar.</span></p>
+    <div class="labo-grid">
+      <button type="button" class="labo-theme" data-theme-choice="duolingo">🦉 <span>Duolingo</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="chess">♟️ <span>Chess</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="neon">🌆 <span data-lang="fr">Néon</span><span data-lang="en">Neon</span><span data-lang="es">Neón</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="retro">👾 <span data-lang="fr">Rétro</span><span data-lang="en">Retro</span><span data-lang="es">Retro</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="ocean">🌊 <span data-lang="fr">Océan</span><span data-lang="en">Ocean</span><span data-lang="es">Océano</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="carnet">📓 <span data-lang="fr">Carnet</span><span data-lang="en">Notebook</span><span data-lang="es">Cuaderno</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="espace">🚀 <span data-lang="fr">Espace</span><span data-lang="en">Space</span><span data-lang="es">Espacio</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="sakura">🌸 <span data-lang="fr">Sakura</span><span data-lang="en">Sakura</span><span data-lang="es">Sakura</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="terminal">⌨️ <span data-lang="fr">Terminal</span><span data-lang="en">Terminal</span><span data-lang="es">Terminal</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="volcan">🌋 <span data-lang="fr">Volcan</span><span data-lang="en">Volcano</span><span data-lang="es">Volcán</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="bonbon">🍬 <span data-lang="fr">Bonbon</span><span data-lang="en">Candy</span><span data-lang="es">Caramelo</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="manga">💥 <span data-lang="fr">Manga</span><span data-lang="en">Manga</span><span data-lang="es">Manga</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="vev">⚡ <span>VEV</span></button>
+      <button type="button" class="labo-theme" data-theme-choice="lego">🧱 <span>Lego</span></button>
+    </div>
+  </div>
   <script src="theme.js"></script>
   <script src="premium.js"></script>
+  <script src="legendes.js"></script>
 </body>
 </html>
