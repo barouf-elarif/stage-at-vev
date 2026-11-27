@@ -72,6 +72,7 @@
           stops: function (n) { return n === 0 ? "✅ Pas besoin de s’arrêter : une charge suffit." : "🔌 Il faut environ " + n + " arrêt" + (n > 1 ? "s" : "") + " de recharge rapide (10 → 80 %) en route."; },
           tripCo2: function (a, b) { return " 🌱 CO₂ : " + a + " kg en thermique, " + b + " kg en électrique."; },
           noCharge: "aucune charge",
+          mNewCar: "🔄 Réglage changé : la borne est libérée. Passe le badge pour une nouvelle charge.",
           tesla: " · Tesla : en Europe, elle se charge avec une prise Combo CCS2, comme pendant mon test chez VEV." },
     en: { idle: "Available", auth: "Authorized", plugged: "Vehicle plugged in", charging: "Charging", full: "Target reached", done: "Finished, charger released",
           mBadge: "🪪 Badge accepted: charging is authorized. Now plug in the cable.",
@@ -92,6 +93,7 @@
           stops: function (n) { return n === 0 ? "✅ No need to stop: one charge is enough." : "🔌 You need about " + n + " fast-charging stop" + (n > 1 ? "s" : "") + " (10 → 80%) on the way."; },
           tripCo2: function (a, b) { return " 🌱 CO₂: " + a + " kg with fuel, " + b + " kg electric."; },
           noCharge: "no charging",
+          mNewCar: "🔄 Setting changed: the charger is released. Swipe the badge for a new charge.",
           tesla: " · Tesla: in Europe, it charges with a Combo CCS2 plug, like during my test at VEV." },
     es: { idle: "Disponible", auth: "Autorizado", plugged: "Vehículo conectado", charging: "Cargando", full: "Objetivo alcanzado", done: "Terminado, cargador liberado",
           mBadge: "🪪 Tarjeta aceptada: la carga está autorizada. Ahora conecta el cable.",
@@ -112,6 +114,7 @@
           stops: function (n) { return n === 0 ? "✅ No hace falta parar: una carga basta." : "🔌 Hacen falta unas " + n + " parada" + (n > 1 ? "s" : "") + " de carga rápida (10 → 80 %) en el camino."; },
           tripCo2: function (a, b) { return " 🌱 CO₂: " + a + " kg con combustible, " + b + " kg en eléctrico."; },
           noCharge: "ninguna carga",
+          mNewCar: "🔄 Ajuste cambiado: el cargador queda libre. Pasa la tarjeta para una nueva carga.",
           tesla: " · Tesla: en Europa, se carga con un conector Combo CCS2, como en mi prueba en VEV." }
   };
   function tr() { return T[html.lang] || T.fr; }
@@ -187,8 +190,6 @@
     $(".sim-soc").textContent = Math.floor(soc) + " %";
     $(".sim-time").textContent = fmtTime(minutes);
     $(".sim-power-select select").disabled = !plug || state === "done";
-    var busy = state !== "idle" && state !== "done";
-    $$(".set-car, .set-bat, .set-conso, .set-maxac, .set-maxdc, .set-start").forEach(function (i) { i.disabled = busy; });
     var x = compare(energy);
     $(".cmp-km").textContent = Math.round(x.km) + " km";
     $(".cmp-elec").textContent = euro(x.elec);
@@ -330,7 +331,10 @@
     if (el.matches(".set-tripkm")) cfg.tripKm = readNum(el, 1, 5000, 100);
     saveCfg();
     // la batterie de départ ne change qu'entre deux charges
-    if (state === "idle") soc = cfg.start;
+    // changer de voiture (ou de batterie au départ) pendant une charge : la borne s'arrête et on recommence
+    var resets = el.matches(".set-car, .set-bat, .set-conso, .set-maxac, .set-maxdc, .set-start");
+    if (resets && state !== "idle") { reset(); say(tr().mNewCar); }
+    else if (state === "idle") soc = cfg.start;
     // ne pas réécrire le champ qu'on est en train de taper
     var typing = el.matches("input[type=number]") ? el : null, keep = typing ? typing.value : null;
     paintSettings();
