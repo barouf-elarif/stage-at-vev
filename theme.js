@@ -1,11 +1,21 @@
 // Thèmes du site : menu déroulant + thèmes secrets (page Centres d'intérêt)
 (function () {
-  var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "noel",
-                "bloodborne", "astro", "ragnarok", "echecs", "halloween"];
-  var menu = document.querySelector(".theme-menu");
+  var THEMES = ["light", "dark", "violet", "vert", "orange", "eclipse", "duolingo", "chess", "neon", "retro", "ocean", "carnet", "espace", "sakura", "terminal", "volcan", "bonbon", "manga", "noel",
+                "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium"];
+  var menus = document.querySelectorAll(".theme-menu");   // « Thème » et « Thème 2 »
   var buttons = document.querySelectorAll("[data-theme-choice]");
 
+  // Thèmes qu'il faut débloquer avant de pouvoir les utiliser
+  var LOCKABLE = ["noel", "bloodborne", "astro", "ragnarok", "echecs", "halloween", "premium"];
+
   function applyTheme(choice) {
+    // Un thème verrouillé (venu de l'adresse ?theme=… ou de la mémoire) n'est jamais appliqué
+    if (LOCKABLE.indexOf(choice) > -1 && !isUnlocked(choice)) {
+      choice = "auto";
+      if (/[?&]theme=/.test(location.search) && history.replaceState) {
+        history.replaceState(null, "", location.pathname + location.hash);
+      }
+    }
     if (THEMES.indexOf(choice) > -1) {
       document.documentElement.dataset.theme = choice;
     } else {
@@ -27,13 +37,20 @@
   buttons.forEach(function (b) {
     b.addEventListener("click", function () {
       applyTheme(b.dataset.themeChoice);
-      if (menu) menu.open = false;
+      menus.forEach(function (m) { m.open = false; });
+    });
+  });
+
+  // Ouvrir un menu ferme l'autre
+  menus.forEach(function (m) {
+    m.addEventListener("toggle", function () {
+      if (m.open) menus.forEach(function (o) { if (o !== m) o.open = false; });
     });
   });
 
   // Fermer le menu quand on clique ailleurs
   document.addEventListener("click", function (e) {
-    if (menu && !menu.contains(e.target)) menu.open = false;
+    menus.forEach(function (m) { if (!m.contains(e.target)) m.open = false; });
   });
 
   // ===== Thèmes secrets =====
@@ -44,7 +61,7 @@
   //  - Astro      : la lumière allumée (thème Clair), puis 5 clics sur la place n°2 des jeux (une par lettre de « ASTRO »)
   //  - God of War : le grand hiver avant le Ragnarök (thème Noël, avec la neige), puis 3 clics sur la place n°3 des jeux
   var secrets = document.getElementById("secrets");
-  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
+  var NAMES = { bloodborne: "Bloodborne", astro: "Astro’s Playroom", ragnarok: "God of War", echecs: { fr: "Échecs", en: "Chess", es: "Ajedrez" }, halloween: "Halloween", premium: { fr: "Échecs Premium", en: "Premium Chess", es: "Ajedrez Premium" }, noel: { fr: "Noël", en: "Christmas", es: "Navidad" } };
   var MSG = {
     unlocked: { fr: "🔓 Thème débloqué : ", en: "🔓 Theme unlocked: ", es: "🔓 Tema desbloqueado: " },
     relocked: { fr: "🔒 Tous les thèmes secrets sont à nouveau verrouillés.", en: "🔒 All secret themes are locked again.", es: "🔒 Todos los temas secretos vuelven a estar bloqueados." }
@@ -61,6 +78,9 @@
     document.querySelectorAll("[data-secret], [data-menu-lock]").forEach(function (b) {
       b.classList.toggle("locked", !isUnlocked(b.dataset.secret || b.dataset.menuLock));
     });
+    // Échecs Premium : l'indice n'apparaît qu'après Échecs, le bouton qu'après la promotion
+    document.documentElement.classList.toggle("has-echecs", isUnlocked("echecs"));
+    document.documentElement.classList.toggle("has-premium", isUnlocked("premium"));
   }
 
   function toast(text) {
@@ -95,6 +115,7 @@
     var list = getUnlocked(); list.push(id);
     try { localStorage.setItem("unlocked", JSON.stringify(list)); } catch (e) {}
     refreshLocks();
+    if (typeof refreshLockAll === "function") refreshLockAll();
     var btn = document.querySelector('[data-secret="' + id + '"]');
     if (btn) { btn.classList.remove("just-unlocked"); void btn.offsetWidth; btn.classList.add("just-unlocked"); }
     var name = typeof NAMES[id] === "string" ? NAMES[id] : NAMES[id][lang()];
@@ -224,6 +245,27 @@
       if (currentTheme() === "noel") unlock("ragnarok"); else toast(WRONG.ragnarok[lang()]);
     });
 
+    // Échecs Premium (encore plus secret) : la promotion du pion.
+    // Avec le thème Échecs, toucher les pions blancs (places 4 à 10 des jeux) dans l'ordre,
+    // sans s'arrêter plus de 2 secondes : le pion arrive au bout de l'échiquier et devient une dame d'or.
+    var pawns = document.querySelectorAll("#jeux .top3.top-rest > li .rank");
+    var step = 0, stepTimer = null;
+    var PROMO = { fr: "♛ Promotion ! Thème débloqué : Échecs Premium", en: "♛ Promotion! Theme unlocked: Premium Chess", es: "♛ ¡Coronación! Tema desbloqueado: Ajedrez Premium" };
+    pawns.forEach(function (pawn, i) {
+      pawn.addEventListener("click", function () {
+        if (secrets.hidden || !isUnlocked("echecs") || isUnlocked("premium") || currentTheme() !== "echecs") { step = 0; return; }
+        clearTimeout(stepTimer);
+        step = (i === step) ? step + 1 : (i === 0 ? 1 : 0);
+        stepTimer = setTimeout(function () { step = 0; }, 2000);
+        if (step === pawns.length) {
+          step = 0;
+          unlock("premium");
+          if (window.premiumPromotion) window.premiumPromotion();   // cinématique (premium.js)
+          setTimeout(function () { applyTheme("premium"); toast(PROMO[lang()]); }, 1200);
+        }
+      });
+    });
+
     // Clic sur un thème verrouillé : afficher son indice
     document.querySelectorAll("[data-secret]").forEach(function (b) {
       b.addEventListener("click", function (e) {
@@ -239,7 +281,7 @@
     if (reset) {
       reset.addEventListener("click", function () {
         try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); localStorage.removeItem("eggs"); } catch (e) {}
-        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel"].indexOf(currentTheme()) > -1) applyTheme("auto");
+        if (["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium"].indexOf(currentTheme()) > -1) applyTheme("auto");
         document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
         refreshLocks(); placeEggs();
         toast(MSG.relocked[lang()]);
@@ -249,6 +291,49 @@
         }, 1200);
       });
     }
+  }
+
+  // ===== Bouton à côté des drapeaux : tout débloquer / tout verrouiller =====
+  var lockAll = document.querySelector(".lock-all");
+  var ALL_LOCKED = ["bloodborne", "astro", "ragnarok", "echecs", "halloween", "noel", "premium"];
+  var LOCK_MSG = {
+    open:   { fr: "🔓 Tous les thèmes sont débloqués !", en: "🔓 All themes are unlocked!", es: "🔓 ¡Todos los temas están desbloqueados!" },
+    closed: { fr: "🔒 Tous les thèmes sont verrouillés.", en: "🔒 All themes are locked.", es: "🔒 Todos los temas están bloqueados." },
+    tipOpen:   { fr: "Débloquer tous les thèmes", en: "Unlock all themes", es: "Desbloquear todos los temas" },
+    tipClosed: { fr: "Verrouiller tous les thèmes", en: "Lock all themes", es: "Bloquear todos los temas" }
+  };
+  function allUnlocked() { return ALL_LOCKED.every(isUnlocked); }
+  function refreshLockAll() {
+    if (!lockAll) return;
+    var open = allUnlocked();
+    lockAll.textContent = open ? "🔒" : "🔓";
+    var tip = (open ? LOCK_MSG.tipClosed : LOCK_MSG.tipOpen)[lang()];
+    lockAll.title = tip; lockAll.setAttribute("aria-label", tip);
+  }
+  if (lockAll) {
+    lockAll.addEventListener("click", function () {
+      if (allUnlocked()) {
+        // Tout verrouiller (comme le bouton « Tout reverrouiller » de la page Centres d'intérêt)
+        try { localStorage.removeItem("unlocked"); localStorage.removeItem("secrets"); localStorage.removeItem("eggs"); } catch (e) {}
+        if (ALL_LOCKED.indexOf(currentTheme()) > -1) applyTheme("auto");
+        if (secrets) secrets.hidden = true;
+        document.querySelectorAll(".secret-item.show-hint").forEach(function (i) { i.classList.remove("show-hint"); });
+        toast(LOCK_MSG.closed[lang()]);
+      } else {
+        // Tout débloquer : thèmes, section secrète et objets cachés
+        try {
+          localStorage.setItem("unlocked", JSON.stringify(ALL_LOCKED));
+          localStorage.setItem("secrets", "1");
+          localStorage.setItem("eggs", JSON.stringify(Object.keys(EGGS)));
+        } catch (e) {}
+        if (secrets) secrets.hidden = false;
+        toast(LOCK_MSG.open[lang()]);
+      }
+      refreshLocks(); placeEggs(); refreshLockAll();
+    });
+    // Le texte de l'infobulle suit la langue choisie
+    new MutationObserver(refreshLockAll).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    refreshLockAll();
   }
 
   // ===== Téléphone : carrousel des parties du CV =====

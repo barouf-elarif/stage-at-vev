@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elarif Barouf — Stagiaire en informatique</title>
   <meta name="description" content="Elarif Barouf, élève en 1CIEL au lycée Eucalyptus à Nice. Stage du 23 novembre au 25 décembre.">
-  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); if (["light","dark","violet","vert","orange","eclipse","noel","bloodborne","astro","ragnarok","echecs","halloween"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); var u = JSON.parse(localStorage.getItem("unlocked") || "[]"); if (["noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1 && u.indexOf(t) < 0) t = null; if (["light","dark","violet","vert","orange","eclipse","duolingo","chess","neon","retro","ocean","carnet","espace","sakura","terminal","volcan","bonbon","manga","noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,9 +26,27 @@
           <button type="button" data-theme-choice="noel" data-menu-lock="noel">🎄 <span data-lang="fr">Noël</span><span data-lang="en">Christmas</span><span data-lang="es">Navidad</span></button>
         </div>
       </details>
+      <details class="theme-menu">
+        <summary><span aria-hidden="true">🧪</span><span data-lang="fr">Thème test</span><span data-lang="en">Test themes</span><span data-lang="es">Temas de prueba</span></summary>
+        <div class="theme-list">
+          <button type="button" data-theme-choice="duolingo">🦉 <span>Duolingo</span></button>
+          <button type="button" data-theme-choice="chess">♟️ <span>Chess</span></button>
+          <button type="button" data-theme-choice="neon">🌆 <span data-lang="fr">Néon</span><span data-lang="en">Neon</span><span data-lang="es">Neón</span></button>
+          <button type="button" data-theme-choice="retro">👾 <span data-lang="fr">Rétro</span><span data-lang="en">Retro</span><span data-lang="es">Retro</span></button>
+          <button type="button" data-theme-choice="ocean">🌊 <span data-lang="fr">Océan</span><span data-lang="en">Ocean</span><span data-lang="es">Océano</span></button>
+          <button type="button" data-theme-choice="carnet">📓 <span data-lang="fr">Carnet</span><span data-lang="en">Notebook</span><span data-lang="es">Cuaderno</span></button>
+          <button type="button" data-theme-choice="espace">🚀 <span data-lang="fr">Espace</span><span data-lang="en">Space</span><span data-lang="es">Espacio</span></button>
+          <button type="button" data-theme-choice="sakura">🌸 <span data-lang="fr">Sakura</span><span data-lang="en">Sakura</span><span data-lang="es">Sakura</span></button>
+          <button type="button" data-theme-choice="terminal">⌨️ <span data-lang="fr">Terminal</span><span data-lang="en">Terminal</span><span data-lang="es">Terminal</span></button>
+          <button type="button" data-theme-choice="volcan">🌋 <span data-lang="fr">Volcan</span><span data-lang="en">Volcano</span><span data-lang="es">Volcán</span></button>
+          <button type="button" data-theme-choice="bonbon">🍬 <span data-lang="fr">Bonbon</span><span data-lang="en">Candy</span><span data-lang="es">Caramelo</span></button>
+          <button type="button" data-theme-choice="manga">💥 <span data-lang="fr">Manga</span><span data-lang="en">Manga</span><span data-lang="es">Manga</span></button>
+        </div>
+      </details>
       <button type="button" class="lang-btn" data-set-lang="fr" title="Français" aria-label="Français"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ED2939"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="es" title="Español" aria-label="Español"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/></svg></button>
+      <button type="button" class="lock-all" aria-label="Débloquer tous les thèmes" title="Débloquer tous les thèmes">🔓</button>
     </div>
     <div class="container">
       <p class="tag">
@@ -279,9 +297,11 @@
         <article class="day">
           <h3>Jeudi 26 novembre</h3>
           <ul>
-            <li><strong>Maquette :</strong> j’ai continué la maquette en ajoutant des routes en 3D. On a posé les routes sur des supports en 3D faits spécialement pour la maquette, puis on les a collés sur la maquette avec du scratch.</li>
-            <li><strong>Thèmes du site :</strong> ajout d’un menu pour changer l’apparence du site : automatique, clair, sombre, et des thèmes de couleur (Éclipse, Noël avec de la neige animée, Violet, Vert et Orange).</li>
-            <li><strong>Thèmes secrets :</strong> des thèmes inspirés de mes centres d’intérêt (Bloodborne, Astro’s Playroom, God of War Ragnarök, Échecs) et un thème Halloween. Ils sont verrouillés : pour les débloquer, il faut résoudre une énigme ou trouver des objets cachés dans le site.</li>
+            <li><strong>Maquette :</strong> j’ai continué la maquette en ajoutant des routes en 3D. On a posé les routes sur des supports en 3D faits spécialement pour la maquette, puis on les a collés sur la maquette avec du scratch.
+              <details class="photo"><summary>📷 Voir la photo des routes 3D</summary><a href="images/maquette-routes.jpg" target="_blank" rel="noopener" title="Cliquer pour agrandir"><img src="images/maquette-routes.jpg" alt="Les routes 3D posées sur leurs supports, sur le plan de la maquette" loading="lazy"></a><span class="photo-cap">Les routes 3D posées sur leurs supports, sur le plan de la maquette · Cliquer pour agrandir</span></details>
+            </li>
+            <li><strong>Thèmes du site :</strong> ajout d’un menu pour changer l’apparence du site : 7 thèmes au choix : automatique, clair, sombre, et des thèmes de couleur (Éclipse, Violet, Vert et Orange).</li>
+            <li><strong>6 thèmes secrets :</strong> 4 thèmes inspirés de mes centres d’intérêt (Bloodborne, Astro’s Playroom, God of War Ragnarök, Échecs), à débloquer en résolvant des énigmes, et 2 thèmes de saison dans le menu (Halloween, et Noël avec de la neige animée), à débloquer en trouvant des objets cachés dans les autres thèmes.</li>
             <li><strong>Version téléphone :</strong> sur téléphone, les parties du CV s’affichent en carrousel qu’on fait glisser, et la barre de navigation défile.</li>
             <li><strong>Photo :</strong> ajout d’une photo de mon poste de travail dans la personnalisation de l’environnement.</li>
           </ul>
@@ -364,9 +384,11 @@
         <article class="day">
           <h3>Thursday, November 26</h3>
           <ul>
-            <li><strong>Model:</strong> I kept working on the model by adding 3D roads. We placed the roads on 3D supports made especially for the model, then attached them to the model with Velcro.</li>
-            <li><strong>Website themes:</strong> added a menu to change how the site looks: automatic, light, dark, and colour themes (Eclipse, Christmas with animated snow, Purple, Green and Orange).</li>
-            <li><strong>Secret themes:</strong> themes inspired by my interests (Bloodborne, Astro’s Playroom, God of War Ragnarök, Chess) and a Halloween theme. They are locked: to unlock them, you have to solve a riddle or find objects hidden in the site.</li>
+            <li><strong>Model:</strong> I kept working on the model by adding 3D roads. We placed the roads on 3D supports made especially for the model, then attached them to the model with Velcro.
+              <details class="photo"><summary>📷 See a photo of the 3D roads</summary><a href="images/maquette-routes.jpg" target="_blank" rel="noopener" title="Click to enlarge"><img src="images/maquette-routes.jpg" alt="The 3D roads on their supports, on the plan of the model" loading="lazy"></a><span class="photo-cap">The 3D roads on their supports, on the plan of the model · Click to enlarge</span></details>
+            </li>
+            <li><strong>Website themes:</strong> added a menu to change how the site looks: 7 themes to choose from: automatic, light, dark, and colour themes (Eclipse, Purple, Green and Orange).</li>
+            <li><strong>6 secret themes:</strong> 4 themes inspired by my interests (Bloodborne, Astro’s Playroom, God of War Ragnarök, Chess), unlocked by solving riddles, and 2 seasonal themes in the menu (Halloween, and Christmas with animated snow), unlocked by finding objects hidden in the other themes.</li>
             <li><strong>Phone version:</strong> on a phone, the parts of the CV are shown in a carousel you can swipe, and the navigation bar scrolls.</li>
             <li><strong>Picture:</strong> added a photo of my workstation in the desktop customization section.</li>
           </ul>
@@ -449,9 +471,11 @@
         <article class="day">
           <h3>Jueves 26 de noviembre</h3>
           <ul>
-            <li><strong>Maqueta:</strong> seguí con la maqueta añadiendo carreteras en 3D. Colocamos las carreteras sobre soportes en 3D hechos especialmente para la maqueta y luego los pegamos a la maqueta con velcro.</li>
-            <li><strong>Temas del sitio:</strong> añadí un menú para cambiar el aspecto del sitio: automático, claro, oscuro y temas de color (Eclipse, Navidad con nieve animada, Violeta, Verde y Naranja).</li>
-            <li><strong>Temas secretos:</strong> temas inspirados en mis intereses (Bloodborne, Astro’s Playroom, God of War Ragnarök, Ajedrez) y un tema de Halloween. Están bloqueados: para desbloquearlos, hay que resolver un enigma o encontrar objetos escondidos en el sitio.</li>
+            <li><strong>Maqueta:</strong> seguí con la maqueta añadiendo carreteras en 3D. Colocamos las carreteras sobre soportes en 3D hechos especialmente para la maqueta y luego los pegamos a la maqueta con velcro.
+              <details class="photo"><summary>📷 Ver la foto de las carreteras 3D</summary><a href="images/maquette-routes.jpg" target="_blank" rel="noopener" title="Haz clic para ampliar"><img src="images/maquette-routes.jpg" alt="Las carreteras 3D sobre sus soportes, en el plano de la maqueta" loading="lazy"></a><span class="photo-cap">Las carreteras 3D sobre sus soportes, en el plano de la maqueta · Haz clic para ampliar</span></details>
+            </li>
+            <li><strong>Temas del sitio:</strong> añadí un menú para cambiar el aspecto del sitio: 7 temas a elegir: automático, claro, oscuro y temas de color (Eclipse, Violeta, Verde y Naranja).</li>
+            <li><strong>6 temas secretos:</strong> 4 temas inspirados en mis intereses (Bloodborne, Astro’s Playroom, God of War Ragnarök, Ajedrez), que se desbloquean resolviendo enigmas, y 2 temas de temporada en el menú (Halloween, y Navidad con nieve animada), que se desbloquean encontrando objetos escondidos en los otros temas.</li>
             <li><strong>Versión para móvil:</strong> en el móvil, las partes del CV se muestran en un carrusel que se desliza, y la barra de navegación se desplaza.</li>
             <li><strong>Foto:</strong> añadí una foto de mi puesto de trabajo en la personalización del entorno.</li>
           </ul>
@@ -528,5 +552,6 @@
     })();
   </script>
   <script src="theme.js"></script>
+  <script src="premium.js"></script>
 </body>
 </html>

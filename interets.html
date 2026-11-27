@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elarif Barouf — Centres d’intérêt</title>
   <meta name="description" content="Les centres d’intérêt d’Elarif Barouf : échecs, jeux vidéo et animés.">
-  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); if (["light","dark","violet","vert","orange","eclipse","noel","bloodborne","astro","ragnarok","echecs","halloween"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <script>try { var m = location.search.match(/[?&]theme=([a-z]+)/); var t = m ? m[1] : localStorage.getItem("theme"); var u = JSON.parse(localStorage.getItem("unlocked") || "[]"); if (["noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1 && u.indexOf(t) < 0) t = null; if (["light","dark","violet","vert","orange","eclipse","duolingo","chess","neon","retro","ocean","carnet","espace","sakura","terminal","volcan","bonbon","manga","noel","bloodborne","astro","ragnarok","echecs","halloween","premium"].indexOf(t) > -1) document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,9 +26,27 @@
           <button type="button" data-theme-choice="noel" data-menu-lock="noel">🎄 <span data-lang="fr">Noël</span><span data-lang="en">Christmas</span><span data-lang="es">Navidad</span></button>
         </div>
       </details>
+      <details class="theme-menu">
+        <summary><span aria-hidden="true">🧪</span><span data-lang="fr">Thème test</span><span data-lang="en">Test themes</span><span data-lang="es">Temas de prueba</span></summary>
+        <div class="theme-list">
+          <button type="button" data-theme-choice="duolingo">🦉 <span>Duolingo</span></button>
+          <button type="button" data-theme-choice="chess">♟️ <span>Chess</span></button>
+          <button type="button" data-theme-choice="neon">🌆 <span data-lang="fr">Néon</span><span data-lang="en">Neon</span><span data-lang="es">Neón</span></button>
+          <button type="button" data-theme-choice="retro">👾 <span data-lang="fr">Rétro</span><span data-lang="en">Retro</span><span data-lang="es">Retro</span></button>
+          <button type="button" data-theme-choice="ocean">🌊 <span data-lang="fr">Océan</span><span data-lang="en">Ocean</span><span data-lang="es">Océano</span></button>
+          <button type="button" data-theme-choice="carnet">📓 <span data-lang="fr">Carnet</span><span data-lang="en">Notebook</span><span data-lang="es">Cuaderno</span></button>
+          <button type="button" data-theme-choice="espace">🚀 <span data-lang="fr">Espace</span><span data-lang="en">Space</span><span data-lang="es">Espacio</span></button>
+          <button type="button" data-theme-choice="sakura">🌸 <span data-lang="fr">Sakura</span><span data-lang="en">Sakura</span><span data-lang="es">Sakura</span></button>
+          <button type="button" data-theme-choice="terminal">⌨️ <span data-lang="fr">Terminal</span><span data-lang="en">Terminal</span><span data-lang="es">Terminal</span></button>
+          <button type="button" data-theme-choice="volcan">🌋 <span data-lang="fr">Volcan</span><span data-lang="en">Volcano</span><span data-lang="es">Volcán</span></button>
+          <button type="button" data-theme-choice="bonbon">🍬 <span data-lang="fr">Bonbon</span><span data-lang="en">Candy</span><span data-lang="es">Caramelo</span></button>
+          <button type="button" data-theme-choice="manga">💥 <span data-lang="fr">Manga</span><span data-lang="en">Manga</span><span data-lang="es">Manga</span></button>
+        </div>
+      </details>
       <button type="button" class="lang-btn" data-set-lang="fr" title="Français" aria-label="Français"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ED2939"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
       <button type="button" class="lang-btn" data-set-lang="es" title="Español" aria-label="Español"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/></svg></button>
+      <button type="button" class="lock-all" aria-label="Débloquer tous les thèmes" title="Débloquer tous les thèmes">🔓</button>
     </div>
     <div class="container">
       <a class="back-link" href="index.html">
@@ -252,6 +270,11 @@
         <div class="secret-item">
           <button type="button" class="secret-btn" data-theme-choice="echecs" data-secret="echecs"><span class="swatch sw-echecs"></span><span class="secret-name"><span data-lang="fr">Échecs</span><span data-lang="en">Chess</span><span data-lang="es">Ajedrez</span></span></button>
           <p class="secret-hint"><span data-lang="fr">Énigme : mes animés jouent avec les noirs, mes jeux avec les blancs. Pour commencer la partie, les deux rois doivent se saluer : le noir d’abord, puis le blanc.</span><span data-lang="en">Riddle: my anime play black, my games play white. To start the game, the two kings must greet each other: black first, then white.</span><span data-lang="es">Enigma: mis animes juegan con negras, mis juegos con blancas. Para empezar la partida, los dos reyes deben saludarse: primero el negro, luego el blanco.</span></p>
+          <p class="premium-hint"><span data-lang="fr">♛ Encore plus secret : avec le thème Échecs, fais avancer le pion blanc case par case jusqu’au bout de l’échiquier… il sera promu.</span><span data-lang="en">♛ Even more secret: with the Chess theme, move the white pawn square by square to the end of the board… it will be promoted.</span><span data-lang="es">♛ Aún más secreto: con el tema Ajedrez, haz avanzar el peón blanco casilla por casilla hasta el final del tablero… será coronado.</span></p>
+        </div>
+        <div class="secret-item premium-item">
+          <button type="button" class="secret-btn" data-theme-choice="premium" data-secret="premium"><span class="swatch sw-premium"></span><span class="secret-name"><span data-lang="fr">Échecs Premium</span><span data-lang="en">Premium Chess</span><span data-lang="es">Ajedrez Premium</span></span></button>
+          <p class="secret-hint"><span data-lang="fr">Le thème le plus secret du site, en or et en argent.</span><span data-lang="en">The most secret theme of the site, in gold and silver.</span><span data-lang="es">El tema más secreto del sitio, en oro y plata.</span></p>
         </div>
       </div>
       <button type="button" class="secret-reset">🔒 <span data-lang="fr">Tout reverrouiller et recommencer</span><span data-lang="en">Lock everything and start again</span><span data-lang="es">Bloquear todo y empezar de nuevo</span></button>
@@ -294,5 +317,6 @@
     })();
   </script>
   <script src="theme.js"></script>
+  <script src="premium.js"></script>
 </body>
 </html>
