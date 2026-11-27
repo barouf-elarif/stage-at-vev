@@ -4,7 +4,7 @@
 //  - explosion d'étincelles à chaque clic, et les pièces du classement qui tournent
 //  - éclat de lumière qui traverse l'écran quand on choisit le thème
 //  - cinématique « Promotion » quand on débloque le thème
-//  - puzzles « Mat en 1 » (bouton ♞), citations de grands joueurs, curseur cavalier
+//  - puzzles « Mat en 1 » et « Mat en 2 » (bouton ♞), citations de grands joueurs, curseur cavalier
 (function () {
   var html = document.documentElement;
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -352,40 +352,69 @@
   }, { passive: true });
 
   // =====================================================================
-  // 4) Puzzle « Mat en 1 » : bouton ♞ en bas à droite, les Blancs jouent et matent en un coup
+  // 4) Puzzles d'échecs : bouton ♞ en bas à droite
+  //    « Mat en 1 » : les Blancs matent en un coup
+  //    « Mat en 2 » : les Blancs jouent, la réponse des Noirs (forcée) est jouée toute seule, puis les Blancs matent
+  //    line = les coups de la solution : Blancs, Noirs, Blancs…
   // =====================================================================
-  var PUZZLES = [
-    { // le mat du couloir
-      board: ["......k.", ".....ppp", "........", "........", "........", "........", ".....PPP", "R.....K."],
-      sol: "a1a8", name: { fr: "Le mat du couloir", en: "Back-rank mate", es: "El mate del pasillo" } },
-    { // le coup du berger
-      board: ["r.bqkb.r", "pppp.ppp", "..n..n..", "....p..Q", "..B.P...", "........", "PPPP.PPP", "RNB.K.NR"],
-      sol: "h5f7", name: { fr: "Le coup du berger", en: "Scholar’s mate", es: "El mate del pastor" } },
-    { // le mat à l'étouffée : le roi est enfermé par ses propres pièces
-      board: ["......rk", "......pp", "........", "......N.", "........", "........", ".....PPP", "......K."],
-      sol: "g5f7", name: { fr: "Le mat à l’étouffée", en: "Smothered mate", es: "El mate de la coz" } },
-    { // la dame soutenue par le fou
-      board: [".......k", ".....ppp", "........", ".......Q", "........", "...B....", ".....PPP", "......K."],
-      sol: "h5h7", name: { fr: "La dame soutenue par le fou", en: "Queen backed by the bishop", es: "La dama apoyada por el alfil" } },
-    { // finale roi et tour
-      board: ["k.......", "........", ".K......", "........", "........", "........", "........", ".......R"],
-      sol: "h1h8", name: { fr: "Finale roi et tour", en: "King and rook endgame", es: "Final de rey y torre" } }
-  ];
+  var PUZZLES = {
+    1: [
+      { // le mat du couloir
+        board: ["......k.", ".....ppp", "........", "........", "........", "........", ".....PPP", "R.....K."],
+        line: ["a1a8"], name: { fr: "Le mat du couloir", en: "Back-rank mate", es: "El mate del pasillo" } },
+      { // le coup du berger
+        board: ["r.bqkb.r", "pppp.ppp", "..n..n..", "....p..Q", "..B.P...", "........", "PPPP.PPP", "RNB.K.NR"],
+        line: ["h5f7"], name: { fr: "Le coup du berger", en: "Scholar’s mate", es: "El mate del pastor" } },
+      { // le mat à l'étouffée : le roi est enfermé par ses propres pièces
+        board: ["......rk", "......pp", "........", "......N.", "........", "........", ".....PPP", "......K."],
+        line: ["g5f7"], name: { fr: "Le mat à l’étouffée", en: "Smothered mate", es: "El mate de la coz" } },
+      { // la dame soutenue par le fou
+        board: [".......k", ".....ppp", "........", ".......Q", "........", "...B....", ".....PPP", "......K."],
+        line: ["h5h7"], name: { fr: "La dame soutenue par le fou", en: "Queen backed by the bishop", es: "La dama apoyada por el alfil" } },
+      { // finale roi et tour
+        board: ["k.......", "........", ".K......", "........", "........", "........", "........", ".......R"],
+        line: ["h1h8"], name: { fr: "Finale roi et tour", en: "King and rook endgame", es: "Final de rey y torre" } }
+    ],
+    2: [
+      { // la dame se sacrifie pour attirer la dame noire, puis la tour mate sur la dernière rangée
+        board: ["...r..k.", "..q..ppp", "........", "........", "...Q....", "........", ".....PPP", "...R..K."],
+        line: ["d4d8", "c7d8", "d1d8"], name: { fr: "Le sacrifice de la dame", en: "The queen sacrifice", es: "El sacrificio de la dama" } },
+      { // le mat de Philidor : sacrifice en g8, puis mat à l'étouffée
+        board: ["....r..k", "......pp", ".......N", "...Q....", "........", "........", ".....PPP", "......K."],
+        line: ["d5g8", "e8g8", "h6f7"], name: { fr: "Le mat de Philidor", en: "Philidor’s mate", es: "El mate de Philidor" } },
+      { // un coup calme du roi : le roi noir n'a plus qu'une case
+        board: [".......k", "........", ".....K..", "........", "........", "........", "........", "......R."],
+        line: ["f6f7", "h8h7", "g1h1"], name: { fr: "Le coup calme", en: "The quiet move", es: "La jugada tranquila" } },
+      { // le mat de Boden : deux fous qui se croisent
+        board: ["..kr....", "pp.n....", "..n.....", "........", ".....B..", ".....Q..", "....BPPP", "......K."],
+        line: ["f3c6", "b7c6", "e2a6"], name: { fr: "Le mat de Boden", en: "Boden’s mate", es: "El mate de Boden" } }
+    ]
+  };
   var PT = {
-    fr: { title: "Mat en 1", turn: "Les Blancs jouent et font échec et mat en un coup.", pick: "Clique sur une pièce blanche, puis sur sa case d’arrivée.",
-          wrong: "Pas tout à fait… cherche encore !", right: "Échec et mat ! ♛ Bravo !", next: "Puzzle suivant ›", solved: function (n, t) { return "Résolus : " + n + " / " + t; },
-          all: "Tous les puzzles sont résolus : tu mérites ton titre de Grand Maître ♛", open: "Puzzle d’échecs", close: "Fermer" },
-    en: { title: "Mate in 1", turn: "White to play and checkmate in one move.", pick: "Click a white piece, then its destination square.",
-          wrong: "Not quite… keep looking!", right: "Checkmate! ♛ Well done!", next: "Next puzzle ›", solved: function (n, t) { return "Solved: " + n + " / " + t; },
-          all: "All puzzles solved: you’ve earned your Grandmaster title ♛", open: "Chess puzzle", close: "Close" },
-    es: { title: "Mate en 1", turn: "Juegan las blancas y dan jaque mate en una jugada.", pick: "Haz clic en una pieza blanca y luego en su casilla de llegada.",
-          wrong: "No del todo… ¡sigue buscando!", right: "¡Jaque mate! ♛ ¡Bravo!", next: "Siguiente puzzle ›", solved: function (n, t) { return "Resueltos: " + n + " / " + t; },
-          all: "Todos los puzzles resueltos: te has ganado el título de Gran Maestro ♛", open: "Puzzle de ajedrez", close: "Cerrar" }
+    fr: { tab1: "Mat en 1", tab2: "Mat en 2", turn1: "Les Blancs jouent et font échec et mat en un coup.",
+          turn2: "Les Blancs jouent et font échec et mat en deux coups. La réponse des Noirs se joue toute seule.",
+          pick: "Clique sur une pièce blanche, puis sur sa case d’arrivée.", wrong: "Pas tout à fait… cherche encore !",
+          reply: "Bien vu ! Les Noirs sont obligés de répondre… À toi de finir !", right: "Échec et mat ! ♛ Bravo !",
+          next: "Puzzle suivant ›", solved: function (n, t) { return "Résolus : " + n + " / " + t; },
+          all: "Tous les puzzles de cette série sont résolus ♛", open: "Puzzles d’échecs", close: "Fermer" },
+    en: { tab1: "Mate in 1", tab2: "Mate in 2", turn1: "White to play and checkmate in one move.",
+          turn2: "White to play and checkmate in two moves. Black’s reply is played automatically.",
+          pick: "Click a white piece, then its destination square.", wrong: "Not quite… keep looking!",
+          reply: "Well spotted! Black has to reply… Now finish it!", right: "Checkmate! ♛ Well done!",
+          next: "Next puzzle ›", solved: function (n, t) { return "Solved: " + n + " / " + t; },
+          all: "Every puzzle in this set is solved ♛", open: "Chess puzzles", close: "Close" },
+    es: { tab1: "Mate en 1", tab2: "Mate en 2", turn1: "Juegan las blancas y dan jaque mate en una jugada.",
+          turn2: "Juegan las blancas y dan jaque mate en dos jugadas. La respuesta de las negras se juega sola.",
+          pick: "Haz clic en una pieza blanca y luego en su casilla de llegada.", wrong: "No del todo… ¡sigue buscando!",
+          reply: "¡Bien visto! Las negras están obligadas a responder… ¡Ahora termina!", right: "¡Jaque mate! ♛ ¡Bravo!",
+          next: "Siguiente puzzle ›", solved: function (n, t) { return "Resueltos: " + n + " / " + t; },
+          all: "Todos los puzzles de esta serie están resueltos ♛", open: "Puzzles de ajedrez", close: "Cerrar" }
   };
   function pt() { return PT[html.lang] || PT.fr; }
-  function solvedList() { try { return JSON.parse(localStorage.getItem("premium-puzzles") || "[]"); } catch (e) { return []; } }
-  function saveSolved(l) { try { localStorage.setItem("premium-puzzles", JSON.stringify(l)); } catch (e) {} }
-  var pzBtn = null, pzPanel = null, pzIndex = 0, pzSel = null, pzDone = false;
+  function storeKey(m) { return m === 2 ? "premium-puzzles2" : "premium-puzzles"; }
+  function solvedList(m) { try { return JSON.parse(localStorage.getItem(storeKey(m)) || "[]"); } catch (e) { return []; } }
+  function saveSolved(m, l) { try { localStorage.setItem(storeKey(m), JSON.stringify(l)); } catch (e) {} }
+  var pzBtn = null, pzPanel = null, pzMode = 1, pzIndex = 0, pzSel = null, pzStep = 0, pzBusy = false, pzTimer = 0;
 
   function showPuzzleBtn(on) {
     if (on && !pzBtn) {
@@ -396,11 +425,15 @@
       document.body.appendChild(pzBtn);
     } else if (!on && pzBtn) { pzBtn.remove(); pzBtn = null; closePuzzle(); }
   }
+  function firstUnsolved(m) {
+    var done = solvedList(m);
+    for (var i = 0; i < PUZZLES[m].length; i++) if (done.indexOf(i) < 0) return i;
+    return 0;
+  }
   function openPuzzle() {
-    var done = solvedList();
-    // on commence par le premier puzzle pas encore résolu
-    pzIndex = 0;
-    for (var i = 0; i < PUZZLES.length; i++) if (done.indexOf(i) < 0) { pzIndex = i; break; }
+    // la série « Mat en 2 » s'ouvre directement quand tous les « Mat en 1 » sont résolus
+    pzMode = solvedList(1).length >= PUZZLES[1].length && solvedList(2).length < PUZZLES[2].length ? 2 : 1;
+    pzIndex = firstUnsolved(pzMode);
     pzPanel = document.createElement("div");
     pzPanel.className = "pz-panel";
     pzPanel.setAttribute("role", "dialog");
@@ -410,13 +443,15 @@
     drawPuzzle();
   }
   function closePuzzle() {
+    clearTimeout(pzTimer);
     if (!pzPanel) return;
     pzPanel.remove(); pzPanel = null;
     if (pzBtn) pzBtn.setAttribute("aria-expanded", "false");
   }
   function drawPuzzle() {
-    var P = PUZZLES[pzIndex], t = pt(), done = solvedList();
-    pzSel = null; pzDone = false;
+    clearTimeout(pzTimer);
+    var P = PUZZLES[pzMode][pzIndex], t = pt(), done = solvedList(pzMode);
+    pzSel = null; pzStep = 0; pzBusy = false;
     var cells = "";
     for (var r = 0; r < 8; r++) for (var f = 0; f < 8; f++) {
       var ch = P.board[r][f], name = String.fromCharCode(97 + f) + (8 - r);
@@ -426,18 +461,38 @@
     }
     pzPanel.innerHTML =
       '<button type="button" class="pz-close" aria-label="' + t.close + '">×</button>' +
-      '<p class="pz-title">♞ ' + t.title + ' · <span>' + (P.name[html.lang] || P.name.fr) + "</span></p>" +
-      '<p class="pz-turn">' + t.turn + "</p>" +
+      '<div class="pz-tabs" role="tablist">' +
+        '<button type="button" role="tab" data-mode="1" aria-selected="' + (pzMode === 1) + '">♞ ' + t.tab1 + "</button>" +
+        '<button type="button" role="tab" data-mode="2" aria-selected="' + (pzMode === 2) + '">♞♞ ' + t.tab2 + "</button></div>" +
+      '<p class="pz-title">' + (P.name[html.lang] || P.name.fr) + "</p>" +
+      '<p class="pz-turn">' + (pzMode === 2 ? t.turn2 : t.turn1) + "</p>" +
       '<div class="pz-board">' + cells + "</div>" +
       '<p class="pz-msg" role="status" aria-live="polite">' + t.pick + "</p>" +
-      '<div class="pz-foot"><span class="pz-count">' + t.solved(done.length, PUZZLES.length) + '</span><button type="button" class="pz-next">' + t.next + "</button></div>";
+      '<div class="pz-foot"><span class="pz-count">' + t.solved(done.length, PUZZLES[pzMode].length) + '</span><button type="button" class="pz-next">' + t.next + "</button></div>";
     pzPanel.querySelector(".pz-close").addEventListener("click", closePuzzle);
-    pzPanel.querySelector(".pz-next").addEventListener("click", function () { pzIndex = (pzIndex + 1) % PUZZLES.length; drawPuzzle(); });
+    pzPanel.querySelector(".pz-next").addEventListener("click", function () { pzIndex = (pzIndex + 1) % PUZZLES[pzMode].length; drawPuzzle(); });
+    pzPanel.querySelectorAll(".pz-tabs button").forEach(function (tb) {
+      tb.addEventListener("click", function () {
+        var m = +tb.dataset.mode;
+        if (m === pzMode) return;
+        pzMode = m; pzIndex = firstUnsolved(m); drawPuzzle();
+      });
+    });
     pzPanel.querySelector(".pz-board").addEventListener("click", onSquare);
+  }
+  // déplacer une pièce sur l'échiquier du puzzle (en prenant ce qu'il y a sur la case d'arrivée)
+  function pzMove(from, to) {
+    var a = pzPanel.querySelector('[data-sq="' + from + '"]'), z = pzPanel.querySelector('[data-sq="' + to + '"]');
+    var piece = a.querySelector(".pz-piece");
+    z.innerHTML = ""; z.appendChild(piece);
+    z.dataset.color = a.dataset.color; delete a.dataset.color;
+    pzPanel.querySelectorAll(".pz-sq.last").forEach(function (q) { q.classList.remove("last"); });
+    a.classList.add("last"); z.classList.add("last");
+    return z;
   }
   function onSquare(e) {
     var b = e.target.closest(".pz-sq");
-    if (!b || pzDone) return;
+    if (!b || pzBusy) return;
     var msg = pzPanel.querySelector(".pz-msg");
     if (b.dataset.color === "w") {   // choisir (ou changer) la pièce blanche
       if (pzSel) pzSel.classList.remove("sel");
@@ -445,26 +500,42 @@
       return;
     }
     if (!pzSel) return;
-    var P = PUZZLES[pzIndex], mv = pzSel.dataset.sq + b.dataset.sq;
-    if (mv === P.sol) {
-      pzDone = true;
-      var piece = pzSel.querySelector(".pz-piece");
-      b.innerHTML = ""; b.appendChild(piece);
-      pzSel.classList.remove("sel"); b.classList.add("mate");
-      msg.textContent = pt().right; msg.className = "pz-msg ok";
-      var done = solvedList();
-      if (done.indexOf(pzIndex) < 0) { done.push(pzIndex); saveSolved(done); }
-      pzPanel.querySelector(".pz-count").textContent = pt().solved(done.length, PUZZLES.length);
-      if (done.length === PUZZLES.length) msg.textContent += " " + pt().all;
-      var rc = b.getBoundingClientRect();
-      if (running) burst(rc.left + rc.width / 2, rc.top + rc.height / 2, 60, 5);
-      chime();
-    } else {
+    var P = PUZZLES[pzMode][pzIndex], mv = pzSel.dataset.sq + b.dataset.sq;
+    pzSel.classList.remove("sel");
+    if (mv !== P.line[pzStep]) {
+      pzSel = null;
       msg.textContent = pt().wrong; msg.className = "pz-msg ko";
-      pzPanel.querySelector(".pz-board").classList.remove("shake"); void pzPanel.offsetWidth;
-      pzPanel.querySelector(".pz-board").classList.add("shake");
-      pzSel.classList.remove("sel"); pzSel = null;
+      var bd = pzPanel.querySelector(".pz-board");
+      bd.classList.remove("shake"); void bd.offsetWidth; bd.classList.add("shake");
+      return;
     }
+    pzSel = null;
+    var z = pzMove(mv.slice(0, 2), mv.slice(2, 4));
+    clack();
+    if (pzStep + 1 < P.line.length) {
+      // bon premier coup : les Noirs répondent tout seuls
+      pzBusy = true;
+      msg.textContent = pt().reply; msg.className = "pz-msg ok";
+      var reply = P.line[pzStep + 1], panel = pzPanel;
+      pzTimer = setTimeout(function () {
+        if (pzPanel !== panel) return;
+        pzMove(reply.slice(0, 2), reply.slice(2, 4));
+        clack();
+        pzStep += 2; pzBusy = false;
+      }, 900);
+      return;
+    }
+    // échec et mat
+    pzBusy = true;
+    z.classList.add("mate");
+    msg.textContent = pt().right; msg.className = "pz-msg ok";
+    var done = solvedList(pzMode);
+    if (done.indexOf(pzIndex) < 0) { done.push(pzIndex); saveSolved(pzMode, done); }
+    pzPanel.querySelector(".pz-count").textContent = pt().solved(done.length, PUZZLES[pzMode].length);
+    if (done.length === PUZZLES[pzMode].length) msg.textContent += " " + pt().all;
+    var rc = z.getBoundingClientRect();
+    if (running) burst(rc.left + rc.width / 2, rc.top + rc.height / 2, 60, 5);
+    chime();
   }
   document.addEventListener("click", function (e) {   // clic en dehors : on ferme
     if (pzPanel && !pzPanel.contains(e.target) && e.target !== pzBtn) closePuzzle();
