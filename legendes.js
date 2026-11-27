@@ -2,7 +2,8 @@
 //  - Palesang (après Bloodborne) : brume, corbeaux, cloche, vague rouge au clic
 //  - Le Mur (L'Attaque des Titans, maintenant dans les thèmes en test du laboratoire) : un géant se lève derrière le mur quand on fait défiler, vapeur, grondement
 //  - God of War III (après God of War) : l'Olympe en feu, braises, éclairs et tonnerre
-// Et le thème secret Slime Rancher : des slimes qui sautent dans l'en-tête, un plort à chaque clic
+// Et le thème secret Slime Rancher : un plort à chaque clic
+// (les particules, mini-jeux, compteurs et slimes de l'en-tête sont dans effets.js)
 // La façon de les débloquer est dans theme.js.
 (function () {
   var html = document.documentElement;
@@ -103,6 +104,15 @@
     c.style.animationDuration = (7 + Math.random() * 5) + "s";
     c.style.setProperty("--s", (0.6 + Math.random() * 0.8).toFixed(2));
     c.innerHTML = CROW;
+    // un corbeau abattu tombe et rapporte des Échos de sang (compteur dans effets.js)
+    c.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (c.classList.contains("shot")) return;
+      var r = c.getBoundingClientRect();
+      c.style.left = r.left + "px"; c.classList.add("shot");
+      window.dispatchEvent(new CustomEvent("fx-points", { detail: { n: 100, x: e.clientX, y: e.clientY } }));
+      setTimeout(function () { c.remove(); }, 900);
+    });
     document.body.appendChild(c);
     setTimeout(function () { c.remove(); }, 13000);
     crowTimer = setTimeout(crow, 4000 + Math.random() * 6000);
@@ -150,49 +160,6 @@
     if (giant) { giant.remove(); giant = null; }
   }
 
-  // ---------- God of War III : braises qui montent de l'Olympe en feu ----------
-  var emberTimer = null;
-  function ember() {
-    if (theme() !== "gow3") return;
-    var e = document.createElement("span");
-    e.className = "gw-ember";
-    e.style.left = (Math.random() * 100) + "vw";
-    e.style.animationDuration = (5 + Math.random() * 5) + "s";
-    e.style.setProperty("--dx", ((Math.random() - 0.5) * 120).toFixed(0) + "px");
-    document.body.appendChild(e);
-    setTimeout(function () { e.remove(); }, 10500);
-    emberTimer = setTimeout(ember, 250 + Math.random() * 450);
-  }
-  function startGow() { if (!calm) ember(); }
-  function stopGow() { clearTimeout(emberTimer); document.querySelectorAll(".gw-ember").forEach(function (e) { e.remove(); }); }
-
-  // ---------- Slime Rancher : des slimes qui sautent dans l'en-tête ----------
-  function slimeSvg(body, light) {
-    return '<svg viewBox="0 0 60 50" aria-hidden="true"><path d="M6 46 C2 30 12 6 30 6 C48 6 58 30 54 46 Z" fill="' + body + '"/>' +
-      '<ellipse cx="20" cy="17" rx="6" ry="3" fill="' + light + '" opacity=".8"/>' +
-      '<ellipse cx="22" cy="28" rx="3.2" ry="4.4" fill="#2a1a2e"/><ellipse cx="38" cy="28" rx="3.2" ry="4.4" fill="#2a1a2e"/>' +
-      '<circle cx="23" cy="26.5" r="1.2" fill="#fff"/><circle cx="39" cy="26.5" r="1.2" fill="#fff"/>' +
-      '<path d="M25 35 Q30 40 35 35" fill="none" stroke="#2a1a2e" stroke-width="2.2" stroke-linecap="round"/></svg>';
-  }
-  var slimes = null;
-  function startSlime() {
-    var hero = document.querySelector(".hero");
-    if (!hero || slimes) return;
-    slimes = document.createElement("div");
-    slimes.className = "sl-field";
-    slimes.setAttribute("aria-hidden", "true");
-    [["#ff7ac8", "#ffd0ec", 62], ["#7ad0ff", "#d6f1ff", 76], ["#ffc94a", "#fff0c2", 88]].forEach(function (c, i) {
-      var d = document.createElement("span");
-      d.className = "sl-slime";
-      d.style.left = c[2] + "%";
-      d.style.animationDelay = (i * 0.35) + "s";
-      d.innerHTML = slimeSvg(c[0], c[1]);
-      slimes.appendChild(d);
-    });
-    hero.insertBefore(slimes, hero.firstChild);
-  }
-  function stopSlime() { if (slimes) { slimes.remove(); slimes = null; } }
-
   // ---------- Clics : vague rouge (Palesang) ou poussière de pierre (Le Mur) ----------
   document.addEventListener("click", function (e) {
     var th = theme();
@@ -214,15 +181,10 @@
     if (now !== "lunesang" && was === "lunesang") stopMoon();
     if (now === "mur" && was !== "mur") { startWall(); if (document.readyState === "complete") rumble(1.4); }
     if (now !== "mur" && was === "mur") stopWall();
-    if (now === "gow3" && was !== "gow3") { startGow(); if (document.readyState === "complete") thunder(); }
-    if (now !== "gow3" && was === "gow3") stopGow();
-    if (now === "slime" && was !== "slime") startSlime();
-    if (now !== "slime" && was === "slime") stopSlime();
+    if (now === "gow3" && was !== "gow3" && document.readyState === "complete") thunder();
     was = now;
   }
   new MutationObserver(update).observe(html, { attributes: true, attributeFilter: ["data-theme"] });
   if (theme() === "lunesang") startMoon();
   if (theme() === "mur") startWall();
-  if (theme() === "gow3") startGow();
-  if (theme() === "slime") startSlime();
 })();
