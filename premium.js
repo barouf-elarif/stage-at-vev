@@ -550,7 +550,12 @@
     { a: "Emanuel Lasker", fr: "Quand tu trouves un bon coup, cherches-en un meilleur.", en: "When you see a good move, look for a better one.", es: "Cuando veas una buena jugada, busca una mejor." },
     { a: "Paul Morphy", fr: "Aide tes pièces, et elles t’aideront.", en: "Help your pieces so they can help you.", es: "Ayuda a tus piezas y ellas te ayudarán." },
     { a: "Siegbert Tarrasch", fr: "Les échecs, comme la musique et l’amour, ont le pouvoir de rendre les gens heureux.", en: "Chess, like love, like music, has the power to make men happy.", es: "El ajedrez, como el amor y la música, tiene el poder de hacer feliz a la gente." },
-    { a: "Irving Chernev", fr: "Chaque maître des échecs a d’abord été un débutant.", en: "Every chess master was once a beginner.", es: "Todo maestro de ajedrez fue alguna vez un principiante." }
+    { a: "Irving Chernev", fr: "Chaque maître des échecs a d’abord été un débutant.", en: "Every chess master was once a beginner.", es: "Todo maestro de ajedrez fue alguna vez un principiante." },
+    { a: "Mikhaïl Tal", fr: "Il faut emmener ton adversaire dans une forêt sombre où 2 + 2 = 5, et où le chemin de sortie n’est assez large que pour un seul.", en: "You must take your opponent into a deep dark forest where 2 + 2 = 5, and the path leading out is only wide enough for one.", es: "Debes llevar a tu rival a un bosque oscuro donde 2 + 2 = 5, y donde el camino de salida solo es lo bastante ancho para uno." },
+    { a: "Aron Nimzowitsch", fr: "La menace est plus forte que son exécution.", en: "The threat is stronger than the execution.", es: "La amenaza es más fuerte que su ejecución." },
+    { a: "Wilhelm Steinitz", fr: "Le roi est une pièce qui se bat : utilise-le !", en: "The king is a fighting piece. Use it!", es: "El rey es una pieza que lucha: ¡úsalo!" },
+    { a: "Garry Kasparov", fr: "Les échecs sont une torture mentale.", en: "Chess is mental torture.", es: "El ajedrez es una tortura mental." },
+    { a: "Benjamin Franklin", fr: "La vie est une sorte de partie d’échecs.", en: "Life is a kind of chess.", es: "La vida es una especie de partida de ajedrez." }
   ];
   var quoteEl = null, quoteTimer = null, quoteI = 0;
   function paintQuote() {

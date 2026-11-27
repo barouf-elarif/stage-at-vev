@@ -525,6 +525,20 @@
         <span data-lang="en">Charge an electric car like during my tests at VEV: swipe the badge, plug in the cable, start charging and follow it live.</span>
         <span data-lang="es">Carga un coche eléctrico como en mis pruebas en VEV: pasa la tarjeta, conecta el cable, inicia la carga y síguela en directo.</span>
       </p>
+      <details class="sim-settings" open>
+        <summary>⚙️ <span data-lang="fr">Réglages : choisis ta voiture et ta charge</span><span data-lang="en">Settings: choose your car and your charge</span><span data-lang="es">Ajustes: elige tu coche y tu carga</span></summary>
+        <div class="set-grid">
+          <label class="set-field set-wide">🚗 <span data-lang="fr">Voiture</span><span data-lang="en">Car</span><span data-lang="es">Coche</span><select class="set-car"></select></label>
+          <label class="set-field set-custom">🔋 <span data-lang="fr">Batterie (kWh)</span><span data-lang="en">Battery (kWh)</span><span data-lang="es">Batería (kWh)</span><input type="number" class="set-bat" min="15" max="130" step="1"></label>
+          <label class="set-field set-custom">📉 <span data-lang="fr">Consommation (kWh/100 km)</span><span data-lang="en">Consumption (kWh/100 km)</span><span data-lang="es">Consumo (kWh/100 km)</span><input type="number" class="set-conso" min="10" max="35" step="0.5"></label>
+          <label class="set-field set-custom">🔌 <span data-lang="fr">Charge max en AC (kW)</span><span data-lang="en">Max AC charging (kW)</span><span data-lang="es">Carga máx. en AC (kW)</span><input type="number" class="set-maxac" min="3" max="22" step="0.1"></label>
+          <label class="set-field set-custom">⚡ <span data-lang="fr">Charge max en DC (kW)</span><span data-lang="en">Max DC charging (kW)</span><span data-lang="es">Carga máx. en DC (kW)</span><input type="number" class="set-maxdc" min="20" max="350" step="5"></label>
+          <label class="set-field">🔋 <span data-lang="fr">Batterie au départ</span><span data-lang="en">Battery at start</span><span data-lang="es">Batería al inicio</span> <output class="out-start"></output><input type="range" class="set-start" min="0" max="90" step="5"></label>
+          <label class="set-field">🎯 <span data-lang="fr">Objectif de charge</span><span data-lang="en">Charge target</span><span data-lang="es">Objetivo de carga</span> <output class="out-target"></output><input type="range" class="set-target" min="20" max="100" step="5"></label>
+          <label class="set-field">💶 <span data-lang="fr">Prix à la borne (€/kWh)</span><span data-lang="en">Charger price (€/kWh)</span><span data-lang="es">Precio en el cargador (€/kWh)</span><input type="number" class="set-price" min="0" max="2" step="0.01"></label>
+        </div>
+        <p class="set-info"></p>
+      </details>
       <div class="sim">
         <svg class="sim-scene" viewBox="0 0 360 170" aria-hidden="true">
           <rect x="8" y="150" width="344" height="6" rx="3" class="sim-ground"/>
@@ -568,17 +582,23 @@
               <select disabled><option>—</option></select>
             </label>
             <label class="sim-speed">⏩ <span data-lang="fr">Vitesse de la simulation</span><span data-lang="en">Simulation speed</span><span data-lang="es">Velocidad de la simulación</span>
-              <select><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
+              <select class="sim-speed-sel"><option value="120">×120</option><option value="600" selected>×600</option><option value="1800">×1800</option></select>
             </label>
           </div>
         </div>
       </div>
       <p class="sim-msg" role="status" aria-live="polite"></p>
       <div class="sim-compare">
-        <p class="sim-live-title">⛽ <span data-lang="fr">Comparatif : électrique ou diesel ?</span><span data-lang="en">Comparison: electric or diesel?</span><span data-lang="es">Comparativa: ¿eléctrico o diésel?</span></p>
+        <p class="sim-live-title">⛽ <span data-lang="fr">Comparatif : électrique ou thermique ?</span><span data-lang="en">Comparison: electric or fuel?</span><span data-lang="es">Comparativa: ¿eléctrico o combustión?</span></p>
+        <div class="set-grid cmp-settings">
+          <label class="set-field">⛽ <span data-lang="fr">Carburant</span><span data-lang="en">Fuel</span><span data-lang="es">Combustible</span><select class="set-fuel"><option value="diesel">Diesel</option><option value="essence">Essence</option></select></label>
+          <label class="set-field">💶 <span data-lang="fr">Prix du carburant (€/L)</span><span data-lang="en">Fuel price (€/L)</span><span data-lang="es">Precio del combustible (€/L)</span><input type="number" class="set-fuelprice" min="0.5" max="4" step="0.01"></label>
+          <label class="set-field">📉 <span data-lang="fr">Consommation (L/100 km)</span><span data-lang="en">Consumption (L/100 km)</span><span data-lang="es">Consumo (L/100 km)</span><input type="number" class="set-fuelconso" min="2" max="20" step="0.1"></label>
+          <label class="set-field">🏠 <span data-lang="fr">Électricité à la maison (€/kWh)</span><span data-lang="en">Home electricity (€/kWh)</span><span data-lang="es">Electricidad en casa (€/kWh)</span><input type="number" class="set-home" min="0" max="1" step="0.01"></label>
+        </div>
         <p class="cmp-km-line"><span data-lang="fr">Autonomie récupérée :</span><span data-lang="en">Range gained:</span><span data-lang="es">Autonomía recuperada:</span> <strong class="cmp-km">0 km</strong></p>
         <div class="cmp-rows">
-          <span class="cmp-name">⛽ <span data-lang="fr">Même trajet en diesel</span><span data-lang="en">Same trip with diesel</span><span data-lang="es">Mismo trayecto en diésel</span></span>
+          <span class="cmp-name">⛽ <span class="cmp-fuel-name"></span></span>
           <span class="cmp-track"><span class="cmp-bar cmp-bar-diesel"></span></span><strong class="cmp-diesel">0,00 €</strong>
           <span class="cmp-name">⚡ <span data-lang="fr">Électrique, à la borne</span><span data-lang="en">Electric, at the charger</span><span data-lang="es">Eléctrico, en el cargador</span></span>
           <span class="cmp-track"><span class="cmp-bar cmp-bar-elec"></span></span><strong class="cmp-elec">0,00 €</strong>
@@ -589,28 +609,60 @@
           <span>💰 <span data-lang="fr">Économie à la borne :</span><span data-lang="en">Savings at the charger:</span><span data-lang="es">Ahorro en el cargador:</span> <strong class="cmp-save">0,00 €</strong></span>
           <span>🌱 CO₂ : <strong class="cmp-co2">0 kg → 0 kg</strong></span>
         </p>
+        <div class="cmp-cards">
+          <div class="cmp-card"><span class="cmp-card-t">💶 <span data-lang="fr">Coût aux 100 km</span><span data-lang="en">Cost per 100 km</span><span data-lang="es">Coste cada 100 km</span></span><span class="c100"></span></div>
+          <div class="cmp-card"><span class="cmp-card-t">🌳 <span data-lang="fr">CO₂ évité sur 1 an</span><span data-lang="en">CO₂ avoided in 1 year</span><span data-lang="es">CO₂ evitado en 1 año</span></span><span class="cco2"></span></div>
+          <div class="cmp-card"><span class="cmp-card-t">⏱️ <span data-lang="fr">Pour récupérer 100 km</span><span data-lang="en">To gain 100 km</span><span data-lang="es">Para recuperar 100 km</span></span><span class="ctime"></span></div>
+          <div class="cmp-card"><span class="cmp-card-t">🛣️ <span data-lang="fr">Autonomie batterie pleine</span><span data-lang="en">Full battery range</span><span data-lang="es">Autonomía con batería llena</span></span><span class="crange"></span></div>
+        </div>
+
         <div class="cmp-month">
           <p class="sim-live-title"><span>📅 <span data-lang="fr">Et sur un mois ?</span><span data-lang="en">And over a month?</span><span data-lang="es">¿Y en un mes?</span></span>
-            <label class="sim-speed cmp-month-km"><span data-lang="fr">Je roule</span><span data-lang="en">I drive</span><span data-lang="es">Conduzco</span>
-              <select><option value="500">500 km</option><option value="1000" selected>1000 km</option><option value="1500">1500 km</option><option value="2000">2000 km</option><option value="3000">3000 km</option></select>
-              <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span>
-            </label>
+            <label class="sim-speed cmp-month-km"><span data-lang="fr">Je roule</span><span data-lang="en">I drive</span><span data-lang="es">Conduzco</span> <output class="out-km"></output> <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span>
+              <input type="range" class="set-km" min="100" max="4000" step="100" value="1000"></label>
           </p>
           <div class="cmp-month-grid">
-            <div><span>⛽ <span data-lang="fr">Diesel</span><span data-lang="en">Diesel</span><span data-lang="es">Diésel</span></span><strong class="m-diesel">—</strong></div>
+            <div><span>⛽ <span class="cmp-fuel-name"></span></span><strong class="m-diesel">—</strong></div>
             <div><span>⚡ <span data-lang="fr">À la borne</span><span data-lang="en">At the charger</span><span data-lang="es">En el cargador</span></span><strong class="m-elec">—</strong></div>
             <div><span>🏠 <span data-lang="fr">À la maison</span><span data-lang="en">At home</span><span data-lang="es">En casa</span></span><strong class="m-home">—</strong></div>
           </div>
-          <p class="cmp-month-save">💰 <span data-lang="fr">En chargeant à la borne, j’économise</span><span data-lang="en">Charging at the charger, I save</span><span data-lang="es">Cargando en el cargador, ahorro</span>
-            <strong class="m-save">—</strong> <span data-lang="fr">par mois, soit</span><span data-lang="en">per month, that’s</span><span data-lang="es">al mes, o sea</span> <strong class="m-save-year">—</strong> <span data-lang="fr">par an.</span><span data-lang="en">per year.</span><span data-lang="es">al año.</span></p>
-          <p class="cmp-month-home">🏠 <span data-lang="fr">Et en chargeant à la maison :</span><span data-lang="en">And charging at home:</span><span data-lang="es">Y cargando en casa:</span>
-            <strong class="m-save-home">—</strong> <span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span> (<strong class="m-save-home-year">—</strong> <span data-lang="fr">par an</span><span data-lang="en">per year</span><span data-lang="es">al año</span>).</p>
+          <table class="cmp-table">
+            <thead><tr><th></th><th><span data-lang="fr">par mois</span><span data-lang="en">per month</span><span data-lang="es">al mes</span></th><th><span data-lang="fr">par an</span><span data-lang="en">per year</span><span data-lang="es">al año</span></th><th><span data-lang="fr">en 5 ans</span><span data-lang="en">in 5 years</span><span data-lang="es">en 5 años</span></th></tr></thead>
+            <tbody>
+              <tr><th>💰 <span data-lang="fr">Économie à la borne</span><span data-lang="en">Savings at the charger</span><span data-lang="es">Ahorro en el cargador</span></th><td class="s-b1"></td><td class="s-b12"></td><td class="s-b60"></td></tr>
+              <tr><th>🏠 <span data-lang="fr">Économie à la maison</span><span data-lang="en">Savings at home</span><span data-lang="es">Ahorro en casa</span></th><td class="s-h1"></td><td class="s-h12"></td><td class="s-h60"></td></tr>
+              <tr><th>🌱 <span data-lang="fr">CO₂ évité</span><span data-lang="en">CO₂ avoided</span><span data-lang="es">CO₂ evitado</span></th><td class="s-c1"></td><td class="s-c12"></td><td class="s-c60"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cmp-block">
+          <p class="sim-live-title"><span>⏱️ <span data-lang="fr">Combien de temps pour charger ?</span><span data-lang="en">How long does it take to charge?</span><span data-lang="es">¿Cuánto tarda en cargar?</span></span> <small class="cmp-span"></small></p>
+          <div class="cmp-times"></div>
+          <p class="cmp-hint"><span data-lang="fr">La voiture limite parfois la puissance : une borne de 350 kW ne charge pas plus vite qu’une de 50 kW si la voiture n’accepte que 50 kW.</span><span data-lang="en">The car sometimes limits the power: a 350 kW charger is no faster than a 50 kW one if the car only accepts 50 kW.</span><span data-lang="es">El coche a veces limita la potencia: un cargador de 350 kW no carga más rápido que uno de 50 kW si el coche solo acepta 50 kW.</span></p>
+        </div>
+
+        <div class="cmp-block">
+          <p class="sim-live-title"><span>🗺️ <span data-lang="fr">Et pour un trajet ?</span><span data-lang="en">And for a trip?</span><span data-lang="es">¿Y para un viaje?</span></span>
+            <label class="sim-speed"><span data-lang="fr">Trajet</span><span data-lang="en">Trip</span><span data-lang="es">Viaje</span><select class="set-trip">
+              <option value="30">30 km</option>
+              <option value="200" selected>Nice → Marseille (200 km)</option>
+              <option value="470">Nice → Lyon (470 km)</option>
+              <option value="930">Nice → Paris (930 km)</option>
+              <option value="custom">…</option>
+            </select></label>
+            <label class="sim-speed set-trip-custom" hidden><input type="number" class="set-tripkm" min="1" max="5000" step="1" value="100"> km</label>
+          </p>
+          <div class="cmp-month-grid">
+            <div><span>⛽ <span class="cmp-fuel-name"></span></span><strong class="t-fuel">—</strong></div>
+            <div><span>⚡ <span data-lang="fr">À la borne</span><span data-lang="en">At the charger</span><span data-lang="es">En el cargador</span></span><strong class="t-elec">—</strong></div>
+            <div><span>🏠 <span data-lang="fr">À la maison</span><span data-lang="en">At home</span><span data-lang="es">En casa</span></span><strong class="t-home">—</strong></div>
+          </div>
+          <p class="cmp-trip-info"></p>
         </div>
       </div>
       <p class="sim-note">
-        <span data-lang="fr">Batterie de 60 kWh qui part de 20 %. En courant continu (CCS2), la puissance baisse quand la batterie se remplit, pour la protéger. Prix à la borne : 0,56 €/kWh. Comparatif (estimations moyennes, environ 1000 km par mois pour un Français) : voiture électrique à 16 kWh/100 km, diesel à 6 L/100 km et 1,70 €/L, recharge à la maison à 0,25 €/kWh, 2,65 kg de CO₂ par litre de gazole et environ 50 g par kWh d’électricité en France.</span>
-        <span data-lang="en">60 kWh battery starting at 20%. With direct current (CCS2), power drops as the battery fills up, to protect it. Charger price: €0.56/kWh. Comparison (average estimates, about 1,000 km per month for a French driver): electric car at 16 kWh/100 km, diesel at 6 L/100 km and €1.70/L, home charging at €0.25/kWh, 2.65 kg of CO₂ per litre of diesel and about 50 g per kWh of electricity in France.</span>
-        <span data-lang="es">Batería de 60 kWh que empieza al 20 %. En corriente continua (CCS2), la potencia baja cuando la batería se llena, para protegerla. Precio en el cargador: 0,56 €/kWh. Comparativa (estimaciones medias, unos 1000 km al mes para un conductor francés): coche eléctrico a 16 kWh/100 km, diésel a 6 L/100 km y 1,70 €/L, carga en casa a 0,25 €/kWh, 2,65 kg de CO₂ por litro de gasóleo y unos 50 g por kWh de electricidad en Francia.</span>
+        <span data-lang="fr">Valeurs approximatives, à titre d’exemple. En courant continu (CCS2), la puissance baisse quand la batterie se remplit, pour la protéger. Par défaut : borne à 0,56 €/kWh, électricité à la maison à 0,25 €/kWh, diesel à 1,70 €/L et 6 L/100 km, essence à 1,80 €/L et 6,5 L/100 km. CO₂ : 2,65 kg par litre de gazole, 2,30 kg par litre d’essence, environ 50 g par kWh d’électricité en France ; un arbre absorbe environ 25 kg de CO₂ par an.</span><span data-lang="en">Approximate values, as an example. With direct current (CCS2), power drops as the battery fills up, to protect it. Defaults: charger at €0.56/kWh, home electricity at €0.25/kWh, diesel at €1.70/L and 6 L/100 km, petrol at €1.80/L and 6.5 L/100 km. CO₂: 2.65 kg per litre of diesel, 2.30 kg per litre of petrol, about 50 g per kWh of electricity in France; a tree absorbs about 25 kg of CO₂ per year.</span><span data-lang="es">Valores aproximados, a modo de ejemplo. En corriente continua (CCS2), la potencia baja cuando la batería se llena, para protegerla. Por defecto: cargador a 0,56 €/kWh, electricidad en casa a 0,25 €/kWh, diésel a 1,70 €/L y 6 L/100 km, gasolina a 1,80 €/L y 6,5 L/100 km. CO₂: 2,65 kg por litro de gasóleo, 2,30 kg por litro de gasolina, unos 50 g por kWh de electricidad en Francia; un árbol absorbe unos 25 kg de CO₂ al año.</span>
       </p>
     </section>
 
